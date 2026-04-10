@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download DATA Compass - Enterprise Data Quality & FAIR Platform</title>
+  <meta name="description" content="Download DATA Compass — the enterprise platform for data quality analysis, FAIR assessment, and AI-readiness scoring. One command to install.">
+  <style>
+    :root {
+      --brand-900: #0f172a;
+      --brand-800: #1e293b;
+      --brand-700: #334155;
+      --brand-600: #475569;
+      --brand-500: #64748b;
+      --brand-400: #94a3b8;
+      --brand-300: #cbd5e1;
+      --brand-200: #e2e8f0;
+      --brand-100: #f1f5f9;
+      --brand-50:  #f8fafc;
+      --accent-600: #2563eb;
+      --accent-500: #3b82f6;
+      --accent-400: #60a5fa;
+      --accent-100: #dbeafe;
+      --green-600: #16a34a;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--brand-800);
+      background: var(--brand-50);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      background: var(--brand-900);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent-400); }
+    .nav-links a {
+      color: var(--brand-300);
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 32px;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ---- Hero ---- */
+    .hero {
+      background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-800) 100%);
+      padding: 80px 24px 64px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.15);
+      color: var(--accent-400);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+    .hero h1 {
+      color: #fff;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      color: var(--brand-300);
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* ---- Download Card ---- */
+    .download-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      max-width: 560px;
+      margin: -40px auto 0;
+      padding: 40px;
+      position: relative;
+      z-index: 10;
+    }
+    .download-card h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--brand-900);
+    }
+    .download-card .version {
+      color: var(--brand-500);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .btn-download {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: var(--accent-600);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-download:hover {
+      background: var(--accent-500);
+      transform: translateY(-1px);
+    }
+    .btn-download:active { transform: translateY(0); }
+
+    .btn-download svg {
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    .download-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--brand-200);
+      font-size: 13px;
+      color: var(--brand-500);
+    }
+
+    .alt-download {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--brand-200);
+    }
+    .alt-download summary {
+      font-size: 13px;
+      color: var(--brand-500);
+      cursor: pointer;
+      user-select: none;
+    }
+    .alt-download summary:hover { color: var(--brand-700); }
+    .alt-download .alt-body {
+      margin-top: 12px;
+    }
+    .code-block {
+      background: var(--brand-900);
+      color: var(--brand-300);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: 8px 0;
+      position: relative;
+    }
+    .code-block .comment { color: var(--brand-600); }
+    .code-block .cmd { color: var(--green-500); }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--brand-700);
+      color: var(--brand-300);
+      border: none;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: var(--brand-600); }
+
+    /* ---- Content Section ---- */
+    .content {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: var(--brand-900);
+    }
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .card li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--brand-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .card li .check {
+      color: var(--green-600);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ---- Quick Start ---- */
+    .quickstart {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-top: 40px;
+    }
+    .quickstart h3 {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: var(--brand-900);
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-100);
+      color: var(--accent-600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .step-content h4 {
+      font-size: 14px;
+      color: var(--brand-800);
+      margin-bottom: 4px;
+    }
+    .step-content p {
+      font-size: 13px;
+      color: var(--brand-500);
+    }
+
+    /* ---- Checksum ---- */
+    .checksum-section {
+      margin-top: 40px;
+    }
+    .checksum-section h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: var(--brand-900);
+    }
+    .checksum-section p {
+      font-size: 13px;
+      color: var(--brand-500);
+      margin-bottom: 12px;
+    }
+
+    /* ---- Footer ---- */
+    .footer {
+      background: var(--brand-900);
+      color: var(--brand-400);
+      padding: 40px 24px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .footer a { color: var(--accent-400); text-decoration: none; }
+    .footer a:hover { color: var(--accent-300); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      .download-card { margin: -30px 16px 0; padding: 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">DATA <span>Compass</span></a>
+      <div class="nav-links">
+        <a href="#requirements">Requirements</a>
+        <a href="#quickstart">Quick Start</a>
+        <a href="#verify">Verify</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">v1.0.0 Stable Release</div>
+    <h1>Download DATA Compass</h1>
+    <p>Enterprise data quality analysis, FAIR assessment, and AI-readiness scoring. One command to install.</p>
+  </section>
+
+  <!-- Download Card -->
+  <div class="download-card">
+    <h2>DATA Compass for Linux</h2>
+    <p class="version">Version 1.0.0 &middot; Released March 2026 &middot; ~15KB installer</p>
+
+    <a href="https://github.com/a-uppal/fair-compass/releases/download/v1.0.0/compass-setup.sh" class="btn-download" download>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v7.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 11.586V4a1 1 0 011-1z"/><path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+      Download compass-setup.sh
+    </a>
+
+    <div class="download-meta">
+      <span>File size: ~15 KB</span>
+      <span>Platform: Linux (x86_64)</span>
+      <span>Shell script</span>
+    </div>
+
+    <!-- Alternative: curl one-liner -->
+    <div class="alt-download">
+      <details>
+        <summary>Alternative: install with one command</summary>
+        <div class="alt-body">
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <span class="cmd">curl</span> -fsSL https://compassfordata.com/download/compass-setup.sh | <span class="cmd">sudo</span> bash
+          </div>
+          <p style="font-size:12px; color:var(--brand-500); margin-top:8px;">
+            Or download and inspect first:
+          </p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <span class="cmd">wget</span> https://compassfordata.com/download/compass-setup.sh<br>
+            <span class="cmd">chmod</span> +x compass-setup.sh<br>
+            <span class="cmd">sudo</span> ./compass-setup.sh
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Offline bundle for air-gapped -->
+    <div class="alt-download">
+      <details>
+        <summary>Air-gapped / offline installation</summary>
+        <div class="alt-body">
+          <p style="font-size:13px; color:var(--brand-600); margin-bottom:12px;">
+            For environments without internet access, download the full offline bundle (~700 MB)
+            which includes pre-built Docker images.
+          </p>
+          <a href="https://github.com/a-uppal/fair-compass/releases/download/v1.0.0/compass-setup-v1.0.0.sh" class="btn-download" style="background:var(--brand-700);" download>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v7.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 11.586V4a1 1 0 011-1z"/><path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+            Download Offline Installer (~700 MB)
+          </a>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Requirements + What's Included -->
+    <div class="grid" id="requirements">
+      <div class="card">
+        <h3>System Requirements</h3>
+        <ul>
+          <li><span class="check">&#10003;</span> Linux (Ubuntu 20.04+, RHEL 8+, Debian 11+)</li>
+          <li><span class="check">&#10003;</span> 4 GB RAM minimum (8 GB recommended)</li>
+          <li><span class="check">&#10003;</span> 10 GB free disk space</li>
+          <li><span class="check">&#10003;</span> Docker Engine 24+ (installer can install this for you)</li>
+          <li><span class="check">&#10003;</span> Ports 3001 (app) and 5432 (database)</li>
+          <li><span class="check">&#10003;</span> Internet access for image pull (~700 MB one-time)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What Gets Installed</h3>
+        <ul>
+          <li><span class="check">&#10003;</span> DATA Compass application server</li>
+          <li><span class="check">&#10003;</span> PostgreSQL 16 database</li>
+          <li><span class="check">&#10003;</span> 93 database migrations (auto-applied)</li>
+          <li><span class="check">&#10003;</span> Interactive setup wizard (TUI)</li>
+          <li><span class="check">&#10003;</span> Admin user creation</li>
+          <li><span class="check">&#10003;</span> Auto-generated secrets (JWT, MFA, DB)</li>
+          <li><span class="check">&#10003;</span> Health monitoring endpoints</li>
+          <li><span class="check">&#10003;</span> Backup and restore tooling</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick Start -->
+    <div class="quickstart" id="quickstart">
+      <h3>Quick Start</h3>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Download the installer</h4>
+          <p>A single ~15KB shell script. No dependencies beyond curl or wget.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Run the installer</h4>
+          <p><code>chmod +x compass-setup.sh && sudo ./compass-setup.sh</code></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Walk through the setup wizard</h4>
+          <p>The wizard checks prerequisites, installs Docker if needed, generates secrets, pulls images from our registry, and starts all services. You'll answer 6 questions: license, API key, org name, admin email, name, and password.</p>
+        </div>
+      </div>
+
+      <div class="step" style="margin-bottom:0">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Open DATA Compass</h4>
+          <p>Navigate to <code>http://your-server:3001</code> and log in with your admin credentials. You're ready to analyze.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verify -->
+    <div class="checksum-section" id="verify">
+      <h3>Verify Your Download</h3>
+      <p>After downloading, verify the integrity of the installer:</p>
+      <div class="code-block" style="max-width:560px">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <span class="comment"># Download the checksum</span><br>
+        <span class="cmd">curl</span> -fsSL https://github.com/a-uppal/fair-compass/releases/download/v1.0.0/compass-setup.sh.sha256 -o compass-setup.sh.sha256<br><br>
+        <span class="comment"># Verify</span><br>
+        <span class="cmd">sha256sum</span> -c compass-setup.sh.sha256
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Campana &amp; Schott. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      <a href="/docs">Documentation</a> &middot;
+      <a href="/releases">All Releases</a> &middot;
+      <a href="mailto:anuj.uppal@campana-schott.com">Support</a>
+    </p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const block = btn.parentElement;
+      const text = block.textContent
+        .replace('Copy', '')
+        .replace(/^\s+/gm, '')
+        .trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

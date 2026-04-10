@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License Admin - DATA Compass</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root {
+      --brand-900: #0f172a;
+      --brand-800: #1e293b;
+      --brand-700: #334155;
+      --brand-600: #475569;
+      --brand-500: #64748b;
+      --brand-400: #94a3b8;
+      --brand-300: #cbd5e1;
+      --brand-200: #e2e8f0;
+      --brand-100: #f1f5f9;
+      --brand-50:  #f8fafc;
+      --accent-700: #1a56db;
+      --accent-600: #2563eb;
+      --accent-500: #3b82f6;
+      --accent-400: #60a5fa;
+      --accent-100: #dbeafe;
+      --green-600: #16a34a;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --red-600: #dc2626;
+      --red-100: #fee2e2;
+      --amber-600: #d97706;
+      --amber-100: #fef3c7;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--brand-800);
+      background: var(--brand-50);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      background: var(--brand-900);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent-400); }
+    .nav-badge {
+      background: var(--amber-600);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a {
+      color: var(--brand-300);
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 32px;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ---- Screens ---- */
+    .screen {
+      display: none;
+      max-width: 560px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    .screen.active { display: block; }
+
+    .screen-wide {
+      display: none;
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .screen-wide.active { display: block; }
+
+    /* ---- Card ---- */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      padding: 40px;
+    }
+    .card h2 {
+      font-size: 22px;
+      color: var(--brand-900);
+      margin-bottom: 8px;
+    }
+    .card p.subtitle {
+      color: var(--brand-500);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* ---- Form ---- */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand-700);
+      margin-bottom: 6px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="password"],
+    .form-group input[type="date"],
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--brand-300);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--brand-800);
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-600);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .form-group textarea {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-help {
+      font-size: 12px;
+      color: var(--brand-500);
+      margin-top: 4px;
+    }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      text-decoration: none;
+    }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      background: var(--accent-700);
+      color: #fff;
+      width: 100%;
+      padding: 12px 20px;
+    }
+    .btn-primary:hover { background: var(--accent-600); transform: translateY(-1px); }
+    .btn-primary:disabled {
+      background: var(--brand-300);
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background: var(--brand-100);
+      color: var(--brand-700);
+      border: 1px solid var(--brand-200);
+    }
+    .btn-secondary:hover { background: var(--brand-200); }
+    .btn-danger {
+      background: var(--red-600);
+      color: #fff;
+    }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    /* ---- Radio / Checkbox Groups ---- */
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .radio-group label, .checkbox-group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--brand-700);
+      padding: 6px 12px;
+      border: 1px solid var(--brand-200);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .radio-group label:hover, .checkbox-group label:hover {
+      border-color: var(--accent-500);
+      background: var(--accent-100);
+    }
+    .radio-group input:checked + span,
+    .checkbox-group input:checked + span {
+      color: var(--accent-700);
+      font-weight: 600;
+    }
+    .radio-group label:has(input:checked),
+    .checkbox-group label:has(input:checked) {
+      border-color: var(--accent-600);
+      background: var(--accent-100);
+    }
+    .checkbox-group input, .radio-group input {
+      accent-color: var(--accent-700);
+    }
+
+    /* ---- Section Dividers ---- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--brand-200);
+    }
+    .section-header:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+    .section-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brand-800);
+    }
+
+    /* ---- Alert ---- */
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .alert.show { display: block; }
+    .alert-error {
+      background: var(--red-100);
+      color: var(--red-600);
+      border: 1px solid #fca5a5;
+    }
+    .alert-success {
+      background: var(--green-100);
+      color: var(--green-600);
+      border: 1px solid #86efac;
+    }
+    .alert-warning {
+      background: var(--amber-100);
+      color: var(--amber-600);
+      border: 1px solid #fcd34d;
+    }
+
+    /* ---- Summary ---- */
+    .summary-box {
+      background: var(--brand-100);
+      border: 1px solid var(--brand-200);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .summary-box h4 {
+      font-size: 14px;
+      color: var(--brand-900);
+      margin-bottom: 8px;
+    }
+    .summary-box .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--brand-200);
+    }
+    .summary-box .row:last-child { border-bottom: none; }
+    .summary-box .row .label { color: var(--brand-500); }
+    .summary-box .row .value { color: var(--brand-800); font-weight: 500; }
+    .summary-box .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--accent-100);
+      color: var(--accent-700);
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .tag-green {
+      background: var(--green-100);
+      color: var(--green-600);
+    }
+
+    /* ---- History Table ---- */
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .history-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--brand-100);
+      color: var(--brand-600);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--brand-200);
+    }
+    .history-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--brand-100);
+      color: var(--brand-700);
+      vertical-align: top;
+    }
+    .history-table tr:hover td { background: var(--brand-50); }
+    .history-table .mono {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 11px;
+      color: var(--brand-500);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--brand-400);
+      font-size: 14px;
+    }
+
+    /* ---- Tabs ---- */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--brand-200);
+      margin-bottom: 28px;
+    }
+    .tab {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--brand-500);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: inherit;
+    }
+    .tab:hover { color: var(--brand-700); }
+    .tab.active {
+      color: var(--accent-700);
+      border-bottom-color: var(--accent-700);
+      font-weight: 600;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ---- Key Setup ---- */
+    .key-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .key-status.configured {
+      background: var(--green-100);
+      color: var(--green-600);
+    }
+    .key-status.missing {
+      background: var(--amber-100);
+      color: var(--amber-600);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.green { background: var(--green-600); }
+    .status-dot.amber { background: var(--amber-600); }
+
+    /* ---- Misc ---- */
+    .uuid-gen {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--accent-600);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+    .uuid-gen:hover { text-decoration: underline; }
+
+    .lock-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-100);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .lock-icon svg { width: 24px; height: 24px; color: var(--accent-700); }
+
+    .text-center { text-align: center; }
+    .mt-12 { margin-top: 12px; }
+    .mt-20 { margin-top: 20px; }
+    .mt-28 { margin-top: 28px; }
+    .mb-20 { margin-bottom: 20px; }
+
+    /* ---- Footer ---- */
+    .footer {
+      background: var(--brand-900);
+      color: var(--brand-400);
+      padding: 40px 24px;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 640px) {
+      .card { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .screen-wide { padding: 0 16px; }
+      .nav-links { display: none; }
+      .history-table { font-size: 11px; }
+      .history-table th, .history-table td { padding: 8px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">DATA <span>Compass</span> <span class="nav-badge">License Admin</span></a>
+      <div class="nav-links">
+        <a href="/download/">Downloads</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN: PIN Login                                            -->
+  <!-- ============================================================ -->
+  <div id="screen-login" class="screen active">
+    <div class="card text-center">
+      <div class="lock-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+      </div>
+      <h2>License Admin Portal</h2>
+      <p class="subtitle">Enter your admin PIN to continue</p>
+
+      <div id="login-alert" class="alert alert-error"></div>
+
+      <div class="form-group">
+        <input type="password" id="pin-input" placeholder="Enter PIN" maxlength="32"
+               onkeydown="if(event.key==='Enter')handleLogin()">
+      </div>
+
+      <button class="btn btn-primary" onclick="handleLogin()">Unlock</button>
+
+      <p class="form-help mt-12" id="pin-setup-hint" style="display:none;">
+        No PIN set yet. Enter a new PIN to get started (min. 4 characters).
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SCREEN: Main Portal (after login)                            -->
+  <!-- ============================================================ -->
+  <div id="screen-main" class="screen-wide">
+    <div class="card">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('generate')">Generate License</button>
+        <button class="tab" onclick="switchTab('history')">License History</button>
+        <button class="tab" onclick="switchTab('settings')">Settings</button>
+      </div>
+
+      <!-- ====================== TAB: Generate ====================== -->
+      <div id="tab-generate" class="tab-panel active">
+
+        <!-- Key Status -->
+        <div id="key-status-bar"></div>
+        <div id="generate-alert" class="alert"></div>
+
+        <!-- Customer Info -->
+        <div class="section-header" style="margin-top:0;padding-top:0;border-top:none;">
+          <h3>Customer Information</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customer-name">Customer Name</label>
+            <input type="text" id="customer-name" placeholder="e.g. Acme Pharmaceuticals">
+          </div>
+          <div class="form-group">
+            <label for="customer-id">
+              Customer ID
+              <button class="uuid-gen" onclick="generateCustomerId()" title="Generate UUID">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                </svg>
+                auto-generate
+              </button>
+            </label>
+            <input type="text" id="customer-id" placeholder="UUID or custom ID">
+          </div>
+        </div>
+
+        <!-- Edition -->
+        <div class="section-header">
+          <h3>Edition</h3>
+        </div>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="edition" value="professional" onchange="handleEditionChange('professional')">
+            <span>Professional</span>
+          </label>
+          <label>
+            <input type="radio" name="edition" value="enterprise" checked onchange="handleEditionChange('enterprise')">
+            <span>Enterprise</span>
+          </label>
+        </div>
+
+        <!-- Modules -->
+        <div class="section-header">
+          <h3>Modules</h3>
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm" onclick="toggleAllModules(true)">Select All</button>
+            <button class="btn btn-secondary btn-sm" onclick="toggleAllModules(false)">Deselect All</button>
+          </div>
+        </div>
+        <div class="checkbox-group" id="modules-group">
+          <label><input type="checkbox" name="module" value="fair_scoring"><span>FAIR Scoring</span></label>
+          <label><input type="checkbox" name="module" value="data_quality"><span>Data Quality</span></label>
+          <label><input type="checkbox" name="module" value="ml_readiness"><span>ML Readiness</span></label>
+          <label><input type="checkbox" name="module" value="ontology_analysis"><span>Ontology Analysis</span></label>
+          <label><input type="checkbox" name="module" value="privacy_detection"><span>Privacy Detection</span></label>
+          <label><input type="checkbox" name="module" value="test_agent"><span>Test Agent</span></label>
+          <label><input type="checkbox" name="module" value="literature_ai"><span>Literature AI</span></label>
+          <label><input type="checkbox" name="module" value="governance_lens"><span>Governance Lens</span></label>
+          <label><input type="checkbox" name="module" value="contextual_validity"><span>Contextual Validity</span></label>
+          <label><input type="checkbox" name="module" value="bridge_ai"><span>Bridge AI</span></label>
+          <label><input type="checkbox" name="module" value="regulatory"><span>Regulatory</span></label>
+        </div>
+
+        <!-- Integrations -->
+        <div class="section-header">
+          <h3>Integrations</h3>
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm" onclick="toggleAllIntegrations(true)">Select All</button>
+            <button class="btn btn-secondary btn-sm" onclick="toggleAllIntegrations(false)">Deselect All</button>
+          </div>
+        </div>
+        <div class="checkbox-group" id="integrations-group">
+          <label><input type="checkbox" name="integration" value="databricks"><span>Databricks</span></label>
+          <label><input type="checkbox" name="integration" value="snowflake"><span>Snowflake</span></label>
+          <label><input type="checkbox" name="integration" value="veeva"><span>Veeva</span></label>
+          <label><input type="checkbox" name="integration" value="stardog"><span>Stardog</span></label>
+          <label><input type="checkbox" name="integration" value="collibra"><span>Collibra</span></label>
+        </div>
+
+        <!-- Limits -->
+        <div class="section-header">
+          <h3>Limits &amp; Expiration</h3>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="max-users">Max Users</label>
+            <input type="number" id="max-users" value="25" min="1" max="10000">
+          </div>
+          <div class="form-group">
+            <label for="expiration-date">Expiration Date</label>
+            <input type="date" id="expiration-date">
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="mt-28">
+          <button class="btn btn-primary" id="btn-generate" onclick="generateLicense()">
+            Generate License
+          </button>
+        </div>
+
+        <!-- Summary (shown after generation) -->
+        <div id="license-summary" style="display:none;"></div>
+
+      </div>
+
+      <!-- ====================== TAB: History ====================== -->
+      <div id="tab-history" class="tab-panel">
+        <div id="history-content"></div>
+      </div>
+
+      <!-- ====================== TAB: Settings ====================== -->
+      <div id="tab-settings" class="tab-panel">
+
+        <div class="section-header" style="margin-top:0;padding-top:0;border-top:none;">
+          <h3>Signing Key (Ed25519 Private Key)</h3>
+        </div>
+
+        <div id="settings-key-status"></div>
+
+        <div class="form-group">
+          <label for="private-key-input">Paste PKCS#8 PEM Private Key</label>
+          <textarea id="private-key-input" rows="8" placeholder="-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEI...
+-----END PRIVATE KEY-----"></textarea>
+          <p class="form-help">
+            The private key is stored in your browser's localStorage and never leaves this device.
+            It is used exclusively for client-side JWT signing.
+          </p>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" style="width:auto;" onclick="savePrivateKey()">Save Key</button>
+          <button class="btn btn-danger btn-sm" onclick="removePrivateKey()">Remove Key</button>
+        </div>
+
+        <div id="settings-alert" class="alert mt-20"></div>
+
+        <div class="section-header">
+          <h3>Change PIN</h3>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="new-pin">New PIN</label>
+            <input type="password" id="new-pin" placeholder="Min. 4 characters" maxlength="32">
+          </div>
+          <div class="form-group">
+            <label for="confirm-pin">Confirm PIN</label>
+            <input type="password" id="confirm-pin" placeholder="Confirm new PIN" maxlength="32">
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="changePin()">Update PIN</button>
+        <div id="pin-alert" class="alert mt-12"></div>
+
+        <div class="section-header">
+          <h3>Danger Zone</h3>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="clearAllData()">Clear All Data (Key, History, PIN)</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>DATA Compass License Admin &mdash; Internal Use Only</p>
+    <p style="margin-top:8px; font-size:12px; color:var(--brand-500);">
+      Keys and license data are stored in your browser. Nothing is sent to any server.
+    </p>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- JavaScript                                                    -->
+  <!-- ============================================================ -->
+  <script>
+    // ================================================================
+    // CONSTANTS
+    // ================================================================
+
+    const STORAGE_KEYS = {
+      PIN_HASH: 'compass_license_pin_hash',
+      PRIVATE_KEY: 'compass_license_private_key',
+      HISTORY: 'compass_license_history',
+    };
+
+    const SESSION_KEYS = {
+      AUTHENTICATED: 'compass_license_auth',
+    };
+
+    const PROFESSIONAL_MODULES = [
+      'fair_scoring', 'data_quality', 'ml_readiness',
+      'privacy_detection', 'governance_lens', 'regulatory',
+    ];
+
+    const ALL_MODULES = [
+      'fair_scoring', 'data_quality', 'ml_readiness',
+      'ontology_analysis', 'privacy_detection', 'test_agent',
+      'literature_ai', 'governance_lens', 'contextual_validity',
+      'bridge_ai', 'regulatory',
+    ];
+
+    const MODULE_LABELS = {
+      fair_scoring: 'FAIR Scoring',
+      data_quality: 'Data Quality',
+      ml_readiness: 'ML Readiness',
+      ontology_analysis: 'Ontology Analysis',
+      privacy_detection: 'Privacy Detection',
+      test_agent: 'Test Agent',
+      literature_ai: 'Literature AI',
+      governance_lens: 'Governance Lens',
+      contextual_validity: 'Contextual Validity',
+      bridge_ai: 'Bridge AI',
+      regulatory: 'Regulatory',
+    };
+
+    const INTEGRATION_LABELS = {
+      databricks: 'Databricks',
+      snowflake: 'Snowflake',
+      veeva: 'Veeva',
+      stardog: 'Stardog',
+      collibra: 'Collibra',
+    };
+
+    // ================================================================
+    // UTILITY FUNCTIONS
+    // ================================================================
+
+    function generateUUID() {
+      return crypto.randomUUID();
+    }
+
+    function bufferToBase64url(buffer) {
+      const bytes = new Uint8Array(buffer);
+      let str = '';
+      for (let i = 0; i < bytes.length; i++) {
+        str += String.fromCharCode(bytes[i]);
+      }
+      return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function stringToBase64url(str) {
+      return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function base64ToArrayBuffer(base64) {
+      const binaryString = atob(base64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
+
+    async function hashPin(pin) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(pin);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function showAlert(elementId, message, type) {
+      const el = document.getElementById(elementId);
+      el.className = 'alert alert-' + type + ' show';
+      el.textContent = message;
+    }
+
+    function hideAlert(elementId) {
+      const el = document.getElementById(elementId);
+      el.className = 'alert';
+      el.textContent = '';
+    }
+
+    function formatDate(isoStr) {
+      const d = new Date(isoStr);
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ================================================================
+    // PIN AUTHENTICATION
+    // ================================================================
+
+    (function initLogin() {
+      const hasPin = localStorage.getItem(STORAGE_KEYS.PIN_HASH);
+      if (!hasPin) {
+        document.getElementById('pin-setup-hint').style.display = 'block';
+      }
+      // Auto-login if session is still valid
+      if (sessionStorage.getItem(SESSION_KEYS.AUTHENTICATED) === 'true') {
+        showMainScreen();
+      }
+    })();
+
+    async function handleLogin() {
+      const pin = document.getElementById('pin-input').value;
+      if (pin.length < 4) {
+        showAlert('login-alert', 'PIN must be at least 4 characters.', 'error');
+        return;
+      }
+
+      const storedHash = localStorage.getItem(STORAGE_KEYS.PIN_HASH);
+      const pinHash = await hashPin(pin);
+
+      if (!storedHash) {
+        // First-time setup: store the new PIN
+        localStorage.setItem(STORAGE_KEYS.PIN_HASH, pinHash);
+        sessionStorage.setItem(SESSION_KEYS.AUTHENTICATED, 'true');
+        showMainScreen();
+        return;
+      }
+
+      if (pinHash === storedHash) {
+        sessionStorage.setItem(SESSION_KEYS.AUTHENTICATED, 'true');
+        showMainScreen();
+      } else {
+        showAlert('login-alert', 'Incorrect PIN. Please try again.', 'error');
+        document.getElementById('pin-input').value = '';
+        document.getElementById('pin-input').focus();
+      }
+    }
+
+    function showMainScreen() {
+      document.getElementById('screen-login').classList.remove('active');
+      document.getElementById('screen-main').classList.add('active');
+      initMainScreen();
+    }
+
+    // ================================================================
+    // MAIN SCREEN INITIALIZATION
+    // ================================================================
+
+    function initMainScreen() {
+      updateKeyStatusBar();
+      setDefaultExpiration();
+      handleEditionChange('enterprise');
+      renderHistory();
+    }
+
+    function setDefaultExpiration() {
+      const oneYear = new Date();
+      oneYear.setFullYear(oneYear.getFullYear() + 1);
+      document.getElementById('expiration-date').value = oneYear.toISOString().split('T')[0];
+    }
+
+    function updateKeyStatusBar() {
+      const hasKey = !!localStorage.getItem(STORAGE_KEYS.PRIVATE_KEY);
+      const bar = document.getElementById('key-status-bar');
+      const settingsBar = document.getElementById('settings-key-status');
+
+      if (hasKey) {
+        bar.innerHTML = '<div class="key-status configured"><span class="status-dot green"></span> Signing key configured. Ready to generate licenses.</div>';
+        settingsBar.innerHTML = '<div class="key-status configured"><span class="status-dot green"></span> Ed25519 private key is stored in localStorage.</div>';
+        document.getElementById('btn-generate').disabled = false;
+      } else {
+        bar.innerHTML = '<div class="key-status missing"><span class="status-dot amber"></span> No signing key configured. Go to <a href="#" onclick="switchTab(\'settings\');return false;" style="color:inherit;font-weight:600;">Settings</a> to paste your Ed25519 private key.</div>';
+        settingsBar.innerHTML = '<div class="key-status missing"><span class="status-dot amber"></span> No key configured. Paste your Ed25519 PKCS#8 PEM key below.</div>';
+        document.getElementById('btn-generate').disabled = true;
+      }
+    }
+
+    // ================================================================
+    // TAB SWITCHING
+    // ================================================================
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+      const tabs = document.querySelectorAll('.tab');
+      const tabIndex = { generate: 0, history: 1, settings: 2 }[tabName];
+      tabs[tabIndex].classList.add('active');
+      document.getElementById('tab-' + tabName).classList.add('active');
+
+      if (tabName === 'history') renderHistory();
+      if (tabName === 'settings') updateKeyStatusBar();
+    }
+
+    // ================================================================
+    // EDITION & MODULE HELPERS
+    // ================================================================
+
+    function handleEditionChange(edition) {
+      const checkboxes = document.querySelectorAll('input[name="module"]');
+      if (edition === 'enterprise') {
+        checkboxes.forEach(cb => cb.checked = true);
+        toggleAllIntegrations(true);
+      } else {
+        checkboxes.forEach(cb => {
+          cb.checked = PROFESSIONAL_MODULES.includes(cb.value);
+        });
+        // Professional: no integrations by default
+        toggleAllIntegrations(false);
+      }
+    }
+
+    function toggleAllModules(state) {
+      document.querySelectorAll('input[name="module"]').forEach(cb => cb.checked = state);
+    }
+
+    function toggleAllIntegrations(state) {
+      document.querySelectorAll('input[name="integration"]').forEach(cb => cb.checked = state);
+    }
+
+    function generateCustomerId() {
+      document.getElementById('customer-id').value = generateUUID();
+    }
+
+    // ================================================================
+    // PRIVATE KEY MANAGEMENT
+    // ================================================================
+
+    function savePrivateKey() {
+      const raw = document.getElementById('private-key-input').value.trim();
+      if (!raw) {
+        showAlert('settings-alert', 'Please paste your Ed25519 private key in PEM format.', 'error');
+        return;
+      }
+      if (!raw.includes('-----BEGIN PRIVATE KEY-----') || !raw.includes('-----END PRIVATE KEY-----')) {
+        showAlert('settings-alert', 'Invalid PEM format. Expected PKCS#8 format with BEGIN/END PRIVATE KEY headers.', 'error');
+        return;
+      }
+      localStorage.setItem(STORAGE_KEYS.PRIVATE_KEY, raw);
+      document.getElementById('private-key-input').value = '';
+      updateKeyStatusBar();
+      showAlert('settings-alert', 'Signing key saved successfully.', 'success');
+    }
+
+    function removePrivateKey() {
+      if (!confirm('Remove the signing key from localStorage? You will need to paste it again to generate licenses.')) return;
+      localStorage.removeItem(STORAGE_KEYS.PRIVATE_KEY);
+      updateKeyStatusBar();
+      showAlert('settings-alert', 'Signing key removed.', 'warning');
+    }
+
+    // ================================================================
+    // PIN MANAGEMENT
+    // ================================================================
+
+    async function changePin() {
+      const newPin = document.getElementById('new-pin').value;
+      const confirmPin = document.getElementById('confirm-pin').value;
+
+      if (newPin.length < 4) {
+        showAlert('pin-alert', 'PIN must be at least 4 characters.', 'error');
+        return;
+      }
+      if (newPin !== confirmPin) {
+        showAlert('pin-alert', 'PINs do not match.', 'error');
+        return;
+      }
+
+      const pinHash = await hashPin(newPin);
+      localStorage.setItem(STORAGE_KEYS.PIN_HASH, pinHash);
+      document.getElementById('new-pin').value = '';
+      document.getElementById('confirm-pin').value = '';
+      showAlert('pin-alert', 'PIN updated successfully.', 'success');
+    }
+
+    function clearAllData() {
+      if (!confirm('This will delete your signing key, license history, and PIN. You will be logged out. Continue?')) return;
+      localStorage.removeItem(STORAGE_KEYS.PIN_HASH);
+      localStorage.removeItem(STORAGE_KEYS.PRIVATE_KEY);
+      localStorage.removeItem(STORAGE_KEYS.HISTORY);
+      sessionStorage.removeItem(SESSION_KEYS.AUTHENTICATED);
+      window.location.reload();
+    }
+
+    // ================================================================
+    // JWT / Ed25519 SIGNING
+    // ================================================================
+
+    async function importEd25519PrivateKey(pem) {
+      const pemContents = pem
+        .replace(/-----BEGIN PRIVATE KEY-----/, '')
+        .replace(/-----END PRIVATE KEY-----/, '')
+        .replace(/\s+/g, '');
+
+      const binaryDer = base64ToArrayBuffer(pemContents);
+
+      return await crypto.subtle.importKey(
+        'pkcs8',
+        binaryDer,
+        { name: 'Ed25519' },
+        false,
+        ['sign']
+      );
+    }
+
+    async function signJWT(payload, privateKey) {
+      const header = { alg: 'EdDSA', typ: 'JWT' };
+
+      const encodedHeader = stringToBase64url(JSON.stringify(header));
+      const encodedPayload = stringToBase64url(JSON.stringify(payload));
+
+      const signingInput = encodedHeader + '.' + encodedPayload;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(signingInput);
+
+      const signature = await crypto.subtle.sign(
+        { name: 'Ed25519' },
+        privateKey,
+        data
+      );
+
+      const encodedSignature = bufferToBase64url(signature);
+
+      return signingInput + '.' + encodedSignature;
+    }
+
+    // ================================================================
+    // LICENSE GENERATION
+    // ================================================================
+
+    async function generateLicense() {
+      hideAlert('generate-alert');
+      document.getElementById('license-summary').style.display = 'none';
+
+      // Validate inputs
+      const customerName = document.getElementById('customer-name').value.trim();
+      const customerId = document.getElementById('customer-id').value.trim();
+      const editionEl = document.querySelector('input[name="edition"]:checked');
+      const maxUsers = parseInt(document.getElementById('max-users').value, 10);
+      const expirationDate = document.getElementById('expiration-date').value;
+
+      if (!customerName) {
+        showAlert('generate-alert', 'Customer name is required.', 'error');
+        return;
+      }
+      if (!customerId) {
+        showAlert('generate-alert', 'Customer ID is required. Click "auto-generate" for a UUID.', 'error');
+        return;
+      }
+      if (!editionEl) {
+        showAlert('generate-alert', 'Please select an edition.', 'error');
+        return;
+      }
+      if (!maxUsers || maxUsers < 1) {
+        showAlert('generate-alert', 'Max users must be at least 1.', 'error');
+        return;
+      }
+      if (!expirationDate) {
+        showAlert('generate-alert', 'Expiration date is required.', 'error');
+        return;
+      }
+
+      const selectedModules = Array.from(document.querySelectorAll('input[name="module"]:checked')).map(cb => cb.value);
+      const selectedIntegrations = Array.from(document.querySelectorAll('input[name="integration"]:checked')).map(cb => cb.value);
+
+      if (selectedModules.length === 0) {
+        showAlert('generate-alert', 'Please select at least one module.', 'error');
+        return;
+      }
+
+      // Build payload
+      const now = new Date();
+      const licensePayload = {
+        license_id: generateUUID(),
+        customer_id: customerId,
+        customer_name: customerName,
+        edition: editionEl.value,
+        activated_modules: selectedModules,
+        activated_integrations: selectedIntegrations,
+        max_users: maxUsers,
+        issued_at: now.toISOString(),
+        expiration_date: new Date(expirationDate + 'T23:59:59Z').toISOString(),
+      };
+
+      // Sign JWT
+      const pemKey = localStorage.getItem(STORAGE_KEYS.PRIVATE_KEY);
+      if (!pemKey) {
+        showAlert('generate-alert', 'No signing key configured. Go to Settings to add your Ed25519 private key.', 'error');
+        return;
+      }
+
+      let jwt;
+      try {
+        const cryptoKey = await importEd25519PrivateKey(pemKey);
+        jwt = await signJWT(licensePayload, cryptoKey);
+      } catch (err) {
+        showAlert('generate-alert', 'Signing failed: ' + (err.message || String(err)) + '. Check that your private key is a valid Ed25519 PKCS#8 PEM key.', 'error');
+        return;
+      }
+
+      // Download the .key file
+      downloadFile('compass-license.key', jwt, 'application/jwt');
+
+      // Save to history
+      const historyEntry = {
+        license_id: licensePayload.license_id,
+        customer_id: licensePayload.customer_id,
+        customer_name: licensePayload.customer_name,
+        edition: licensePayload.edition,
+        activated_modules: licensePayload.activated_modules,
+        activated_integrations: licensePayload.activated_integrations,
+        max_users: licensePayload.max_users,
+        issued_at: licensePayload.issued_at,
+        expiration_date: licensePayload.expiration_date,
+      };
+      saveToHistory(historyEntry);
+
+      // Show summary
+      showLicenseSummary(licensePayload);
+      showAlert('generate-alert', 'License generated and downloaded as compass-license.key', 'success');
+    }
+
+    function downloadFile(filename, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function showLicenseSummary(payload) {
+      const container = document.getElementById('license-summary');
+      container.style.display = 'block';
+
+      const modulesTags = payload.activated_modules
+        .map(m => '<span class="tag">' + escapeHtml(MODULE_LABELS[m] || m) + '</span>')
+        .join('');
+
+      const integrationsTags = payload.activated_integrations.length > 0
+        ? payload.activated_integrations
+            .map(i => '<span class="tag tag-green">' + escapeHtml(INTEGRATION_LABELS[i] || i) + '</span>')
+            .join('')
+        : '<span style="color:var(--brand-400);font-size:12px;">None</span>';
+
+      container.innerHTML = '' +
+        '<div class="summary-box">' +
+          '<h4>License Summary</h4>' +
+          '<div class="row"><span class="label">License ID</span><span class="value" style="font-family:monospace;font-size:12px;">' + escapeHtml(payload.license_id) + '</span></div>' +
+          '<div class="row"><span class="label">Customer</span><span class="value">' + escapeHtml(payload.customer_name) + '</span></div>' +
+          '<div class="row"><span class="label">Customer ID</span><span class="value" style="font-family:monospace;font-size:12px;">' + escapeHtml(payload.customer_id) + '</span></div>' +
+          '<div class="row"><span class="label">Edition</span><span class="value" style="text-transform:capitalize;">' + escapeHtml(payload.edition) + '</span></div>' +
+          '<div class="row"><span class="label">Modules</span><span class="value"><span class="tags">' + modulesTags + '</span></span></div>' +
+          '<div class="row"><span class="label">Integrations</span><span class="value"><span class="tags">' + integrationsTags + '</span></span></div>' +
+          '<div class="row"><span class="label">Max Users</span><span class="value">' + escapeHtml(String(payload.max_users)) + '</span></div>' +
+          '<div class="row"><span class="label">Issued</span><span class="value">' + formatDate(payload.issued_at) + '</span></div>' +
+          '<div class="row"><span class="label">Expires</span><span class="value">' + formatDate(payload.expiration_date) + '</span></div>' +
+        '</div>' +
+        '<div style="margin-top:12px;text-align:right;">' +
+          '<button class="btn btn-secondary btn-sm" onclick="downloadSummaryText()">Download Summary (.txt)</button>' +
+        '</div>';
+    }
+
+    function downloadSummaryText() {
+      const history = getHistory();
+      if (history.length === 0) return;
+      const latest = history[history.length - 1];
+
+      const lines = [
+        '===============================================',
+        '  DATA Compass - License Summary',
+        '===============================================',
+        '',
+        '  License ID:    ' + latest.license_id,
+        '  Customer:      ' + latest.customer_name,
+        '  Customer ID:   ' + latest.customer_id,
+        '  Edition:       ' + latest.edition.charAt(0).toUpperCase() + latest.edition.slice(1),
+        '',
+        '  Modules:',
+        ...latest.activated_modules.map(m => '    - ' + (MODULE_LABELS[m] || m)),
+        '',
+        '  Integrations:',
+        ...(latest.activated_integrations.length > 0
+          ? latest.activated_integrations.map(i => '    - ' + (INTEGRATION_LABELS[i] || i))
+          : ['    (none)']),
+        '',
+        '  Max Users:     ' + latest.max_users,
+        '  Issued:        ' + formatDate(latest.issued_at),
+        '  Expires:       ' + formatDate(latest.expiration_date),
+        '',
+        '===============================================',
+        '  Generated by DATA Compass License Admin',
+        '  ' + new Date().toISOString(),
+        '===============================================',
+        '',
+      ];
+
+      downloadFile(
+        'compass-license-summary-' + latest.license_id.slice(0, 8) + '.txt',
+        lines.join('\n'),
+        'text/plain'
+      );
+    }
+
+    // ================================================================
+    // HISTORY MANAGEMENT
+    // ================================================================
+
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function saveToHistory(entry) {
+      const history = getHistory();
+      history.push(entry);
+      localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
+    }
+
+    function deleteHistoryEntry(index) {
+      if (!confirm('Delete this license history entry?')) return;
+      const history = getHistory();
+      history.splice(index, 1);
+      localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const container = document.getElementById('history-content');
+      const history = getHistory();
+
+      if (history.length === 0) {
+        container.innerHTML = '<div class="empty-state">No licenses generated yet. Switch to the Generate tab to create your first license.</div>';
+        return;
+      }
+
+      // Show newest first
+      const reversed = [...history].reverse();
+      const indexMap = history.length; // for mapping reversed index back to original
+
+      let rows = '';
+      reversed.forEach((entry, i) => {
+        const originalIndex = history.length - 1 - i;
+        const modulesCount = entry.activated_modules ? entry.activated_modules.length : 0;
+        const integrationsCount = entry.activated_integrations ? entry.activated_integrations.length : 0;
+
+        const modulesTags = (entry.activated_modules || [])
+          .map(m => '<span class="tag">' + escapeHtml(MODULE_LABELS[m] || m) + '</span>')
+          .join(' ');
+
+        const integrationsTags = (entry.activated_integrations || [])
+          .map(ig => '<span class="tag tag-green">' + escapeHtml(INTEGRATION_LABELS[ig] || ig) + '</span>')
+          .join(' ');
+
+        const isExpired = new Date(entry.expiration_date) < new Date();
+        const expirationStyle = isExpired ? 'color:var(--red-600);font-weight:600;' : '';
+
+        rows += '' +
+          '<tr>' +
+            '<td>' + escapeHtml(entry.customer_name) + '<br><span class="mono">' + escapeHtml(entry.customer_id) + '</span></td>' +
+            '<td style="text-transform:capitalize;">' + escapeHtml(entry.edition) + '</td>' +
+            '<td><span style="font-size:12px;">' + modulesTags + '</span></td>' +
+            '<td><span style="font-size:12px;">' + (integrationsTags || '<span style="color:var(--brand-400);">-</span>') + '</span></td>' +
+            '<td>' + escapeHtml(String(entry.max_users)) + '</td>' +
+            '<td>' + formatDate(entry.issued_at) + '</td>' +
+            '<td style="' + expirationStyle + '">' + formatDate(entry.expiration_date) + (isExpired ? ' (expired)' : '') + '</td>' +
+            '<td><button class="btn btn-danger btn-sm" onclick="deleteHistoryEntry(' + originalIndex + ')" title="Delete">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>' +
+            '</button></td>' +
+          '</tr>';
+      });
+
+      container.innerHTML = '' +
+        '<div style="overflow-x:auto;">' +
+          '<table class="history-table">' +
+            '<thead><tr>' +
+              '<th>Customer</th>' +
+              '<th>Edition</th>' +
+              '<th>Modules</th>' +
+              '<th>Integrations</th>' +
+              '<th>Users</th>' +
+              '<th>Issued</th>' +
+              '<th>Expires</th>' +
+              '<th></th>' +
+            '</tr></thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+        '<p style="font-size:12px;color:var(--brand-400);margin-top:12px;text-align:right;">' +
+          history.length + ' license' + (history.length !== 1 ? 's' : '') + ' in history' +
+        '</p>';
+    }
+  </script>
+
+</body>
+</html>
