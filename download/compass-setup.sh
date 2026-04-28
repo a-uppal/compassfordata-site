@@ -33,11 +33,11 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="1.0.0"
+VERSION="1.1.0"
 PRODUCT_NAME="DATA Compass"
-GITHUB_REPO="a-uppal/data-compass"
-DOCKER_IMAGE="ghcr.io/a-uppal/data-compass"
-DOWNLOAD_BASE="${COMPASS_DOWNLOAD_URL:-https://compassfordata.com/releases}"
+GITHUB_REPO="compassfordata/data-compass"
+DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
+DOWNLOAD_BASE="${COMPASS_DOWNLOAD_URL:-https://github.com/compassfordata/compass-releases/releases/download}"
 BUNDLE_URL="${DOWNLOAD_BASE}/v${VERSION}/compass-deploy-v${VERSION}.tar.gz"
 CHECKSUM_URL="${BUNDLE_URL}.sha256"
 
