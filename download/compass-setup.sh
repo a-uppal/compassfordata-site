@@ -33,7 +33,7 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="1.1.0"
+VERSION="1.1.1"
 PRODUCT_NAME="DATA Compass"
 GITHUB_REPO="compassfordata/data-compass"
 DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
@@ -1265,7 +1265,7 @@ deploy_docker() {
     info "Handing off to setup wizard..."
     echo ""
     cd "$EXTRACT_DIR"
-    exec bash ./setup.sh --install "${SETUP_ARGS[@]}"
+    exec bash ./setup.sh "${SETUP_ARGS[@]}"
   elif [[ -f "${EXTRACT_DIR}/deploy/install.sh" ]]; then
     info "Handing off to installer..."
     echo ""
