@@ -33,7 +33,7 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="1.1.3"
+VERSION="1.1.4"
 PRODUCT_NAME="DATA Compass"
 GITHUB_REPO="compassfordata/data-compass"
 DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
@@ -81,6 +81,8 @@ CHANNEL="stable"
 DRY_RUN=false
 SILENT=false
 DEPLOY_TYPE=""
+CONFIG_FILE=""
+VALIDATE_ONLY=false
 LICENSE_FILE="${COMPASS_LICENSE_FILE:-}"
 LICENSE_JWT=""
 LICENSE_B64=""
@@ -100,6 +102,14 @@ while [[ $# -gt 0 ]]; do
     --silent)
       SILENT=true
       SETUP_ARGS+=("--silent")
+      shift
+      ;;
+    --config)
+      CONFIG_FILE="$2"
+      shift 2
+      ;;
+    --validate-only)
+      VALIDATE_ONLY=true
       shift
       ;;
     --deploy-type)
@@ -126,7 +136,12 @@ while [[ $# -gt 0 ]]; do
       echo ""
       echo "Options:"
       echo "  --version               Print version and exit"
-      echo "  --deploy-type TYPE      Deployment type: azure, aws, docker, airgap"
+      echo "  --config FILE           Run non-interactively from a declarative config"
+      echo "                          file (see compass-install.env.template)"
+      echo "  --validate-only         Validate --config and exit; no host changes."
+      echo "                          Use this to iterate on the config file before"
+      echo "                          triggering an install."
+      echo "  --deploy-type TYPE      Deployment type: docker, airgap, azure"
       echo "  --license FILE          License file path (or Enter for 30-day evaluation)"
       echo "  --dry-run               Preview install plan without changes"
       echo "  --silent                Unattended install (requires COMPASS_* env vars)"
@@ -135,27 +150,34 @@ while [[ $# -gt 0 ]]; do
       echo "  -h, --help              Show this help"
       echo ""
       echo "Deployment types:"
-      echo "  azure      Azure App Service + managed PostgreSQL"
-      echo "  aws        AWS App Runner + RDS PostgreSQL"
-      echo "  docker     Docker Compose on your own Linux server"
-      echo "  airgap     Offline install (no internet required)"
+      echo "  docker     Docker Compose on a Linux host (recommended for pharma;"
+      echo "             use this for AWS EC2, on-prem, or any self-managed VM)"
+      echo "  airgap     Offline install using the pre-built image bundle"
+      echo "  azure      Azure App Service + managed PostgreSQL (provisions"
+      echo "             Azure resources in your tenant)"
       echo ""
-      echo "Silent mode env vars (required when --silent):"
+      echo "  Note: AWS App Runner support was removed in v1.1.4 (architecturally"
+      echo "  broken). For AWS deployments, use 'docker' on an EC2 instance."
+      echo ""
+      echo "Recommended: --config FILE — fills in all answers up front, validates"
+      echo "before any host change, runs non-interactively. See deploy/QUICK_START.md."
+      echo ""
+      echo "Silent mode env vars (used when --silent without --config):"
       echo "  COMPASS_ADMIN_EMAIL, COMPASS_ADMIN_PASSWORD,"
       echo "  COMPASS_ADMIN_NAME, COMPASS_ADMIN_ORG"
       echo "Optional: COMPASS_AI_KEY, COMPASS_PROXY_URL, COMPASS_LICENSE_FILE"
       echo ""
       echo "Examples:"
-      echo "  # Interactive install (shows deployment menu):"
-      echo "  ./compass-setup.sh"
+      echo "  # Recommended: declarative config (validated up front, scriptable):"
+      echo "  sudo ./compass-setup.sh --config /path/to/compass-install.env"
       echo ""
-      echo "  # Azure cloud deploy (no sudo needed):"
-      echo "  ./compass-setup.sh --deploy-type azure"
+      echo "  # Interactive install:"
+      echo "  ./compass-setup.sh"
       echo ""
       echo "  # Docker Compose on your server (sudo required):"
       echo "  sudo ./compass-setup.sh --deploy-type docker"
       echo ""
-      echo "  # Silent Docker Compose install:"
+      echo "  # Silent Docker Compose install (legacy COMPASS_* env path):"
       echo "  export COMPASS_ADMIN_EMAIL=admin@example.com"
       echo "  export COMPASS_ADMIN_PASSWORD=SecurePass123"
       echo "  export COMPASS_ADMIN_NAME='Admin User'"
@@ -170,6 +192,124 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# ---------------------------------------------------------------------------
+# Apply --config file (collect-then-execute pattern)
+# ---------------------------------------------------------------------------
+# When --config FILE is provided, validate every field in the file BEFORE any
+# host change, then translate the schema variables into the COMPASS_* env vars
+# the existing silent-mode wizard already understands. This makes --config
+# additive: nothing in install.sh / lib/config-gen.sh has to change.
+# ---------------------------------------------------------------------------
+
+apply_config_file() {
+  local cfg="$CONFIG_FILE"
+
+  if [[ -z "$cfg" ]]; then
+    return 0   # no --config; interactive flow
+  fi
+
+  if [[ ! -f "$cfg" ]]; then
+    fail "Config file not found: ${cfg}"
+    exit 1
+  fi
+
+  # Locate validator. compass-setup.sh ships in two forms:
+  #   1. Marketing-site download (single file) — no adjacent lib/, fall back
+  #      to minimal inline validation; full validation runs again later after
+  #      the bundle is extracted.
+  #   2. Inside the bundle / source repo — adjacent lib/env-validator.sh, full
+  #      validation right here.
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  local validator="${script_dir}/lib/env-validator.sh"
+
+  if [[ -f "$validator" ]]; then
+    # shellcheck disable=SC1090
+    . "$validator"
+    if ! validate_install_env "$cfg"; then
+      fail "Config validation failed; aborting before any host change."
+      exit 2
+    fi
+  else
+    # Minimal inline validation — just enough to fast-fail on the common
+    # errors before we download a 100MB bundle. Full validator runs after
+    # extraction.
+    info "Pre-validating config (basic checks; full validation runs after bundle extraction)..."
+    if ! bash -n "$cfg" 2>/dev/null; then
+      fail "Config file has bash syntax errors: ${cfg}"
+      exit 2
+    fi
+    # shellcheck disable=SC1090
+    . "$cfg"
+    local missing=()
+    [[ -z "${DEPLOYMENT_TYPE:-}" ]]      && missing+=("DEPLOYMENT_TYPE")
+    [[ -z "${ADMIN_EMAIL:-}" ]]          && missing+=("ADMIN_EMAIL")
+    [[ -z "${AI_PROVIDER_PRIMARY:-}" ]]  && missing+=("AI_PROVIDER_PRIMARY")
+    if (( ${#missing[@]} > 0 )); then
+      fail "Config file is missing required fields:"
+      printf '    - %s\n' "${missing[@]}"
+      exit 2
+    fi
+    case "${DEPLOYMENT_TYPE:-}" in
+      docker|air-gapped|azure) ;;
+      aws|aws-apprunner)
+        fail "DEPLOYMENT_TYPE='${DEPLOYMENT_TYPE}' is not supported."
+        fail "AWS App Runner was removed in v1.1.4 (architecturally broken)."
+        fail "For AWS deployments, use DEPLOYMENT_TYPE=docker on an EC2 instance."
+        exit 2 ;;
+      *)
+        fail "DEPLOYMENT_TYPE='${DEPLOYMENT_TYPE}' invalid; allowed: docker, air-gapped, azure"
+        exit 2 ;;
+    esac
+  fi
+
+  # ----- Translate schema vars -> COMPASS_* env vars used by the wizard -----
+  # The validator (when run) already exported ADMIN_PASSWORD, ANTHROPIC_API_KEY,
+  # OPENAI_API_KEY, etc. The wizard expects them under COMPASS_* names.
+  export COMPASS_ADMIN_EMAIL="${ADMIN_EMAIL:-}"
+  export COMPASS_ADMIN_NAME="${ADMIN_NAME:-}"
+  export COMPASS_ADMIN_ORG="${ADMIN_ORG:-}"
+  export COMPASS_ADMIN_PASSWORD="${ADMIN_PASSWORD:-}"
+  export COMPASS_AI_PROVIDER="${AI_PROVIDER_PRIMARY:-}"
+  export COMPASS_ANTHROPIC_KEY="${ANTHROPIC_API_KEY:-}"
+  export COMPASS_OPENAI_KEY="${OPENAI_API_KEY:-}"
+  # Legacy compatibility — single-key env that the wizard also reads.
+  if [[ "${AI_PROVIDER_PRIMARY:-}" == "anthropic" ]]; then
+    export COMPASS_AI_KEY="${ANTHROPIC_API_KEY:-}"
+  elif [[ "${AI_PROVIDER_PRIMARY:-}" == "openai" ]]; then
+    export COMPASS_AI_KEY="${OPENAI_API_KEY:-}"
+  fi
+  export COMPASS_PROXY_URL="${PROXY_URL:-}"
+  export COMPASS_LICENSE_FILE="${LICENSE_FILE:-}"
+
+  # Update the bootstrap's own variables
+  DEPLOY_TYPE="${DEPLOYMENT_TYPE}"
+  INSTALL_DIR="${INSTALL_DIR:-/opt/compass}"
+  LICENSE_FILE="${LICENSE_FILE:-}"
+  SILENT=true
+  SETUP_ARGS+=("--silent")
+
+  ok "Config file accepted: ${cfg}"
+
+  # Sanitized configuration summary for visual confirmation. Always shown so
+  # the operator can spot a wrong env-var pointing at the wrong key, etc.
+  if [[ "$(type -t print_config_summary 2>/dev/null)" == "function" ]]; then
+    print_config_summary
+  fi
+
+  # --validate-only: stop here, exit clean. No host change attempted.
+  if [[ "$VALIDATE_ONLY" == true ]]; then
+    ok "Validation passed. Re-run without --validate-only to perform the install."
+    exit 0
+  fi
+
+  ok "Running non-interactively with values from config."
+}
+
+# Apply config immediately so DEPLOY_TYPE / INSTALL_DIR / SILENT reflect
+# the config before any other logic runs.
+apply_config_file
 
 # ---------------------------------------------------------------------------
 # Detect download tool
@@ -199,14 +339,60 @@ download_file() {
 # ---------------------------------------------------------------------------
 # Check prerequisites
 # ---------------------------------------------------------------------------
-check_root() {
-  if [[ $EUID -ne 0 ]]; then
-    fail "This installer must be run as root (use sudo)."
-    echo ""
-    echo "  sudo $0 $*"
-    exit 1
+# Privileges check — supports two install postures:
+#
+#   (a) Classic:           operator runs with sudo. EUID=0 → pass.
+#   (b) Path B-Enterprise: cloud team pre-provisions ${INSTALL_DIR} (chowned
+#                          to operator) and adds operator to the docker group.
+#                          Operator then runs *without* sudo.
+#
+# The installer needs (at most) write access to INSTALL_DIR and docker group
+# membership. Root is not strictly required by any operation in install.sh
+# now that Docker is a strict prerequisite (the auto-install path was removed
+# in v1.1.4). This check enforces that necessary-condition without forcing
+# the legacy root-only posture on enterprise customers whose policy forbids
+# operator-level sudo.
+check_install_privileges() {
+  # Pass if the installer can write to INSTALL_DIR (chowned to operator)…
+  if [[ -w "$INSTALL_DIR" ]]; then
+    ok "Install dir writable as $(id -un 2>/dev/null || echo "${USER:-unknown}"): ${INSTALL_DIR}"
+    return 0
   fi
+
+  # …or INSTALL_DIR doesn't exist yet but the parent is writable (we'll mkdir it)…
+  if [[ ! -e "$INSTALL_DIR" ]] && [[ -w "$(dirname "$INSTALL_DIR")" ]]; then
+    ok "Will create ${INSTALL_DIR} (parent is writable as $(id -un 2>/dev/null || echo "${USER:-unknown}"))"
+    return 0
+  fi
+
+  # …or we're root.
+  if [[ $EUID -eq 0 ]]; then
+    ok "Running as root"
+    return 0
+  fi
+
+  # Otherwise we have neither write access nor root.
+  fail "Cannot proceed: ${INSTALL_DIR} is not writable, and you are not root."
+  echo ""
+  echo "  Two ways to satisfy this check:"
+  echo ""
+  echo "  (a) Classic — re-run with sudo:"
+  echo "        sudo $0 $*"
+  echo ""
+  echo "  (b) Path B-Enterprise — run the one-time cloud-team setup first,"
+  echo "      then re-run this installer *without* sudo:"
+  echo "        sudo install -d -o \"\$USER\" -g \"\$USER\" ${INSTALL_DIR}"
+  echo "        sudo usermod -aG docker \"\$USER\""
+  echo "        newgrp docker         # or open a new shell"
+  echo "        $0 $*"
+  echo ""
+  echo "      See deploy/QUICK_START.md → 'Path B-Enterprise (sudo phase split)'."
+  exit 1
 }
+
+# Backwards-compat alias (kept so out-of-tree wrappers calling check_root
+# continue to work). Internal call sites should use check_install_privileges.
+check_root() { check_install_privileges "$@"; }
 
 check_docker() {
   if command -v docker &>/dev/null; then
@@ -214,57 +400,24 @@ check_docker() {
     return 0
   fi
 
-  warn "Docker is not installed."
+  fail "Docker Engine is required and not detected on PATH."
   echo ""
-
-  if [[ "$SILENT" == true ]]; then
-    info "Attempting automatic Docker installation..."
-    install_docker
-    return $?
-  fi
-
-  echo -n "  Install Docker automatically? [Y/n]: "
-  read -r answer
-  if [[ "$answer" =~ ^[Nn]$ ]]; then
-    fail "Docker is required. Install it manually: https://docs.docker.com/engine/install/"
-    exit 1
-  fi
-
-  install_docker
+  echo "  Docker is a strict prerequisite for ${PRODUCT_NAME}. The installer no"
+  echo "  longer auto-installs Docker; that decision belongs with your IT or"
+  echo "  cloud team, who will validate it against your organization's baseline."
+  echo ""
+  echo "  Two options:"
+  echo "    1. Install Docker per your organization's standard process, then"
+  echo "       re-run this installer."
+  echo "    2. Run our vetted Docker install recipe (review with your team first):"
+  echo "         sudo bash deploy/install-docker.sh"
+  echo "       and then re-run this installer."
+  echo ""
+  echo "  Required: Docker Engine >= 24.0 and Docker Compose v2 plugin."
+  echo "  Reference: https://docs.docker.com/engine/install/"
+  exit 1
 }
 
-install_docker() {
-  info "Installing Docker Engine..."
-
-  if command -v apt-get &>/dev/null; then
-    # Debian/Ubuntu
-    apt-get update -qq
-    apt-get install -y -qq ca-certificates curl gnupg
-    install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/$(. /etc/os-release && echo "$ID")/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-    chmod a+r /etc/apt/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$(. /etc/os-release && echo "$ID") $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list
-    apt-get update -qq
-    apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-compose-plugin
-  elif command -v yum &>/dev/null; then
-    # RHEL/CentOS
-    yum install -y -q yum-utils
-    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    yum install -y -q docker-ce docker-ce-cli containerd.io docker-compose-plugin
-  elif command -v dnf &>/dev/null; then
-    # Fedora
-    dnf install -y -q dnf-plugins-core
-    dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-    dnf install -y -q docker-ce docker-ce-cli containerd.io docker-compose-plugin
-  else
-    fail "Unsupported package manager. Install Docker manually: https://docs.docker.com/engine/install/"
-    exit 1
-  fi
-
-  systemctl enable docker
-  systemctl start docker
-  ok "Docker installed and started"
-}
 
 check_compose() {
   if docker compose version &>/dev/null; then
@@ -391,31 +544,30 @@ validate_license() {
 show_deploy_menu() {
   echo -e "  ${BOLD}How would you like to deploy ${PRODUCT_NAME}?${NC}" >&2
   echo "" >&2
-  echo -e "    ${GREEN}1)${NC}  ${BOLD}Azure Cloud${NC}        Azure App Service + managed PostgreSQL" >&2
-  echo -e "                          ${DIM}Recommended for most deployments. No servers to manage.${NC}" >&2
+  echo -e "    ${YELLOW}1)${NC}  ${BOLD}Docker Compose${NC}     Install on your own Linux server" >&2
+  echo -e "                          ${DIM}Recommended for most pharma deployments. Full control.${NC}" >&2
   echo "" >&2
-  echo -e "    ${BLUE}2)${NC}  ${BOLD}AWS Cloud${NC}          AWS App Runner + RDS PostgreSQL" >&2
-  echo -e "                          ${DIM}Deploy to your AWS account. No servers to manage.${NC}" >&2
-  echo "" >&2
-  echo -e "    ${YELLOW}3)${NC}  ${BOLD}Docker Compose${NC}     Install on your own Linux server" >&2
-  echo -e "                          ${DIM}Full control. Runs anywhere Docker is installed.${NC}" >&2
-  echo "" >&2
-  echo -e "    ${YELLOW}4)${NC}  ${BOLD}Air-gapped${NC}         Offline install (no internet required)" >&2
+  echo -e "    ${YELLOW}2)${NC}  ${BOLD}Air-gapped${NC}         Offline install (no internet required)" >&2
   echo -e "                          ${DIM}For secure environments with no outbound internet.${NC}" >&2
+  echo "" >&2
+  echo -e "    ${GREEN}3)${NC}  ${BOLD}Azure Cloud${NC}        Azure App Service + managed PostgreSQL" >&2
+  echo -e "                          ${DIM}Provisions Azure resources in your tenant.${NC}" >&2
   echo "" >&2
   echo -e "    ${DIM}q)${NC}  ${DIM}Quit${NC}" >&2
   echo "" >&2
+  echo -e "    ${DIM}(AWS deployments: pick option 1 — install on an EC2 instance.${NC}" >&2
+  echo -e "    ${DIM} The dedicated AWS App Runner path was removed in v1.1.4.)${NC}" >&2
+  echo "" >&2
 
   while true; do
-    echo -n "  Select [1-4/q]: " >&2
+    echo -n "  Select [1-3/q]: " >&2
     read -r choice
     case "$choice" in
-      1) echo "azure";  return ;;
-      2) echo "aws";    return ;;
-      3) echo "docker"; return ;;
-      4) echo "airgap"; return ;;
+      1) echo "docker"; return ;;
+      2) echo "airgap"; return ;;
+      3) echo "azure";  return ;;
       q|Q) echo "quit"; return ;;
-      *) echo -e "  ${RED}Invalid choice. Enter 1, 2, 3, 4, or q.${NC}" >&2 ;;
+      *) echo -e "  ${RED}Invalid choice. Enter 1, 2, 3, or q.${NC}" >&2 ;;
     esac
   done
 }
@@ -833,363 +985,6 @@ EOJSON
 }
 
 # ---------------------------------------------------------------------------
-# Deploy: AWS Cloud (App Runner + RDS PostgreSQL)
-# ---------------------------------------------------------------------------
-deploy_aws() {
-  echo ""
-  echo -e "  ${BOLD}${GREEN}AWS Cloud Deployment${NC}"
-  echo -e "  ${DIM}App Runner + RDS PostgreSQL${NC}"
-  echo ""
-
-  # Check for AWS CLI
-  if ! command -v aws &>/dev/null; then
-    fail "AWS CLI (aws) is not installed."
-    echo ""
-    echo "  Install it:"
-    echo "    https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
-    echo ""
-    echo "  Or run this installer from AWS CloudShell, which has aws pre-installed:"
-    echo "    https://console.aws.amazon.com/cloudshell"
-    exit 1
-  fi
-  ok "AWS CLI found: $(aws --version 2>/dev/null | head -1)"
-
-  # Check AWS credentials
-  if ! aws sts get-caller-identity &>/dev/null 2>&1; then
-    fail "Not authenticated with AWS. Run 'aws configure' or set AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY."
-    exit 1
-  fi
-
-  local aws_account
-  aws_account=$(aws sts get-caller-identity --query "Account" --output text 2>/dev/null)
-  ok "AWS account: ${aws_account}"
-  echo ""
-
-  # -----------------------------------------------------------------------
-  # Step 1: Collect configuration
-  # -----------------------------------------------------------------------
-  echo -e "  ${BOLD}Step 1/5: Configuration${NC}"
-  echo ""
-
-  local suffix
-  suffix=$(openssl rand -hex 3)
-
-  local region app_name db_identifier
-  echo -n "  AWS region [us-east-1]: "
-  read -r region
-  region="${region:-us-east-1}"
-
-  echo -n "  Service name [compass-${suffix}]: "
-  read -r app_name
-  app_name="${app_name:-compass-${suffix}}"
-
-  db_identifier="${app_name}-db"
-
-  # Database credentials
-  local db_user db_pass
-  echo -n "  Database admin username [compassadmin]: "
-  read -r db_user
-  db_user="${db_user:-compassadmin}"
-
-  echo -n "  Database admin password (min 8 chars, Enter to auto-generate): "
-  read -rs db_pass
-  echo ""
-  if [[ -z "$db_pass" ]]; then
-    db_pass="Cp$(openssl rand -base64 24 | tr -d '/+=!@#$%^&*()' | head -c 20)z9"
-    info "Auto-generated database password"
-  fi
-
-  # Admin user
-  local admin_email admin_name admin_org admin_pass
-  echo ""
-  echo -e "  ${BOLD}Admin account (for logging into DATA Compass):${NC}"
-  echo -n "  Admin email: "
-  read -r admin_email
-  echo -n "  Admin full name: "
-  read -r admin_name
-  echo -n "  Organization name: "
-  read -r admin_org
-  echo -n "  Admin password (min 8 chars): "
-  read -rs admin_pass
-  echo ""
-
-  # Optional: API key
-  local ai_key=""
-  echo ""
-  echo -n "  Anthropic API key (sk-ant-..., Enter to skip): "
-  read -rs ai_key
-  echo ""
-
-  # Generate secrets
-  local jwt_secret mfa_key integration_key
-  jwt_secret=$(openssl rand -base64 48 | tr -d '/+=' | head -c 48)
-  mfa_key=$(openssl rand -base64 32 | tr -d '/+=' | head -c 32)
-  integration_key=$(openssl rand -base64 32 | tr -d '/+=' | head -c 32)
-
-  echo ""
-  echo -e "  ${BOLD}Configuration summary:${NC}"
-  echo "    Region:          ${region}"
-  echo "    Service:         ${app_name}"
-  echo "    Database:        ${db_identifier}"
-  echo "    Admin email:     ${admin_email}"
-  echo ""
-  echo -n "  Proceed? [Y/n]: "
-  read -r confirm
-  if [[ "$confirm" =~ ^[Nn]$ ]]; then
-    info "Cancelled."
-    exit 0
-  fi
-
-  # -----------------------------------------------------------------------
-  # Step 2: Create RDS PostgreSQL
-  # -----------------------------------------------------------------------
-  echo ""
-  echo -e "  ${BOLD}Step 2/5: Create RDS PostgreSQL${NC}"
-  echo ""
-
-  info "Creating RDS PostgreSQL instance (this takes 5-10 minutes)..."
-  if ! aws rds create-db-instance \
-    --db-instance-identifier "$db_identifier" \
-    --db-instance-class db.t4g.micro \
-    --engine postgres \
-    --engine-version 16 \
-    --master-username "$db_user" \
-    --master-user-password "$db_pass" \
-    --allocated-storage 20 \
-    --storage-type gp3 \
-    --publicly-accessible \
-    --backup-retention-period 7 \
-    --region "$region" \
-    --no-multi-az \
-    --output text 2>/dev/null; then
-    fail "Failed to create RDS instance."
-    exit 1
-  fi
-
-  info "Waiting for RDS instance to become available..."
-  aws rds wait db-instance-available \
-    --db-instance-identifier "$db_identifier" \
-    --region "$region" 2>/dev/null
-  ok "RDS instance: ${db_identifier}"
-
-  # Get the endpoint
-  local db_host
-  db_host=$(aws rds describe-db-instances \
-    --db-instance-identifier "$db_identifier" \
-    --region "$region" \
-    --query "DBInstances[0].Endpoint.Address" \
-    --output text 2>/dev/null)
-  ok "Database endpoint: ${db_host}"
-
-  # -----------------------------------------------------------------------
-  # Step 3: Create App Runner service
-  # -----------------------------------------------------------------------
-  echo ""
-  echo -e "  ${BOLD}Step 3/5: Create App Runner Service${NC}"
-  echo ""
-
-  # Build environment variables JSON
-  local env_vars
-  env_vars=$(cat <<ENVJSON
-[
-  {"Name":"NODE_ENV","Value":"production"},
-  {"Name":"PORT","Value":"8080"},
-  {"Name":"PGHOST","Value":"${db_host}"},
-  {"Name":"PGPORT","Value":"5432"},
-  {"Name":"PGDATABASE","Value":"postgres"},
-  {"Name":"PGUSER","Value":"${db_user}"},
-  {"Name":"PGPASSWORD","Value":"${db_pass}"},
-  {"Name":"PGSSL","Value":"require"},
-  {"Name":"PGSSLMODE","Value":"require"},
-  {"Name":"JWT_SECRET","Value":"${jwt_secret}"},
-  {"Name":"MFA_ENCRYPTION_KEY","Value":"${mfa_key}"},
-  {"Name":"INTEGRATION_ENCRYPTION_KEY","Value":"${integration_key}"},
-  {"Name":"RUN_MIGRATIONS","Value":"true"},
-  {"Name":"TRUST_PROXY","Value":"true"},
-  {"Name":"LOG_FORMAT","Value":"json"},
-  {"Name":"LOG_LEVEL","Value":"info"},
-  {"Name":"STORAGE_BACKEND","Value":"postgres"},
-  {"Name":"FILE_STORAGE_BACKEND","Value":"postgres"},
-  {"Name":"ENABLE_INPUT_VALIDATION","Value":"true"},
-  {"Name":"ENABLE_RATE_LIMITING","Value":"true"},
-  {"Name":"ENABLE_SECURITY_HEADERS","Value":"true"},
-  {"Name":"ENABLE_ERROR_SANITIZATION","Value":"true"}
-ENVJSON
-  )
-
-  # Add license if provided
-  if [[ -n "$LICENSE_B64" ]]; then
-    env_vars="${env_vars},
-  {\"Name\":\"COMPASS_LICENSE_B64\",\"Value\":\"${LICENSE_B64}\"},
-  {\"Name\":\"COMPASS_LICENSE_REQUIRED\",\"Value\":\"true\"}"
-  else
-    env_vars="${env_vars},
-  {\"Name\":\"COMPASS_LICENSE_REQUIRED\",\"Value\":\"false\"}"
-  fi
-
-  # Add AI key if provided
-  if [[ -n "$ai_key" ]]; then
-    env_vars="${env_vars},
-  {\"Name\":\"ANTHROPIC_API_KEY\",\"Value\":\"${ai_key}\"}"
-  fi
-
-  env_vars="${env_vars}
-]"
-
-  info "Creating App Runner service..."
-  local create_output
-  create_output=$(aws apprunner create-service \
-    --service-name "$app_name" \
-    --source-configuration "{
-      \"ImageRepository\": {
-        \"ImageIdentifier\": \"${DOCKER_IMAGE}:${VERSION}\",
-        \"ImageConfiguration\": {
-          \"Port\": \"8080\",
-          \"RuntimeEnvironmentVariables\": ${env_vars}
-        },
-        \"ImageRepositoryType\": \"ECR_PUBLIC\"
-      },
-      \"AutoDeploymentsEnabled\": false
-    }" \
-    --instance-configuration "{
-      \"Cpu\": \"1024\",
-      \"Memory\": \"2048\"
-    }" \
-    --health-check-configuration "{
-      \"Protocol\": \"HTTP\",
-      \"Path\": \"/health/live\",
-      \"Interval\": 10,
-      \"Timeout\": 5,
-      \"HealthyThreshold\": 1,
-      \"UnhealthyThreshold\": 5
-    }" \
-    --region "$region" \
-    --output json 2>/dev/null) || { fail "Failed to create App Runner service."; exit 1; }
-
-  local service_arn
-  service_arn=$(echo "$create_output" | grep -o '"ServiceArn": *"[^"]*"' | cut -d'"' -f4)
-  ok "App Runner service created: ${app_name}"
-
-  # -----------------------------------------------------------------------
-  # Step 4: Wait for service to become running
-  # -----------------------------------------------------------------------
-  echo ""
-  echo -e "  ${BOLD}Step 4/5: Start Application${NC}"
-  echo ""
-
-  info "Waiting for App Runner service to start (this takes 3-8 minutes)..."
-  info "First start runs database migrations."
-  echo ""
-
-  local attempts=0
-  local max_attempts=60
-  while [ $attempts -lt $max_attempts ]; do
-    local status
-    status=$(aws apprunner describe-service \
-      --service-arn "$service_arn" \
-      --region "$region" \
-      --query "Service.Status" \
-      --output text 2>/dev/null || echo "UNKNOWN")
-
-    if [[ "$status" == "RUNNING" ]]; then
-      break
-    elif [[ "$status" == "CREATE_FAILED" ]]; then
-      fail "App Runner service failed to start."
-      echo ""
-      echo "  Check the service logs in the AWS Console:"
-      echo "    AWS Console > App Runner > ${app_name} > Logs"
-      exit 1
-    fi
-
-    attempts=$((attempts + 1))
-    printf "\r  Waiting... status=%s (%d/%d)" "$status" "$attempts" "$max_attempts"
-    sleep 10
-  done
-  printf "\r\033[K"
-
-  # Get the service URL
-  local app_url
-  app_url=$(aws apprunner describe-service \
-    --service-arn "$service_arn" \
-    --region "$region" \
-    --query "Service.ServiceUrl" \
-    --output text 2>/dev/null)
-  app_url="https://${app_url}"
-
-  if [ $attempts -ge $max_attempts ]; then
-    fail "App Runner service did not start within 10 minutes."
-    echo ""
-    echo "  Check the service logs in the AWS Console:"
-    echo "    AWS Console > App Runner > ${app_name} > Logs"
-    echo ""
-    echo "  Tear down:"
-    echo "    aws apprunner delete-service --service-arn ${service_arn} --region ${region}"
-    echo "    aws rds delete-db-instance --db-instance-identifier ${db_identifier} --skip-final-snapshot --region ${region}"
-    exit 1
-  fi
-
-  ok "Application is running at: ${app_url}"
-
-  # -----------------------------------------------------------------------
-  # Step 5: Create admin user
-  # -----------------------------------------------------------------------
-  echo ""
-  echo -e "  ${BOLD}Step 5/5: Create Admin User${NC}"
-  echo ""
-
-  if [[ -n "$admin_email" && -n "$admin_pass" ]]; then
-    info "Creating admin user via API..."
-
-    local reg_payload
-    reg_payload=$(cat <<EOJSON
-{"email":"${admin_email}","password":"${admin_pass}","fullName":"${admin_name}","organizationName":"${admin_org}"}
-EOJSON
-    )
-
-    local reg_result
-    reg_result=$(curl -sf -X POST "${app_url}/api/auth/register" \
-      -H "Content-Type: application/json" \
-      -d "$reg_payload" 2>/dev/null)
-
-    if echo "$reg_result" | grep -qi "success\|userId"; then
-      ok "User registered: ${admin_email}"
-    else
-      warn "Registration may have failed. Response: ${reg_result}"
-      echo "  You can register manually at: ${app_url}/register"
-    fi
-
-    # Note: For RDS, we can't easily run SQL directly from the installer.
-    # The user needs to verify their email or use the app's admin CLI.
-    warn "To set admin role, connect to your RDS database and run:"
-    echo "  psql \"host=${db_host} user=${db_user} dbname=postgres sslmode=require\""
-    echo "  UPDATE users SET email_verified = true, role = 'admin' WHERE email = '${admin_email}';"
-  fi
-
-  # -----------------------------------------------------------------------
-  # Done
-  # -----------------------------------------------------------------------
-  echo ""
-  echo -e "  ${BOLD}${GREEN}====================================${NC}"
-  echo -e "  ${BOLD}${GREEN}  ${PRODUCT_NAME} is deployed!${NC}"
-  echo -e "  ${BOLD}${GREEN}====================================${NC}"
-  echo ""
-  echo "  URL:           ${app_url}"
-  echo "  Admin email:   ${admin_email}"
-  echo "  Region:        ${region}"
-  echo ""
-  echo "  Next steps:"
-  echo "    1. Open ${app_url} in your browser and log in"
-  echo "    2. Upload a dataset and run your first FAIR assessment"
-  echo ""
-  echo "  Manage:"
-  echo "    View logs:   AWS Console > App Runner > ${app_name} > Logs"
-  echo "    Tear down:"
-  echo "      aws apprunner delete-service --service-arn ${service_arn} --region ${region}"
-  echo "      aws rds delete-db-instance --db-instance-identifier ${db_identifier} --skip-final-snapshot --region ${region}"
-  echo ""
-}
-
-# ---------------------------------------------------------------------------
 # Deploy: Docker Compose (existing flow)
 # ---------------------------------------------------------------------------
 deploy_docker() {
@@ -1202,7 +997,7 @@ deploy_docker() {
   echo -e "  ${BOLD}Step 1/4: Prerequisites${NC}"
   echo ""
 
-  check_root "$@"
+  check_install_privileges "$@"
   detect_downloader
   ok "Downloader: ${DOWNLOADER}"
   check_docker
@@ -1343,9 +1138,15 @@ main() {
   # Dispatch
   case "$deploy_type" in
     azure)   deploy_azure ;;
-    aws)     deploy_aws ;;
+    aws|aws-apprunner)
+      fail "AWS App Runner deployment was removed in v1.1.4."
+      fail "It was architecturally broken: App Runner cannot pull from GHCR."
+      fail "For AWS deployments, install on an EC2 instance via the docker path:"
+      fail "  ./compass-setup.sh --deploy-type docker"
+      exit 1
+      ;;
     docker)  deploy_docker "$@" ;;
-    airgap)  deploy_airgap ;;
+    airgap|air-gapped)  deploy_airgap ;;
     quit)
       echo ""
       info "Goodbye!"
@@ -1353,7 +1154,7 @@ main() {
       ;;
     *)
       fail "Unknown deployment type: ${deploy_type}"
-      fail "Options: azure, aws, docker, airgap"
+      fail "Options: docker, airgap, azure"
       exit 1
       ;;
   esac
