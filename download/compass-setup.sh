@@ -235,17 +235,49 @@ apply_config_file() {
     # Minimal inline validation — just enough to fast-fail on the common
     # errors before we download a 100MB bundle. Full validator runs after
     # extraction.
+    #
+    # We deliberately do NOT `source` the config file: bare `source` chokes on
+    # CRLF (Windows-edited configs) and on unquoted values that contain spaces
+    # (e.g. ADMIN_NAME=Jane Doe), both of which are common in real customer
+    # workflows. Instead we parse KEY=VALUE pairs ourselves with a small,
+    # auditable parser. The full validator (deploy/lib/env-validator.sh, run
+    # after bundle extraction) does this same thing more rigorously.
     info "Pre-validating config (basic checks; full validation runs after bundle extraction)..."
-    if ! bash -n "$cfg" 2>/dev/null; then
-      fail "Config file has bash syntax errors: ${cfg}"
-      exit 2
-    fi
-    # shellcheck disable=SC1090
-    . "$cfg"
+    local _line _key _val
+    while IFS= read -r _line || [[ -n "$_line" ]]; do
+      _line="${_line%$'\r'}"                  # strip Windows CR
+      [[ "$_line" =~ ^[[:space:]]*# ]] && continue
+      [[ "$_line" =~ ^[[:space:]]*$ ]] && continue
+      [[ "$_line" != *=* ]] && continue
+      _key="${_line%%=*}"
+      _val="${_line#*=}"
+      # Trim whitespace around key
+      _key="${_key#"${_key%%[![:space:]]*}"}"
+      _key="${_key%"${_key##*[![:space:]]}"}"
+      # Strip trailing inline comment if value is unquoted (e.g. KEY=val   # note)
+      if [[ ! "$_val" =~ ^[\"\'] ]]; then
+        _val="${_val%%[[:space:]]#*}"
+      fi
+      # Trim trailing whitespace
+      _val="${_val%"${_val##*[![:space:]]}"}"
+      # Strip surrounding quotes
+      if [[ "$_val" =~ ^\".*\"$ ]] || [[ "$_val" =~ ^\'.*\'$ ]]; then
+        _val="${_val:1:${#_val}-2}"
+      fi
+      # Reject unsafe variable names (defensive — refuse to let malformed input
+      # poison the environment).
+      if [[ ! "$_key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+        fail "Config file has invalid variable name: '${_key}'"
+        exit 2
+      fi
+      # Set without `eval` or `source` — no code execution from the file.
+      printf -v "$_key" '%s' "$_val"
+      export "$_key"
+    done < "$cfg"
+
     local missing=()
-    [[ -z "${DEPLOYMENT_TYPE:-}" ]]      && missing+=("DEPLOYMENT_TYPE")
-    [[ -z "${ADMIN_EMAIL:-}" ]]          && missing+=("ADMIN_EMAIL")
-    [[ -z "${AI_PROVIDER_PRIMARY:-}" ]]  && missing+=("AI_PROVIDER_PRIMARY")
+    [[ -z "${DEPLOYMENT_TYPE:-}" ]] && missing+=("DEPLOYMENT_TYPE")
+    [[ -z "${ADMIN_EMAIL:-}" ]]     && missing+=("ADMIN_EMAIL")
     if (( ${#missing[@]} > 0 )); then
       fail "Config file is missing required fields:"
       printf '    - %s\n' "${missing[@]}"
@@ -260,6 +292,23 @@ apply_config_file() {
         exit 2 ;;
       *)
         fail "DEPLOYMENT_TYPE='${DEPLOYMENT_TYPE}' invalid; allowed: docker, air-gapped, azure"
+        exit 2 ;;
+    esac
+    # AI provider is an EXPLICIT three-way choice. Blank is rejected — the
+    # operator must affirmatively pick none, anthropic, or openai. This makes
+    # "no AI integration" an intentional decision (auditable) rather than a
+    # field somebody forgot to fill in.
+    case "${AI_PROVIDER_PRIMARY:-}" in
+      anthropic|openai|none) ;;
+      '')
+        fail "AI_PROVIDER_PRIMARY is required. Set it to one of:"
+        fail "    anthropic   — Claude via the Anthropic API"
+        fail "    openai      — GPT-4o (or compatible) via the OpenAI API"
+        fail "    none        — install with no LLM provider (AI features disabled)"
+        fail "If you do not want AI integration, set AI_PROVIDER_PRIMARY=none explicitly."
+        exit 2 ;;
+      *)
+        fail "AI_PROVIDER_PRIMARY='${AI_PROVIDER_PRIMARY}' invalid; allowed: anthropic, openai, none"
         exit 2 ;;
     esac
   fi
