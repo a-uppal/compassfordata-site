@@ -33,7 +33,7 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="1.1.4"
+VERSION="1.1.8"
 PRODUCT_NAME="DATA Compass"
 GITHUB_REPO="compassfordata/data-compass"
 DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
@@ -1098,20 +1098,6 @@ deploy_docker() {
   rm -f "$BUNDLE_FILE" "$CHECKSUM_FILE"
   ok "Extracted to ${EXTRACT_DIR}"
   echo ""
-
-  # Pin the bundled docker-compose.yml's image tag to the version this
-  # installer was published for. The release ZIP carries a docker-compose.yml
-  # whose ${COMPASS_VERSION:-X.Y.Z} default may lag the published image; this
-  # ensures `docker compose up` always pulls the matching image.
-  if [[ -f "${EXTRACT_DIR}/docker-compose.yml" ]]; then
-    sed -i.bak -E "s|COMPASS_VERSION:-[0-9][^}]*|COMPASS_VERSION:-${VERSION}|g" \
-      "${EXTRACT_DIR}/docker-compose.yml"
-    rm -f "${EXTRACT_DIR}/docker-compose.yml.bak"
-    ok "Pinned docker-compose.yml to data-compass:${VERSION}"
-  fi
-  # Belt-and-suspenders: also export so subshells (and docker compose's env
-  # interpolation) see it even if the sed above missed an unusual format.
-  export COMPASS_VERSION="$VERSION"
 
   # -----------------------------------------------------------------------
   # Step 4: Launch setup wizard
