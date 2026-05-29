@@ -277,6 +277,35 @@
       .grid-4,.steps{ grid-template-columns:1fr; }
       .footer-grid{ grid-template-columns:1fr; }
     }
+
+    /* ---- demo modal ---- */
+    .modal-overlay{ position:fixed; inset:0; z-index:120; background:rgba(0,40,52,.55); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:flex-start; justify-content:center; padding:5vh 20px; opacity:0; visibility:hidden; transition:opacity .25s; overflow-y:auto; }
+    .modal-overlay.open{ opacity:1; visibility:visible; }
+    .modal-card{ background:var(--ground-2); border-radius:18px; max-width:560px; width:100%; padding:clamp(1.6rem,4vw,2.6rem); box-shadow:var(--shadow-lg); position:relative; transform:translateY(14px); transition:transform .25s; }
+    .modal-overlay.open .modal-card{ transform:none; }
+    .modal-x{ position:absolute; top:1rem; right:1.1rem; background:none; border:0; font-size:1.9rem; line-height:1; color:var(--muted); cursor:pointer; transition:color .2s; }
+    .modal-x:hover{ color:var(--teal); }
+    .modal-title{ font-weight:300; color:var(--teal); font-size:clamp(1.5rem,3.5vw,2rem); letter-spacing:-.02em; line-height:1.1; margin-top:.2rem; }
+    .modal-sub{ color:var(--ink); font-size:.98rem; margin-top:.6rem; margin-bottom:1.6rem; }
+    #demoForm{ display:flex; flex-direction:column; gap:1rem; }
+    .frow{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .ffield{ display:flex; flex-direction:column; gap:.35rem; }
+    .ffield label{ font-size:.78rem; font-weight:600; color:var(--teal); letter-spacing:.01em; }
+    .ffield input,.ffield textarea{ font-family:var(--ff); font-size:.95rem; color:var(--teal); background:var(--white); border:1px solid var(--line); border-radius:9px; padding:.7rem .85rem; transition:border-color .2s, box-shadow .2s; width:100%; }
+    .ffield input:focus,.ffield textarea:focus{ outline:none; border-color:var(--terra); box-shadow:0 0 0 3px rgba(184,92,56,.15); }
+    .ffield textarea{ resize:vertical; min-height:64px; }
+    .ffield input.invalid,.ffield textarea.invalid{ border-color:#c0504d; box-shadow:0 0 0 3px rgba(192,80,77,.12); }
+    .hp{ position:absolute !important; left:-9999px !important; width:1px; height:1px; opacity:0; }
+    .modal-actions{ display:flex; gap:.8rem; justify-content:flex-end; margin-top:.6rem; align-items:center; }
+    .modal-actions .btn{ cursor:pointer; }
+    #demoSubmit[disabled]{ opacity:.6; cursor:wait; }
+    .form-msg{ font-size:.85rem; min-height:1.1em; margin:0; color:var(--muted); }
+    .form-msg.error{ color:#c0504d; }
+    .form-success{ text-align:center; padding:1.5rem 0; }
+    .form-success .check{ width:52px; height:52px; border-radius:50%; background:var(--teal); color:#fff; font-size:1.6rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; }
+    .form-success h3{ color:var(--teal); font-weight:600; font-size:1.3rem; }
+    .form-success p{ color:var(--ink); margin-top:.5rem; }
+    @media (max-width:480px){ .frow{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -290,7 +319,7 @@
         <a href="#method">The Method</a>
         <a href="#dimensions">Dimensions</a>
         <a href="#integrations">Integrations</a>
-        <a href="mailto:contact@compassfordata.com" class="nav-cta">Request a Demo</a>
+        <a href="#" class="nav-cta" data-demo>Request a Demo</a>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
@@ -301,7 +330,7 @@
     <a href="#method">The Method</a>
     <a href="#dimensions">Dimensions</a>
     <a href="#integrations">Integrations</a>
-    <a href="mailto:contact@compassfordata.com" class="btn btn--primary">Request a Demo</a>
+    <a href="#" class="btn btn--primary" data-demo>Request a Demo</a>
   </div>
 
   <span id="top"></span>
@@ -314,7 +343,7 @@
         <h1>AI readiness,<span class="alt">measured — not asserted.</span></h1>
         <p class="hero-sub">The data platform that evaluates datasets for AI readiness — and turns the evaluation into recommendations, an executable action plan, and a quantified ROI.</p>
         <div class="hero-ctas">
-          <a href="mailto:contact@compassfordata.com" class="btn btn--primary btn--lg">Request a Demo</a>
+          <a href="#" class="btn btn--primary btn--lg" data-demo>Request a Demo</a>
           <a href="#model" class="btn btn--outline btn--lg">See the Model</a>
         </div>
         <p class="hero-note">Built for life sciences · Your data never moves · Zero egress</p>
@@ -632,7 +661,7 @@
     <h2>Know before you deploy.<span class="alt">Prove compliance. Accelerate AI with confidence.</span></h2>
     <p>Get a full data-readiness assessment in minutes. No code changes, no data movement, no black boxes.</p>
     <div class="cta-btns">
-      <a href="mailto:contact@compassfordata.com" class="btn btn--white btn--lg">Request a Demo</a>
+      <a href="#" class="btn btn--white btn--lg" data-demo>Request a Demo</a>
       <a href="/download" class="btn btn--ghost-light btn--lg">Download &amp; Try It</a>
     </div>
     <p class="cta-sub">Or download the self-hosted installer and assess your first dataset in under five minutes. No signup required.</p>
@@ -678,6 +707,40 @@
     </div>
   </footer>
 
+  <!-- REQUEST A DEMO MODAL -->
+  <div class="modal-overlay" id="demoModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+      <button class="modal-x" id="demoClose" aria-label="Close">&times;</button>
+      <span class="eyebrow">Request a Demo</span>
+      <h2 class="modal-title" id="demoTitle">See DATA Compass on your data.</h2>
+      <p class="modal-sub">Tell us a little about you and we'll set up a walkthrough.</p>
+      <form id="demoForm" novalidate>
+        <!-- spam honeypot: real users never fill this -->
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="frow">
+          <div class="ffield"><label for="f_first">First name *</label><input id="f_first" name="first_name" autocomplete="given-name" required></div>
+          <div class="ffield"><label for="f_last">Last name *</label><input id="f_last" name="last_name" autocomplete="family-name" required></div>
+        </div>
+        <div class="ffield"><label for="f_company">Company *</label><input id="f_company" name="company" autocomplete="organization" required></div>
+        <div class="frow">
+          <div class="ffield"><label for="f_email">Work email *</label><input id="f_email" type="email" name="email" autocomplete="email" required></div>
+          <div class="ffield"><label for="f_phone">Phone</label><input id="f_phone" type="tel" name="phone" autocomplete="tel"></div>
+        </div>
+        <div class="ffield"><label for="f_notes">Notes</label><textarea id="f_notes" name="notes" rows="3" placeholder="What would you like to see? (optional)"></textarea></div>
+        <div class="modal-actions">
+          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+          <button type="button" class="btn btn--outline" id="demoCancel">Cancel</button>
+          <button type="submit" class="btn btn--primary" id="demoSubmit">Send</button>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess" hidden>
+        <div class="check" aria-hidden="true">&checkmark;</div>
+        <h3>Thanks — we'll be in touch.</h3>
+        <p>Your request is on its way. We'll reach out shortly to schedule your walkthrough.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
     // nav scroll state
     const nav = document.getElementById('nav');
@@ -690,6 +753,77 @@
     // fade-in
     const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold:.12, rootMargin:'0px 0px -40px 0px' });
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+    // --- Request a Demo modal ---
+    // Web3Forms access key. Public by design; the destination emails are stored
+    // server-side at web3forms.com and never appear on this page.
+    const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_WEB3FORMS_ACCESS_KEY";
+
+    const demoModal   = document.getElementById('demoModal');
+    const demoForm    = document.getElementById('demoForm');
+    const formMsg     = document.getElementById('formMsg');
+    const formSuccess = document.getElementById('formSuccess');
+    const submitBtn   = document.getElementById('demoSubmit');
+    let lastFocus = null;
+
+    function openDemo(){
+      lastFocus = document.activeElement;
+      demoModal.classList.add('open');
+      demoModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('f_first').focus(), 80);
+    }
+    function closeDemo(){
+      demoModal.classList.remove('open');
+      demoModal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+    document.querySelectorAll('[data-demo]').forEach(el =>
+      el.addEventListener('click', e => { e.preventDefault(); openDemo(); }));
+    document.getElementById('demoClose').addEventListener('click', closeDemo);
+    document.getElementById('demoCancel').addEventListener('click', closeDemo);
+    demoModal.addEventListener('click', e => { if (e.target === demoModal) closeDemo(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && demoModal.classList.contains('open')) closeDemo(); });
+
+    demoForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      formMsg.textContent = ''; formMsg.classList.remove('error');
+
+      // client-side validation
+      let ok = true;
+      demoForm.querySelectorAll('[required]').forEach(f => {
+        if (!f.value.trim()) { f.classList.add('invalid'); ok = false; }
+        else f.classList.remove('invalid');
+      });
+      const email = demoForm.elements.email;
+      if (email.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value)) { email.classList.add('invalid'); ok = false; }
+      if (!ok) { formMsg.textContent = 'Please complete the required fields.'; formMsg.classList.add('error'); return; }
+
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.indexOf('REPLACE') === 0) {
+        formMsg.textContent = 'This form is not configured yet.'; formMsg.classList.add('error'); return;
+      }
+
+      submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+      const data = Object.fromEntries(new FormData(demoForm).entries());
+      data.access_key = WEB3FORMS_ACCESS_KEY;
+      data.subject    = 'New demo request — compassfordata.com';
+      data.from_name  = 'DATA Compass Website';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        if (json.success) { demoForm.hidden = true; formSuccess.hidden = false; }
+        else { formMsg.textContent = json.message || 'Something went wrong. Please try again.'; formMsg.classList.add('error'); submitBtn.disabled = false; submitBtn.textContent = 'Send'; }
+      } catch (err) {
+        formMsg.textContent = 'Network error — please try again.'; formMsg.classList.add('error');
+        submitBtn.disabled = false; submitBtn.textContent = 'Send';
+      }
+    });
   </script>
 </body>
 </html>
