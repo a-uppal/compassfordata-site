@@ -288,6 +288,7 @@
     .modal-title{ font-weight:300; color:var(--teal); font-size:clamp(1.5rem,3.5vw,2rem); letter-spacing:-.02em; line-height:1.1; margin-top:.2rem; }
     .modal-sub{ color:var(--ink); font-size:.98rem; margin-top:.6rem; margin-bottom:1.6rem; }
     #demoForm{ display:flex; flex-direction:column; gap:1rem; }
+    #demoForm[hidden]{ display:none; }
     .frow{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
     .ffield{ display:flex; flex-direction:column; gap:.35rem; }
     .ffield label{ font-size:.78rem; font-weight:600; color:var(--teal); letter-spacing:.01em; }
@@ -757,7 +758,7 @@
     // --- Request a Demo modal ---
     // Web3Forms access key. Public by design; the destination emails are stored
     // server-side at web3forms.com and never appear on this page.
-    const WEB3FORMS_ACCESS_KEY = "REPLACE_WITH_WEB3FORMS_ACCESS_KEY";
+    const WEB3FORMS_ACCESS_KEY = "16f5a6ca-b05b-40e4-9a29-7a91324f4c92";
 
     const demoModal   = document.getElementById('demoModal');
     const demoForm    = document.getElementById('demoForm');
