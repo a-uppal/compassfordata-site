@@ -154,27 +154,64 @@
 
     /* ---- hero ---- */
     .hero { padding:clamp(3.5rem,8vw,6.5rem) 0 clamp(3.5rem,7vw,5.5rem); }
-    .hero-grid { max-width:var(--maxw); margin:0 auto; padding:0 28px; display:grid; grid-template-columns:1.15fr .85fr; gap:3.5rem; align-items:center; }
+    .hero-grid { max-width:var(--maxw); margin:0 auto; padding:0 28px; display:grid; grid-template-columns:minmax(360px,.85fr) minmax(540px,1.15fr); gap:2.8rem; align-items:center; }
     .hero h1 { font-weight:300; color:var(--teal); letter-spacing:-.022em; line-height:1.04; font-size:clamp(2.6rem,6vw,4.1rem); }
     .hero h1 .alt { color:var(--slate); display:block; }
     .hero-sub { margin-top:1.5rem; font-size:1.16rem; line-height:1.6; color:var(--ink); max-width:50ch; }
     .hero-ctas { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
     .hero-note { margin-top:1.4rem; font-size:.84rem; color:var(--muted); letter-spacing:.01em; }
 
-    /* hero diagram (the flow at a glance) */
+    /* hero: the AI Readiness Decision Brief */
     .hero-visual { position:relative; }
-    .mini-model { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.3rem 1.4rem; box-shadow:var(--shadow); }
-    .mini-stage { display:flex; align-items:center; gap:.75rem; background:var(--white); border:1px solid var(--line); border-radius:8px; padding:.55rem .8rem; }
-    .mini-stage + .mini-stage { margin-top:.45rem; }
-    .mini-stage i { font-style:normal; font-weight:300; color:var(--terra); font-size:.92rem; line-height:1; flex:none; width:1.25rem; }
-    .mini-stage b { display:block; font-size:.68rem; font-weight:700; color:var(--teal); letter-spacing:.03em; text-transform:uppercase; }
-    .mini-stage span { display:block; font-size:.62rem; color:var(--ink); margin-top:.1rem; }
-    .mini-stage--bridge { background:var(--teal); border-color:var(--teal-d); }
-    .mini-stage--bridge b { color:#fff; }
-    .mini-stage--bridge span { color:#cdd9de; }
-    .mini-stage--bridge i { color:#d99a7e; }
-    .mini-stage em { font-style:normal; font-weight:700; color:var(--terra); }
-    .mini-platforms { margin-top:.65rem; font-size:.6rem; color:var(--muted); text-align:center; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+    .hero-proof { margin:0; }
+    .proof-window { background:var(--white); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-lg); overflow:hidden; }
+    .proof-header { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:.85rem 1.15rem; background:var(--ground-2); border-bottom:1px solid var(--line); }
+    .ph-id b { display:block; color:var(--teal); font-size:.86rem; font-weight:700; letter-spacing:.01em; }
+    .proof-sources { font-size:.62rem; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+    .ph-ctx { text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem; }
+    .proof-badge { font-size:.58rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--terra-d); border:1px solid rgba(184,92,56,.35); background:rgba(184,92,56,.07); padding:.22rem .55rem; border-radius:100px; white-space:nowrap; }
+    .proof-secure { font-size:.6rem; color:var(--muted); }
+    .proof-main { display:grid; grid-template-columns:200px 1fr; }
+    /* verdict panel */
+    .proof-score-panel { padding:1.05rem 1rem 1rem; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:center; text-align:center; }
+    .proof-score { position:relative; width:104px; height:104px; }
+    .proof-score svg { width:100%; height:100%; transform:rotate(-90deg); }
+    .proof-score circle { fill:none; stroke-width:8; }
+    .ring-track { stroke:var(--ground-3); }
+    .ring-fill { stroke:var(--terra); stroke-linecap:round; stroke-dasharray:326.7; stroke-dashoffset:189.5; }
+    .score-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:.15rem; }
+    .score-num b { font-size:1.7rem; font-weight:300; color:var(--teal); line-height:1; }
+    .score-num span { font-size:.62rem; color:var(--muted); align-self:center; margin-top:.55rem; }
+    .score-label { margin-top:.5rem; font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .proof-verdict { margin-top:.3rem; font-size:.82rem; font-weight:700; color:var(--teal); line-height:1.3; }
+    .proof-dimensions { list-style:none; width:100%; margin-top:.8rem; border-top:1px dashed var(--line); padding-top:.6rem; }
+    .proof-dimensions li { display:flex; justify-content:space-between; align-items:center; font-size:.7rem; padding:.22rem 0; }
+    .proof-dimensions span { color:var(--ink); }
+    .proof-dimensions i { font-style:normal; font-weight:700; font-size:.62rem; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:.32rem; }
+    .proof-dimensions i::before { content:""; width:7px; height:7px; border-radius:50%; flex:none; }
+    .proof-dimensions i[data-s="critical"] { color:var(--terra-d); } .proof-dimensions i[data-s="critical"]::before { background:var(--terra); }
+    .proof-dimensions i[data-s="blocked"]  { color:var(--terra-d); } .proof-dimensions i[data-s="blocked"]::before  { background:var(--terra); }
+    .proof-dimensions i[data-s="risk"]     { color:var(--ink); }     .proof-dimensions i[data-s="risk"]::before     { background:var(--slate); }
+    .proof-dimensions i[data-s="partial"]  { color:var(--teal); }    .proof-dimensions i[data-s="partial"]::before  { background:var(--teal); }
+    /* diagnosis + recommendation */
+    .proof-diagnosis { padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.9rem; }
+    .pd-eyebrow { display:block; font-size:.58rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); margin-bottom:.3rem; }
+    .pd-block b { display:block; color:var(--teal); font-size:.88rem; font-weight:700; line-height:1.35; }
+    .pd-evidence { display:block; font-size:.66rem; color:var(--muted); margin-top:.25rem; letter-spacing:.02em; }
+    .pd-block p { font-size:.74rem; color:var(--ink); line-height:1.5; margin-top:.3rem; }
+    .pd-block--rec { background:var(--ground-2); border:1px solid var(--line); border-left:3px solid var(--terra); border-radius:var(--radius-sm); padding:.8rem .9rem; }
+    .proof-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+    .proof-meta span { display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line); border-radius:7px; padding:.35rem .6rem; font-size:.7rem; font-weight:700; color:var(--teal); }
+    .proof-meta i { font-style:normal; font-size:.54rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+    /* unlocks + deliverables */
+    .proof-unlocks { display:flex; align-items:center; gap:.9rem; flex-wrap:wrap; padding:.6rem 1.15rem; border-top:1px solid var(--line); font-size:.68rem; color:var(--ink); }
+    .proof-unlocks i { font-style:normal; font-size:.56rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
+    .proof-unlocks span::before { content:"→ "; color:var(--terra); font-weight:700; }
+    .proof-deliverables { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; padding:.65rem 1.15rem; background:var(--ground-2); border-top:1px solid var(--line); font-size:.68rem; font-weight:600; color:var(--teal); }
+    .proof-deliverables i { font-style:normal; font-size:.56rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
+    .proof-loop { margin-left:auto; color:var(--ink); font-weight:600; }
+    .proof-loop em { font-style:normal; color:var(--terra); font-weight:700; }
+    .hero-proof figcaption { text-align:center; font-size:.7rem; color:var(--muted); margin-top:.7rem; }
 
     /* ---- generic section header ---- */
     .sec-head { max-width:64ch; }
@@ -359,30 +396,32 @@
     .stagger > *:nth-child(7){ transition-delay:.36s; }
     .stagger > *:nth-child(8){ transition-delay:.42s; }
 
-    /* hero model assembles the way the product runs:
-       evidence in, foundation reconciled, engines measure,
-       Bridge AI reasons, action ships — loop mark lands last */
+    /* hero decision brief resolves once: surface, score fill, diagnosis, outputs */
     @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
-    @keyframes sweep { from { opacity:0; transform:translateX(-14px); } to { opacity:1; transform:none; } }
-    html.js .mini-stage:nth-child(1) { animation:rise .4s ease .15s backwards; }
-    html.js .mini-stage:nth-child(2) { animation:rise .4s ease .4s backwards; }
-    html.js .mini-stage:nth-child(3) { animation:rise .4s ease .65s backwards; }
-    html.js .mini-stage:nth-child(4) { animation:sweep .45s ease .9s backwards; }
-    html.js .mini-stage:nth-child(5) { animation:rise .4s ease 1.15s backwards; }
-    html.js .mini-platforms { animation:rise .4s ease 1.4s backwards; }
+    @keyframes ringfill { from { stroke-dashoffset:326.7; } }
+    html.js .proof-window { animation:rise .5s ease .1s backwards; }
+    html.js .ring-fill { animation:ringfill .9s ease-out .5s backwards; }
+    html.js .proof-dimensions { animation:rise .4s ease .7s backwards; }
+    html.js .pd-block { animation:rise .4s ease .85s backwards; }
+    html.js .pd-block--rec { animation:rise .4s ease 1s backwards; }
+    html.js .proof-unlocks { animation:rise .4s ease 1.15s backwards; }
+    html.js .proof-deliverables { animation:rise .4s ease 1.25s backwards; }
+    html.js .hero-proof figcaption { animation:rise .4s ease 1.35s backwards; }
 
     @media (prefers-reduced-motion:reduce){
       html.js .fade-in, html.js .fade-in .stagger > * { opacity:1; transform:none; transition:none; }
-      html.js .mini-stage, html.js .mini-platforms { animation:none; }
+      html.js .proof-window, html.js .ring-fill, html.js .proof-dimensions, html.js .pd-block,
+      html.js .pd-block--rec, html.js .proof-unlocks, html.js .proof-deliverables,
+      html.js .hero-proof figcaption { animation:none; }
       html{scroll-behavior:auto;}
     }
 
     /* ---- responsive ---- */
     @media (max-width:980px){
       .hero-grid{ grid-template-columns:1fr; gap:2.5rem; }
-      .hero-visual{ max-width:460px; }
+      .hero-visual{ max-width:640px; }
       .two-col{ grid-template-columns:1fr; gap:1.8rem; }
-      .grid-4,.steps,.mini-dims,.ladder{ grid-template-columns:repeat(2,1fr); }
+      .grid-4,.steps,.ladder{ grid-template-columns:repeat(2,1fr); }
       .grid-3,.tri,.int-grid{ grid-template-columns:1fr; }
       .patterns{ grid-template-columns:repeat(2,1fr); }
       .footer-grid{ grid-template-columns:1fr 1fr; gap:2rem; }
@@ -399,6 +438,11 @@
       .tri-join{ display:none; }
       .tri-finding{ margin-top:1rem; }
       .out-pills{ justify-content:flex-start; }
+      .proof-main{ grid-template-columns:1fr; }
+      .proof-score-panel{ border-right:0; border-bottom:1px solid var(--line); }
+      .proof-header{ flex-direction:column; }
+      .ph-ctx{ align-items:flex-start; text-align:left; }
+      .proof-loop{ margin-left:0; width:100%; }
     }
 
     /* ---- demo modal ---- */
@@ -465,22 +509,80 @@
       <div class="hero-content fade-in">
         <span class="eyebrow">DATA Compass · The Platform</span>
         <h1>AI readiness,<span class="alt">measured — not asserted.</span></h1>
-        <p class="hero-sub">The data platform that evaluates datasets for AI readiness, then turns the evaluation into recommendations, an executable action plan, and a quantified ROI.</p>
+        <p class="hero-sub">Know whether your data can support AI, what is blocking it, what to fix first, and what the fix is worth — without moving the data.</p>
         <div class="hero-ctas">
           <a href="#" class="btn btn--primary btn--lg" data-demo>Request a Demo</a>
-          <a href="#model" class="btn btn--outline btn--lg">See the Model</a>
+          <a href="#synthesis" class="btn btn--outline btn--lg">See a Sample Assessment</a>
         </div>
         <p class="hero-note">Built for life sciences · Your data never moves · Zero egress</p>
       </div>
       <div class="hero-visual">
-        <div class="mini-model" aria-hidden="true">
-          <div class="mini-stage"><i>01</i><div><b>Enterprise evidence</b><span>data · knowledge · governance · people</span></div></div>
-          <div class="mini-stage"><i>02</i><div><b>Triangulated FAIR</b><span>Technical × Perceived × Governed</span></div></div>
-          <div class="mini-stage"><i>03</i><div><b>Four assessment engines</b><span>semantic · statistical · contextual · regulatory</span></div></div>
-          <div class="mini-stage mini-stage--bridge"><i>04</i><div><b>Bridge AI</b><span>root cause · priorities · quantified ROI</span></div></div>
-          <div class="mini-stage"><i>05</i><div><b>Action &amp; proof</b><span>plan · scripts · trajectory <em>↺</em></span></div></div>
-          <div class="mini-platforms">Databricks · Snowflake · Stardog · Veeva</div>
-        </div>
+        <figure class="hero-proof">
+          <div class="proof-window">
+            <header class="proof-header">
+              <div class="ph-id">
+                <b>Quality Events Dataset</b>
+                <span class="proof-sources">Databricks · Veeva · Stardog · SOPs</span>
+              </div>
+              <div class="ph-ctx">
+                <span class="proof-badge">Illustrative assessment</span>
+                <span class="proof-secure">Connected in place · zero egress</span>
+              </div>
+            </header>
+            <div class="proof-main">
+              <section class="proof-score-panel" aria-label="Readiness verdict">
+                <div class="proof-score" role="img" aria-label="AI readiness score: 42 out of 100">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="ring-track" cx="60" cy="60" r="52"/>
+                    <circle class="ring-fill" cx="60" cy="60" r="52"/>
+                  </svg>
+                  <div class="score-num" aria-hidden="true"><b>42</b><span>/ 100</span></div>
+                </div>
+                <span class="score-label">AI readiness</span>
+                <p class="proof-verdict">Not ready for supervised&nbsp;AI</p>
+                <ul class="proof-dimensions">
+                  <li><span>Semantic</span><i data-s="critical">Critical</i></li>
+                  <li><span>Statistical</span><i data-s="risk">At risk</i></li>
+                  <li><span>Contextual</span><i data-s="blocked">Blocked</i></li>
+                  <li><span>Regulatory</span><i data-s="partial">Partial</i></li>
+                </ul>
+              </section>
+              <section class="proof-diagnosis" aria-label="Diagnosis and recommendation">
+                <div class="pd-block">
+                  <span class="pd-eyebrow">Primary blocker</span>
+                  <b>Vocabulary fragmentation across source systems</b>
+                  <span class="pd-evidence">36 status values · 19 severity encodings · inconsistent booleans</span>
+                  <p>Incompatible vocabularies block reliable integration and inflate AI/ML preprocessing.</p>
+                </div>
+                <div class="pd-block pd-block--rec">
+                  <span class="pd-eyebrow">Recommended next move</span>
+                  <b>Establish one canonical controlled vocabulary across source systems.</b>
+                  <p>Standardize status, severity, priority, and event type before further schema or metadata work.</p>
+                  <div class="proof-meta">
+                    <span><i>Impact</i>High</span>
+                    <span><i>Execution risk</i>Moderate</span>
+                    <span><i>Horizon</i>6–9 months</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="proof-unlocks">
+              <i>What this unlocks</i>
+              <span>Fewer duplicate records</span>
+              <span>Less ML preprocessing</span>
+              <span>Stronger interoperability</span>
+            </div>
+            <footer class="proof-deliverables">
+              <i>Compass delivers</i>
+              <span>✓ Action plan</span>
+              <span>✓ Remediation script</span>
+              <span>✓ ROI model</span>
+              <span>✓ Evidence trace</span>
+              <span class="proof-loop"><em aria-hidden="true">↺</em> Reassess to prove lift</span>
+            </footer>
+          </div>
+          <figcaption>Illustrative assessment using sample data.</figcaption>
+        </figure>
       </div>
     </div>
   </header>
