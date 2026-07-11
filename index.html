@@ -233,6 +233,9 @@
     .shot img { display:block; width:100%; height:auto; border-radius:var(--radius); border:1px solid var(--line); box-shadow:var(--shadow-lg); }
     .shot figcaption { text-align:center; font-size:.84rem; color:var(--muted); margin-top:1rem; letter-spacing:.01em; }
     .panel .shot figcaption { color:#aebfc6; }
+    .shot-pair { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem; align-items:start; }
+    .shot-pair .shot { margin-top:0; max-width:none; }
+    @media (max-width:980px){ .shot-pair { grid-template-columns:1fr; gap:2.5rem; } }
 
     /* ---- dimensions deep ---- */
     .dim-block { padding:clamp(3rem,6vw,4.5rem) 0; border-top:1px solid var(--line); }
@@ -603,7 +606,12 @@
           <div class="feat"><span class="dot"></span><div><span class="lbl">ML readiness</span><b>Four algorithms.</b><span>Data sufficiency · bias detection · feature engineering · class separability.</span></div></div>
           <div class="feat"><span class="dot"></span><div><span class="lbl">Evidenced</span><b>Named statistical tests.</b><span>Benford · Pearson / Chi-square · Cohen's Kappa · Shapley · LOO.</span></div></div>
         </div>
-      </div></div>
+      </div>
+      <figure class="shot">
+        <img src="img/dq-assessment.webp" alt="A DATA Compass Data Quality Assessment: overall quality 66 of 100 with an eight-component breakdown — information, statistical quality, independence, outliers, completeness, cleanliness, anomaly detection — plus dataset-size and sparse-data callouts" width="1600" height="1043" loading="lazy">
+        <figcaption>The Statistical Health read on a live warehouse table: eight components scored, warnings in plain language.</figcaption>
+      </figure>
+      </div>
 
       <!-- D3 Contextual Validity -->
       <div class="dim-block fade-in"><div class="two-col">
@@ -631,7 +639,18 @@
           <div class="feat"><span class="dot"></span><div><span class="lbl">FDA credibility</span><b>Seven steps + Step 8.</b><span>Context of use → fit-for-use, plus agent decision provenance.</span></div></div>
           <div class="feat"><span class="dot"></span><div><span class="lbl">Privacy</span><b>GDPR · HIPAA · CCPA.</b><span>Cited line-by-line, mapped to FAIR pillars.</span></div></div>
         </div>
-      </div></div>
+      </div>
+      <div class="shot-pair">
+        <figure class="shot">
+          <img src="img/alcoa-compliance.webp" alt="A DATA Compass ALCOA+ Compliance card scoring 68, partial: three evidence-backed principles scored, six indicators flagged as requiring source-system evidence, and twelve findings by severity" width="1095" height="1383" loading="lazy">
+          <figcaption>ALCOA+: evidence-backed principles scored; the rest honestly labeled as needing source-system evidence.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="img/fda-credibility.webp" alt="A DATA Compass FDA AI Credibility card: score 55, verdict Not Fit for Use, relevance and reliability sub-scores, and gaps found by severity — two critical, two major, one minor" width="1099" height="958" loading="lazy">
+          <figcaption>FDA AI credibility: a verdict with its gaps attached — including when the answer is “not fit for use.”</figcaption>
+        </figure>
+      </div>
+      </div>
     </div>
   </section>
 
@@ -669,6 +688,10 @@
         <div class="pcard"><span class="lbl">Routed</span><h3>Findings connect to the plan automatically.</h3><p>No re-keying scores into a separate tracker.</p></div>
         <div class="pcard"><span class="lbl">Traceable</span><h3>Plan → recommendation → finding → source.</h3><p>The whole chain survives an audit.</p></div>
       </div>
+      <figure class="shot">
+        <img src="img/smart-recommendation.webp" alt="A DATA Compass smart recommendation: implement controlled-vocabulary master data management — impact, effort, and timeline up top with return, cost, ROI, and payback; below, the causal analysis chain from problem to root cause to fix to outcome, plus stakeholder-readiness context" width="1198" height="1204" loading="lazy">
+        <figcaption>One finding, fully dressed: the causal chain, the stakeholder read, the fix, and the ROI — ready to defend in a steering committee.</figcaption>
+      </figure>
     </div>
   </section>
 
