@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /download/
+Disallow: /admin/
+Allow: /
+
+Sitemap: https://compassfordata.com/sitemap.xml

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DATA Compass — AI readiness, measured — not asserted.</title>
+  <title>DATA Compass · AI readiness, measured — not asserted.</title>
+  <link rel="canonical" href="https://compassfordata.com/">
   <meta name="description" content="DATA Compass is the data platform that evaluates datasets for AI readiness across four dimensions — then turns every finding into a recommendation, an executable action plan, and a quantified ROI. Built for life sciences.">
   <meta name="theme-color" content="#00495D">
   <meta property="og:type" content="website">
@@ -19,6 +20,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://compassfordata.com/#org",
+        "name": "DATA Compass",
+        "url": "https://compassfordata.com/",
+        "logo": "https://compassfordata.com/img/hero-dashboard.png",
+        "email": "contact@compassfordata.com",
+        "description": "DATA Compass evaluates datasets for AI readiness across four dimensions, grounded in FAIR. Built for life sciences."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "DATA Compass",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Self-hosted (Docker Compose, on-premises or private cloud)",
+        "url": "https://compassfordata.com/",
+        "publisher": { "@id": "https://compassfordata.com/#org" },
+        "description": "The data platform that evaluates datasets for AI readiness and turns the evaluation into recommendations, an executable action plan, and a quantified ROI. Zero data egress: analyses run against the customer's own warehouse."
+      }
+    ]
+  }
+  </script>
   <style>
     /* ================================================================
        DATA COMPASS — v0.2 canonical design system (cream/teal/terracotta)
@@ -34,7 +60,7 @@
       --teal-d:    #003543;
       --slate:     #8EA3AC;   /* headline 2, quotes */
       --ink:       #5C6670;   /* body */
-      --muted:     #9A958C;   /* meta / footer text */
+      --muted:     #66615A;   /* meta / footer text (≥4.5:1 on cream) */
       --white:     #FFFFFF;
       --line:      #d8d1c5;   /* hairline on cream */
       --radius:    14px;
@@ -197,6 +223,7 @@
     .pat { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
     .pat b { display:block; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra); }
     .pat span { font-size:.8rem; color:var(--ink); }
+    .patterns-note { text-align:center; margin-top:1.4rem; font-size:.84rem; color:#aebfc6; letter-spacing:.02em; }
 
     /* ---- dimensions deep ---- */
     .dim-block { padding:clamp(3rem,6vw,4.5rem) 0; border-top:1px solid var(--line); }
@@ -240,16 +267,16 @@
     .cta-sub { font-size:.85rem!important; color:#9fb2b9!important; margin-top:1.4rem!important; }
 
     /* ---- footer ---- */
-    .footer { background:var(--band); color:#5d574c; padding:3.5rem 28px 2rem; }
+    .footer { background:var(--band); color:#4E4840; padding:3.5rem 28px 2rem; }
     .footer-grid { max-width:var(--maxw); margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2.5rem; }
     .footer-brand { font-weight:600; color:var(--teal); font-size:1.1rem; }
     .footer-brand b { font-weight:800; } .footer-brand .mark { color:var(--terra); }
-    .footer-desc { font-size:.9rem; margin-top:.8rem; max-width:34ch; color:#6b6458; }
+    .footer-desc { font-size:.9rem; margin-top:.8rem; max-width:34ch; color:#4E4840; }
     .footer h4 { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); margin-bottom:1rem; }
     .footer ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-    .footer a { color:#5d574c; text-decoration:none; font-size:.9rem; transition:color .2s; }
+    .footer a { color:#4E4840; text-decoration:none; font-size:.9rem; transition:color .2s; }
     .footer a:hover { color:var(--teal); }
-    .footer-bar { max-width:var(--maxw); margin:2.5rem auto 0; padding-top:1.5rem; border-top:1px solid rgba(0,0,0,.1); display:flex; justify-content:space-between; font-size:.82rem; color:#7a7164; flex-wrap:wrap; gap:.5rem; }
+    .footer-bar { max-width:var(--maxw); margin:2.5rem auto 0; padding-top:1.5rem; border-top:1px solid rgba(0,0,0,.1); display:flex; justify-content:space-between; font-size:.82rem; color:#554E40; flex-wrap:wrap; gap:.5rem; }
 
     /* ---- mobile menu ---- */
     .mobile { position:fixed; inset:0; background:var(--ground); z-index:100; transform:translateX(100%); transition:transform .3s; display:flex; flex-direction:column; padding:5rem 2rem 2rem; gap:1.4rem; }
@@ -257,10 +284,10 @@
     .mobile a { color:var(--teal); text-decoration:none; font-size:1.3rem; font-weight:500; }
     .mobile-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:0; font-size:2rem; color:var(--teal); cursor:pointer; line-height:1; }
 
-    /* ---- fade-in ---- */
-    .fade-in { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
-    .fade-in.visible { opacity:1; transform:none; }
-    @media (prefers-reduced-motion:reduce){ .fade-in{opacity:1;transform:none;transition:none;} html{scroll-behavior:auto;} }
+    /* ---- fade-in (JS-gated: without JS, content renders fully visible) ---- */
+    html.js .fade-in { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+    html.js .fade-in.visible { opacity:1; transform:none; }
+    @media (prefers-reduced-motion:reduce){ html.js .fade-in{opacity:1;transform:none;transition:none;} html{scroll-behavior:auto;} }
 
     /* ---- responsive ---- */
     @media (max-width:980px){
@@ -359,7 +386,7 @@
             <div class="mini-dim"><b>Regulatory<br>Compliance</b></div>
           </div>
           <div class="mini-foundation">FAIR — the triangulated foundation</div>
-          <div class="mini-platforms">Databricks · Snowflake · Collibra · Veeva</div>
+          <div class="mini-platforms">Databricks · Snowflake · Stardog · Veeva</div>
         </div>
       </div>
     </div>
@@ -426,7 +453,7 @@
         <div class="layer-lbl">Foundation</div>
         <div class="foundation-bar">FAIR — triangulated (Technical · Perceived · Governed) → defensible</div>
         <div class="layer-lbl" style="margin-top:1rem;">Platforms</div>
-        <div class="platforms-bar"><b>Databricks · Snowflake · Collibra · Veeva</b> — your data, in place · zero egress</div>
+        <div class="platforms-bar"><b>Databricks · Snowflake · Stardog · Veeva</b> — your data, in place · zero egress</div>
       </div>
     </div>
   </section>
@@ -462,7 +489,7 @@
           <span class="eyebrow">§ 05 · Connect</span>
           <h2 class="headline">Your data never moves.<span class="alt">We query it in place.</span></h2>
           <p class="lead">Compass is an API overlay, not a data lake. It connects to your warehouse, runs read-only queries through your own compute, and analyzes the results in memory. No ETL, no copies, no new storage. Source data never leaves your environment — the answer to the first question every pharma security review asks.</p>
-          <div class="chip" style="margin-top:2rem;">Databricks · Snowflake · Collibra · Veeva</div>
+          <div class="chip" style="margin-top:2rem;">Databricks · Snowflake · Stardog · Veeva</div>
         </div>
         <div class="feat-list">
           <div class="feat"><span class="dot"></span><div><span class="lbl">Connect</span><b>Unity Catalog / Snowflake, PAT or OAuth.</b><span>Read-only. Credentials AES-256 in Key Vault / Secrets Manager.</span></div></div>
@@ -489,14 +516,15 @@
       <div class="tri-chip-wrap"><span class="chip">Agreement = Confidence&nbsp;&nbsp;·&nbsp;&nbsp;Divergence = The Finding</span></div>
       <div class="patterns">
         <div class="pat"><b>Confirmed Maturity</b><span>all three legs agree, high</span></div>
+        <div class="pat"><b>Aligned Maturity</b><span>data and people agree; the governed read is pending</span></div>
+        <div class="pat"><b>Greenfield</b><span>little signal anywhere — start clean</span></div>
         <div class="pat"><b>Usability Gap</b><span>technically strong, people struggle</span></div>
         <div class="pat"><b>Tribal Knowledge</b><span>people know it, nothing is written</span></div>
-        <div class="pat"><b>Unnormalized Practice</b><span>documented, not yet in the data</span></div>
+        <div class="pat"><b>Unformalized Practice</b><span>the practice works; no SOP captures it</span></div>
         <div class="pat"><b>Abandoned Capability</b><span>was there, now decayed</span></div>
         <div class="pat"><b>Policy Theater</b><span>SOPs exist, practice doesn't follow</span></div>
-        <div class="pat"><b>Greenfield</b><span>little signal anywhere — start clean</span></div>
-        <div class="pat" style="background:rgba(255,255,255,.03); border-style:dashed;"><b>Seven named patterns</b><span>each one an actionable diagnosis</span></div>
       </div>
+      <p class="patterns-note">Eight named patterns — each one an actionable diagnosis.</p>
     </div>
   </section>
 
@@ -603,11 +631,28 @@
     </div>
   </section>
 
-  <!-- §10 THE VALUE (teal panel) -->
+  <!-- §10 THE TRAJECTORY -->
+  <section class="section-pad" id="trajectory">
+    <div class="container fade-in">
+      <div class="sec-head">
+        <span class="eyebrow">§ 10 · The Trajectory</span>
+        <h2 class="headline">A score is a photograph.<span class="alt">A program needs the film.</span></h2>
+        <p class="lead">Every Compass analysis appends to the dataset's history. Fix something, re-analyze, and the trend view shows each dimension moving — with the delta since your last checkpoint quantified in a progress report your steering committee can actually read.</p>
+      </div>
+      <div class="grid-3">
+        <div class="pcard"><span class="lbl">Re-analyze in place</span><h3>One click re-runs the full assessment.</h3><p>On a connected dataset — no re-browsing the catalog, no re-upload.</p></div>
+        <div class="pcard"><span class="lbl">Trend per dimension</span><h3>Watch each score move over time.</h3><p>Statistical health, semantic maturity, governance, ML readiness — with FAIR-pillar drill-down.</p></div>
+        <div class="pcard"><span class="lbl">Progress since checkpoint</span><h3>The delta, quantified.</h3><p>What improved, what regressed, and which remediation produced it — evidence attached.</p></div>
+      </div>
+      <p class="quote" style="margin-top:3rem;">“Readiness is a trajectory. One reading tells you where you stand; the trend tells you if the program works.”</p>
+    </div>
+  </section>
+
+  <!-- §11 THE VALUE (teal panel) -->
   <section class="section-pad panel" id="value">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 10 · The Value</span>
+        <span class="eyebrow">§ 11 · The Value</span>
         <h2 class="headline">Readiness, in dollars.<span class="alt">Not just a grade.</span></h2>
         <p class="lead">Every gap carries a cost and every fix carries a return. Compass quantifies the business value of closing each gap — grounded in the Pistoia Alliance FAIR business-value model — so a data-readiness program competes for budget on the same terms as everything else: ROI.</p>
       </div>
@@ -620,11 +665,11 @@
     </div>
   </section>
 
-  <!-- §11 AUTONOMY / CLOSE -->
+  <!-- §12 AUTONOMY / CLOSE -->
   <section class="section-pad" id="autonomy">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 11 · Know Before You Deploy</span>
+        <span class="eyebrow">§ 12 · Know Before You Deploy</span>
         <h2 class="headline">How much autonomy<span class="alt">can your data actually support?</span></h2>
         <p class="lead">Readiness isn't a yes/no. Compass tells you which level of AI autonomy your data can support today — and exactly what to fix to climb to the next one.</p>
       </div>
@@ -697,7 +742,6 @@
         <ul>
           <li><a href="/download">Download</a></li>
           <li><a href="mailto:contact@compassfordata.com">Contact</a></li>
-          <li><a href="https://github.com/a-uppal/data-compass" rel="noopener noreferrer">GitHub</a></li>
         </ul>
       </div>
     </div>
@@ -742,6 +786,8 @@
   </div>
 
   <script>
+    // JS is running: enable scroll-reveal styling (no-JS renderers see everything)
+    document.documentElement.classList.add('js');
     // nav scroll state
     const nav = document.getElementById('nav');
     addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), { passive:true });
@@ -751,8 +797,12 @@
     document.getElementById('mobileClose').addEventListener('click', () => mm.classList.remove('open'));
     mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
     // fade-in
-    const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold:.12, rootMargin:'0px 0px -40px 0px' });
-    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold:.12, rootMargin:'0px 0px -40px 0px' });
+      document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+    }
 
     // --- Request a Demo modal ---
     // Web3Forms access key. Public by design; the destination emails are stored
