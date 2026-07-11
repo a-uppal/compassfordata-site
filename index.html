@@ -11,11 +11,13 @@
   <meta property="og:url" content="https://compassfordata.com/">
   <meta property="og:title" content="DATA Compass — AI readiness, measured — not asserted.">
   <meta property="og:description" content="Evaluate datasets for AI readiness across four dimensions, grounded in FAIR — then close the gap with recommendations, an action plan, and a quantified ROI.">
-  <meta property="og:image" content="https://compassfordata.com/img/hero-dashboard.png">
+  <meta property="og:image" content="https://compassfordata.com/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DATA Compass — AI readiness, measured — not asserted.">
   <meta name="twitter:description" content="The data platform that measures AI readiness across four dimensions, grounded in FAIR — for life sciences.">
-  <meta name="twitter:image" content="https://compassfordata.com/img/hero-dashboard.png">
+  <meta name="twitter:image" content="https://compassfordata.com/img/og-card.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13.5' fill='none' stroke='%2300495D' stroke-width='2.5'/><path d='M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z' fill='%2300495D'/><path d='M16 4 L19 13 L16 16 L13 13 Z' fill='%23B85C38'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +31,7 @@
         "@id": "https://compassfordata.com/#org",
         "name": "DATA Compass",
         "url": "https://compassfordata.com/",
-        "logo": "https://compassfordata.com/img/hero-dashboard.png",
+        "logo": "https://compassfordata.com/img/og-card.png",
         "email": "contact@compassfordata.com",
         "description": "DATA Compass evaluates datasets for AI readiness across four dimensions, grounded in FAIR. Built for life sciences."
       },
@@ -224,6 +226,13 @@
     .pat b { display:block; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra); }
     .pat span { font-size:.8rem; color:var(--ink); }
     .patterns-note { text-align:center; margin-top:1.4rem; font-size:.84rem; color:#aebfc6; letter-spacing:.02em; }
+
+    /* ---- product screenshots ---- */
+    .shot { margin:3rem auto 0; max-width:860px; }
+    .shot--narrow { max-width:560px; }
+    .shot img { display:block; width:100%; height:auto; border-radius:var(--radius); border:1px solid var(--line); box-shadow:var(--shadow-lg); }
+    .shot figcaption { text-align:center; font-size:.84rem; color:var(--muted); margin-top:1rem; letter-spacing:.01em; }
+    .panel .shot figcaption { color:#aebfc6; }
 
     /* ---- dimensions deep ---- */
     .dim-block { padding:clamp(3rem,6vw,4.5rem) 0; border-top:1px solid var(--line); }
@@ -553,6 +562,10 @@
         <div class="pat"><b>Policy Theater</b><span>SOPs exist, practice doesn't follow</span></div>
       </div>
       <p class="patterns-note">Eight named patterns — each one an actionable diagnosis.</p>
+      <figure class="shot shot--narrow">
+        <img src="img/pillar-card.webp" alt="A DATA Compass pillar card: the Accessible pillar confirmed as a Usability Gap, with Technical, Perceived, and Governed leg scores, coverage sufficiency, coherence, and what-to-do guidance" width="1060" height="1050" loading="lazy">
+        <figcaption>A live pillar card: three legs scored with coverage honesty, the pattern named, and the move spelled out.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -672,6 +685,10 @@
         <div class="pcard"><span class="lbl">Trend per dimension</span><h3>Watch each score move over time.</h3><p>Statistical health, semantic maturity, governance, ML readiness — with FAIR-pillar drill-down.</p></div>
         <div class="pcard"><span class="lbl">Progress since checkpoint</span><h3>The delta, quantified.</h3><p>What improved, what regressed, and which remediation produced it — evidence attached.</p></div>
       </div>
+      <figure class="shot">
+        <img src="img/trend-trajectory.webp" alt="The DATA Compass technical trajectory view: Technical Asset Score and Statistical Health plotted across three readings from March to July, with the scoring-rubric version annotated on the timeline" width="1532" height="1028" loading="lazy">
+        <figcaption>A real trajectory: three readings across four months, with the scoring-rubric version pinned to the timeline.</figcaption>
+      </figure>
       <p class="quote" style="margin-top:3rem;">“Readiness is a trajectory. One reading tells you where you stand; the trend tells you if the program works.”</p>
     </div>
   </section>
