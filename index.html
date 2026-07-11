@@ -161,16 +161,20 @@
     .hero-ctas { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
     .hero-note { margin-top:1.4rem; font-size:.84rem; color:var(--muted); letter-spacing:.01em; }
 
-    /* hero diagram (compass / four-dimensions glance) */
+    /* hero diagram (the flow at a glance) */
     .hero-visual { position:relative; }
-    .mini-model { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; box-shadow:var(--shadow); }
-    .mini-bridge { background:var(--teal); color:#fff; border-radius:var(--radius-sm); padding:.7rem .9rem; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; }
-    .mini-bridge span { color:var(--slate); font-size:.6rem; }
-    .mini-dims { display:grid; grid-template-columns:repeat(4,1fr); gap:.55rem; margin:.55rem 0; }
-    .mini-dim { background:var(--white); border:1px solid var(--line); border-radius:8px; padding:.7rem .45rem .6rem; text-align:center; border-top:3px solid var(--terra); }
-    .mini-dim b { display:block; font-size:.62rem; font-weight:700; color:var(--teal); letter-spacing:.02em; line-height:1.25; }
-    .mini-foundation { background:var(--ground-3); border-radius:8px; padding:.65rem .8rem; font-size:.68rem; font-weight:600; color:var(--teal); text-align:center; letter-spacing:.01em; }
-    .mini-platforms { margin-top:.55rem; font-size:.6rem; color:var(--muted); text-align:center; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
+    .mini-model { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.3rem 1.4rem; box-shadow:var(--shadow); }
+    .mini-stage { display:flex; align-items:center; gap:.75rem; background:var(--white); border:1px solid var(--line); border-radius:8px; padding:.55rem .8rem; }
+    .mini-stage + .mini-stage { margin-top:.45rem; }
+    .mini-stage i { font-style:normal; font-weight:300; color:var(--terra); font-size:.92rem; line-height:1; flex:none; width:1.25rem; }
+    .mini-stage b { display:block; font-size:.68rem; font-weight:700; color:var(--teal); letter-spacing:.03em; text-transform:uppercase; }
+    .mini-stage span { display:block; font-size:.62rem; color:var(--ink); margin-top:.1rem; }
+    .mini-stage--bridge { background:var(--teal); border-color:var(--teal-d); }
+    .mini-stage--bridge b { color:#fff; }
+    .mini-stage--bridge span { color:#cdd9de; }
+    .mini-stage--bridge i { color:#d99a7e; }
+    .mini-stage em { font-style:normal; font-weight:700; color:var(--terra); }
+    .mini-platforms { margin-top:.65rem; font-size:.6rem; color:var(--muted); text-align:center; letter-spacing:.06em; text-transform:uppercase; font-weight:600; }
 
     /* ---- generic section header ---- */
     .sec-head { max-width:64ch; }
@@ -355,21 +359,21 @@
     .stagger > *:nth-child(7){ transition-delay:.36s; }
     .stagger > *:nth-child(8){ transition-delay:.42s; }
 
-    /* hero model assembles the way the product thinks:
-       foundation first, dimensions rise from it, Bridge AI sweeps last */
+    /* hero model assembles the way the product runs:
+       evidence in, foundation reconciled, engines measure,
+       Bridge AI reasons, action ships — loop mark lands last */
     @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
     @keyframes sweep { from { opacity:0; transform:translateX(-14px); } to { opacity:1; transform:none; } }
-    html.js .mini-foundation { animation:rise .45s ease .15s backwards; }
-    html.js .mini-dim:nth-child(1) { animation:rise .45s ease .55s backwards; }
-    html.js .mini-dim:nth-child(2) { animation:rise .45s ease .62s backwards; }
-    html.js .mini-dim:nth-child(3) { animation:rise .45s ease .69s backwards; }
-    html.js .mini-dim:nth-child(4) { animation:rise .45s ease .76s backwards; }
-    html.js .mini-bridge { animation:sweep .5s ease 1.05s backwards; }
-    html.js .mini-platforms { animation:rise .4s ease 1.25s backwards; }
+    html.js .mini-stage:nth-child(1) { animation:rise .4s ease .15s backwards; }
+    html.js .mini-stage:nth-child(2) { animation:rise .4s ease .4s backwards; }
+    html.js .mini-stage:nth-child(3) { animation:rise .4s ease .65s backwards; }
+    html.js .mini-stage:nth-child(4) { animation:sweep .45s ease .9s backwards; }
+    html.js .mini-stage:nth-child(5) { animation:rise .4s ease 1.15s backwards; }
+    html.js .mini-platforms { animation:rise .4s ease 1.4s backwards; }
 
     @media (prefers-reduced-motion:reduce){
       html.js .fade-in, html.js .fade-in .stagger > * { opacity:1; transform:none; transition:none; }
-      html.js .mini-foundation, html.js .mini-dim, html.js .mini-bridge, html.js .mini-platforms { animation:none; }
+      html.js .mini-stage, html.js .mini-platforms { animation:none; }
       html{scroll-behavior:auto;}
     }
 
@@ -470,14 +474,11 @@
       </div>
       <div class="hero-visual">
         <div class="mini-model" aria-hidden="true">
-          <div class="mini-bridge">Bridge AI <span>SYNTHESIS</span></div>
-          <div class="mini-dims">
-            <div class="mini-dim"><b>Semantic<br>Clarity</b></div>
-            <div class="mini-dim"><b>Statistical<br>Health</b></div>
-            <div class="mini-dim"><b>Contextual<br>Validity</b></div>
-            <div class="mini-dim"><b>Regulatory<br>Compliance</b></div>
-          </div>
-          <div class="mini-foundation">FAIR — the triangulated foundation</div>
+          <div class="mini-stage"><i>01</i><div><b>Enterprise evidence</b><span>data · knowledge · governance · people</span></div></div>
+          <div class="mini-stage"><i>02</i><div><b>Triangulated FAIR</b><span>Technical × Perceived × Governed</span></div></div>
+          <div class="mini-stage"><i>03</i><div><b>Four assessment engines</b><span>semantic · statistical · contextual · regulatory</span></div></div>
+          <div class="mini-stage mini-stage--bridge"><i>04</i><div><b>Bridge AI</b><span>root cause · priorities · quantified ROI</span></div></div>
+          <div class="mini-stage"><i>05</i><div><b>Action &amp; proof</b><span>plan · scripts · trajectory <em>↺</em></span></div></div>
           <div class="mini-platforms">Databricks · Snowflake · Stardog · Veeva</div>
         </div>
       </div>
