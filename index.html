@@ -192,18 +192,62 @@
     .step { position:relative; padding-left:0; }
     .step::after { content:""; }
 
-    /* ---- THE MODEL diagram ---- */
-    .model { background:var(--ground-2); border:1px solid var(--line); border-radius:18px; padding:clamp(1.4rem,3vw,2.4rem); margin-top:3rem; box-shadow:var(--shadow); }
-    .layer-lbl { font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; }
-    .bridge-bar { background:var(--teal); color:#fff; border-radius:12px; padding:1rem 1.4rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:.86rem; display:flex; align-items:center; justify-content:center; gap:.8rem; text-align:center; }
-    .model-dims { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:1.4rem 0; }
-    .mdim { background:var(--white); border:1px solid var(--line); border-radius:12px; padding:1.3rem 1rem; border-top:4px solid var(--terra); text-align:center; }
-    .mdim b { display:block; color:var(--teal); font-weight:700; font-size:.96rem; letter-spacing:.01em; line-height:1.25; }
-    .mdim small { display:block; color:var(--ink); font-size:.78rem; margin-top:.4rem; }
-    .foundation-bar { background:var(--ground-3); border-radius:12px; padding:1rem 1.4rem; text-align:center; color:var(--teal); font-weight:600; font-size:.95rem; }
-    .platforms-bar { margin-top:1rem; background:#fff; border:1px dashed var(--line); border-radius:12px; padding:.9rem 1.4rem; text-align:center; color:var(--ink); font-size:.86rem; }
-    .platforms-bar b { color:var(--teal); font-weight:700; }
-    .arrow-up { text-align:center; color:var(--slate); font-size:1.1rem; margin:.5rem 0; }
+    /* ---- §03 capability flow ---- */
+    .flow { background:var(--ground-2); border:1px solid var(--line); border-radius:18px; padding:clamp(1.5rem,3.5vw,2.8rem); margin-top:3rem; box-shadow:var(--shadow); }
+    .flow-head { text-align:center; max-width:64ch; margin:0 auto 2.4rem; }
+    .flow-head b { display:block; color:var(--teal); font-size:clamp(1.15rem,2.2vw,1.45rem); font-weight:600; letter-spacing:-.01em; }
+    .flow-head p { font-size:.92rem; color:var(--ink); margin-top:.6rem; line-height:1.6; }
+    .flow-stages { list-style:none; display:flex; flex-direction:column; }
+    .fstage { position:relative; border:1px solid var(--line); background:var(--white); border-radius:var(--radius); padding:1.5rem 1.6rem 1.6rem; }
+    .fstage + .fstage { margin-top:2.6rem; }
+    .fstage + .fstage::before { content:"▼" / ""; position:absolute; top:-1.95rem; left:50%; transform:translateX(-50%); color:var(--slate); font-size:.8rem; }
+    .fs-head { display:flex; align-items:baseline; gap:.9rem; flex-wrap:wrap; margin-bottom:1.15rem; }
+    .fs-num { font-weight:300; font-size:1.5rem; color:var(--terra); line-height:1; }
+    .fs-title b { color:var(--teal); font-size:1.05rem; font-weight:700; display:block; }
+    .fs-title span { font-size:.85rem; color:var(--ink); }
+    .fs-chip { margin-left:auto; font-size:.64rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra-d); background:rgba(184,92,56,.08); border:1px solid rgba(184,92,56,.3); padding:.35rem .75rem; border-radius:100px; white-space:nowrap; }
+    /* stage 1 — evidence */
+    .ev-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .ev-cell { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
+    .ev-cell b { display:block; font-size:.66rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra); margin-bottom:.4rem; }
+    .ev-cell span { font-size:.84rem; color:var(--ink); line-height:1.5; }
+    /* stage 2 — triangulation */
+    .tri-src { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:640px; margin:0 auto; }
+    .tri-node { text-align:center; border:1px solid var(--line); background:var(--ground-2); border-radius:var(--radius-sm); padding:.85rem .6rem; }
+    .tri-node b { color:var(--teal); font-size:.9rem; display:block; }
+    .tri-node span { font-size:.76rem; color:var(--ink); }
+    .tri-join { height:2.1rem; max-width:640px; margin:0 auto; display:flex; justify-content:center; align-items:stretch; gap:0; position:relative; }
+    .tri-join span { width:1.5px; background:var(--slate); display:block; height:100%; }
+    .tri-join span:nth-child(1){ transform:rotate(38deg) translateY(1px); transform-origin:bottom center; margin-right:4.4rem; }
+    .tri-join span:nth-child(3){ transform:rotate(-38deg) translateY(1px); transform-origin:bottom center; margin-left:4.4rem; }
+    .tri-finding { margin:0 auto; width:max-content; background:var(--teal); color:#fff; font-weight:700; letter-spacing:.07em; text-transform:uppercase; font-size:.78rem; padding:.7rem 1.6rem; border-radius:100px; }
+    .tri-verdict { text-align:center; font-size:.9rem; color:var(--ink); margin-top:1.1rem; }
+    .tri-pats { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:.8rem; }
+    .tri-pat { font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra-d); border:1px solid var(--line); background:var(--ground-2); padding:.35rem .75rem; border-radius:100px; }
+    .tri-pat--more { color:var(--muted); font-weight:600; }
+    .tri-fair { margin:1.3rem auto 0; text-align:center; font-size:.8rem; color:var(--muted); max-width:62ch; line-height:1.55; border-top:1px dashed var(--line); padding-top:1rem; }
+    /* stage 3 — engines */
+    .eng-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .eng { background:var(--ground-2); border:1px solid var(--line); border-top:3px solid var(--terra); border-radius:var(--radius-sm); padding:1rem 1.05rem; }
+    .eng b { color:var(--teal); font-size:.93rem; display:block; margin-bottom:.45rem; line-height:1.25; }
+    .eng ul { list-style:none; }
+    .eng li { font-size:.79rem; color:var(--ink); padding:.26rem 0; border-top:1px dashed var(--line); line-height:1.4; }
+    .eng li:first-child { border-top:0; }
+    .fs-proof { margin-top:1.15rem; text-align:center; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+    /* stage 4 — Bridge AI */
+    .fstage--bridge { background:var(--teal); border-color:var(--teal-d); }
+    .fstage--bridge .fs-title b { color:#fff; }
+    .fstage--bridge .fs-title span { color:#cdd9de; }
+    .fstage--bridge .fs-num { color:#d99a7e; }
+    .br-nodes { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; }
+    .br-node { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.17); border-radius:var(--radius-sm); padding:.75rem .8rem; font-size:.81rem; color:#e8eef0; text-align:center; line-height:1.4; }
+    .br-note { margin-top:1.05rem; text-align:center; font-size:.78rem; color:#9fb2b9; }
+    /* stage 5 — outputs + loop */
+    .out-pills { display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; }
+    .out-pill { background:var(--ground-2); border:1px solid var(--line); border-radius:100px; padding:.5rem 1rem; font-size:.83rem; color:var(--teal); font-weight:600; }
+    .flow-loop { margin-top:1.4rem; display:flex; align-items:flex-start; gap:.7rem; justify-content:center; font-size:.85rem; color:var(--ink); max-width:58ch; margin-left:auto; margin-right:auto; border-top:1px dashed var(--line); padding-top:1.1rem; }
+    .flow-loop .loop-mark { color:var(--terra); font-size:1.25rem; font-weight:700; line-height:1; }
+    .flow-loop b { color:var(--teal); }
 
     /* ---- two-column feature rows (FAIR floor, connect, dimensions deep) ---- */
     .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; margin-top:1rem; }
@@ -334,15 +378,23 @@
       .hero-grid{ grid-template-columns:1fr; gap:2.5rem; }
       .hero-visual{ max-width:460px; }
       .two-col{ grid-template-columns:1fr; gap:1.8rem; }
-      .grid-4,.steps,.model-dims,.mini-dims,.ladder{ grid-template-columns:repeat(2,1fr); }
+      .grid-4,.steps,.mini-dims,.ladder{ grid-template-columns:repeat(2,1fr); }
       .grid-3,.tri,.int-grid{ grid-template-columns:1fr; }
       .patterns{ grid-template-columns:repeat(2,1fr); }
       .footer-grid{ grid-template-columns:1fr 1fr; gap:2rem; }
+      .ev-grid,.eng-grid{ grid-template-columns:repeat(2,1fr); }
+      .br-nodes{ grid-template-columns:repeat(2,1fr); }
     }
     @media (max-width:680px){
       .nav-links{ display:none; } .hamburger{ display:flex; }
       .grid-4,.steps{ grid-template-columns:1fr; }
       .footer-grid{ grid-template-columns:1fr; }
+      .ev-grid,.eng-grid{ grid-template-columns:1fr; }
+      .fs-chip{ margin-left:0; }
+      .tri-src{ grid-template-columns:1fr; gap:.6rem; }
+      .tri-join{ display:none; }
+      .tri-finding{ margin-top:1rem; }
+      .out-pills{ justify-content:flex-start; }
     }
 
     /* ---- demo modal ---- */
@@ -479,21 +531,101 @@
         <h2 class="headline">Four dimensions.<span class="alt">One foundation.</span></h2>
         <p class="lead">Everyone sells FAIR and stops. Compass treats FAIR as the foundation, then measures the four dimensions of readiness FAIR enables but does not guarantee, with Bridge AI synthesizing it all into what to do next.</p>
       </div>
-      <div class="model">
-        <div class="layer-lbl">Synthesis</div>
-        <div class="bridge-bar">Bridge AI &nbsp;→&nbsp; Recommendations · Action Plan · ROI</div>
-        <div class="arrow-up">▲</div>
-        <div class="layer-lbl">Four dimensions</div>
-        <div class="model-dims">
-          <div class="mdim"><b>Semantic Clarity</b><small>ontologies · meaning</small></div>
-          <div class="mdim"><b>Statistical Health</b><small>soundness · ML-fit</small></div>
-          <div class="mdim"><b>Contextual Validity</b><small>fit for your use</small></div>
-          <div class="mdim"><b>Regulatory Compliance</b><small>the integrity bar</small></div>
+      <div class="flow">
+        <div class="flow-head">
+          <b>From enterprise evidence to defensible AI action</b>
+          <p>Compass connects heterogeneous evidence, reconciles it into a defensible baseline, measures readiness across four dimensions, identifies root causes, and turns findings into executable, measurable action.</p>
         </div>
-        <div class="layer-lbl">Foundation</div>
-        <div class="foundation-bar">FAIR — triangulated (Technical · Perceived · Governed) → defensible</div>
-        <div class="layer-lbl" style="margin-top:1rem;">Platforms</div>
-        <div class="platforms-bar"><b>Databricks · Snowflake · Stardog · Veeva</b> — your data, in place · zero egress</div>
+        <ol class="flow-stages stagger">
+
+          <li class="fstage">
+            <div class="fs-head">
+              <span class="fs-num">01</span>
+              <div class="fs-title"><b>Enterprise evidence</b><span>Connect data, knowledge, governance, and stakeholder evidence</span></div>
+              <span class="fs-chip">Read-only · in place · zero egress</span>
+            </div>
+            <div class="ev-grid">
+              <div class="ev-cell"><b>Data platforms</b><span>Databricks · Snowflake · Veeva · files &amp; APIs</span></div>
+              <div class="ev-cell"><b>Knowledge systems</b><span>Stardog · ontologies · metadata · vocabularies</span></div>
+              <div class="ev-cell"><b>Governance evidence</b><span>SOPs · policies · standards · regulatory documents</span></div>
+              <div class="ev-cell"><b>People &amp; purpose</b><span>Interviews · persona sentiment · the declared use case</span></div>
+            </div>
+          </li>
+
+          <li class="fstage">
+            <div class="fs-head">
+              <span class="fs-num">02</span>
+              <div class="fs-title"><b>The triangulated FAIR foundation</b><span>Reconcile what the data shows, what people experience, and what governance requires</span></div>
+              <span class="fs-chip">16 FAIR rules · SHACL</span>
+            </div>
+            <div class="tri-src">
+              <div class="tri-node"><b>Technical</b><span>what the data shows</span></div>
+              <div class="tri-node"><b>Perceived</b><span>what people experience</span></div>
+              <div class="tri-node"><b>Governed</b><span>what policy requires</span></div>
+            </div>
+            <div class="tri-join" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="tri-finding">Defensible finding</div>
+            <p class="tri-verdict">Agreement builds confidence. Divergence reveals the problem — and names it:</p>
+            <div class="tri-pats">
+              <span class="tri-pat">Usability Gap</span>
+              <span class="tri-pat">Policy Theater</span>
+              <span class="tri-pat">Tribal Knowledge</span>
+              <span class="tri-pat">Unformalized Practice</span>
+              <span class="tri-pat tri-pat--more">+ 4 more</span>
+            </div>
+            <p class="tri-fair">FAIR — findable · accessible · interoperable · reusable — is the substrate: necessary for readiness, not sufficient on its own. The engines below measure what it can't.</p>
+          </li>
+
+          <li class="fstage">
+            <div class="fs-head">
+              <span class="fs-num">03</span>
+              <div class="fs-title"><b>Four assessment engines</b><span>Measure readiness across four interdependent dimensions</span></div>
+              <span class="fs-chip">50+ algorithms · named tests</span>
+            </div>
+            <div class="eng-grid">
+              <div class="eng"><b>Semantic Clarity</b><ul><li>Ontology alignment</li><li>Inferred column→class mapping</li><li>Interoperability depth</li></ul></div>
+              <div class="eng"><b>Statistical Health</b><ul><li>Data quality — 8 algorithms</li><li>ML readiness — 4 algorithms</li><li>Bias &amp; class separability</li></ul></div>
+              <div class="eng"><b>Contextual Validity</b><ul><li>Fit to the declared use</li><li>Domain Pack rules</li><li>Evidence-cited judgment</li></ul></div>
+              <div class="eng"><b>Regulatory Compliance</b><ul><li>ALCOA+ integrity</li><li>FDA AI credibility</li><li>Privacy &amp; provenance</li></ul></div>
+            </div>
+            <p class="fs-proof">Statistical tests · deterministic rules · evidence extraction — every score traces to its source</p>
+          </li>
+
+          <li class="fstage fstage--bridge">
+            <div class="fs-head">
+              <span class="fs-num">04</span>
+              <div class="fs-title"><b>Bridge AI</b><span>From multidimensional signal to prioritized, evidence-grounded decisions</span></div>
+            </div>
+            <div class="br-nodes">
+              <div class="br-node">Cross-dimension synthesis</div>
+              <div class="br-node">Causal analysis &amp; root cause</div>
+              <div class="br-node">Prioritized recommendations</div>
+              <div class="br-node">Execution risk &amp; stakeholder readiness</div>
+              <div class="br-node">Value drivers &amp; quantified ROI</div>
+              <div class="br-node">Evidence traceability</div>
+            </div>
+            <p class="br-note">No black-box conclusions — every claim cites the evidence that produced it.</p>
+          </li>
+
+          <li class="fstage">
+            <div class="fs-head">
+              <span class="fs-num">05</span>
+              <div class="fs-title"><b>Execution &amp; proof</b><span>Execute, reassess, and prove improvement</span></div>
+            </div>
+            <div class="out-pills">
+              <span class="out-pill">Executive briefing</span>
+              <span class="out-pill">Prioritized action portfolio</span>
+              <span class="out-pill">Remediation scripts</span>
+              <span class="out-pill">Owners · effort · timeline</span>
+              <span class="out-pill">Business case &amp; ROI</span>
+              <span class="out-pill">Regulatory evidence package</span>
+              <span class="out-pill">Readiness trajectory</span>
+              <span class="out-pill">Supported autonomy level</span>
+            </div>
+            <div class="flow-loop"><span class="loop-mark" aria-hidden="true">↺</span><span><b>Reassess</b> — every re-analysis feeds back through the engines and appends to the trajectory. Readiness is measured over time, never asserted once.</span></div>
+          </li>
+
+        </ol>
       </div>
     </div>
   </section>
