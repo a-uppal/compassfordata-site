@@ -244,7 +244,7 @@
     .compare .after { background:var(--teal); }
     .compare h3 { font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
     .compare .before h3 { color:var(--muted); }
-    .compare .after h3 { color:#d99a7e; }
+    .compare .after h3 { color:#e4b29a; }
     .compare ul { list-style:none; }
     .compare li { padding:.5rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
     .compare .after li { color:#e8eef0; border-top-color:rgba(255,255,255,.16); }
@@ -332,9 +332,9 @@
     /* ---- autonomy ladder ---- */
     .ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:3rem; }
     .rung { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; position:relative; }
-    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); }
+    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#8a4227; }
     .rung b { display:block; color:var(--teal); font-size:1.1rem; font-weight:600; margin:.5rem 0 .4rem; }
-    .rung span { font-size:.86rem; color:var(--ink); }
+    .rung span { font-size:.86rem; color:#4f5862; }
     .rung:nth-child(1){ background:var(--ground-2); }
     .rung:nth-child(2){ background:#efeae1; }
     .rung:nth-child(3){ background:#e7e0d4; }
@@ -342,7 +342,7 @@
 
     /* ---- panel (teal full-bleed) ---- */
     .panel { background:var(--teal); color:#fff; }
-    .panel .eyebrow { color:#d99a7e; }
+    .panel .eyebrow { color:#e4b29a; }
     .panel .headline { color:#fff; }
     .panel .headline .alt { color:var(--slate-on-dark); }
     .panel .lead { color:#cdd9de; }
@@ -375,6 +375,7 @@
     .mobile { position:fixed; inset:0; background:var(--ground); z-index:100; transform:translateX(100%); transition:transform .3s; display:flex; flex-direction:column; padding:5rem 2rem 2rem; gap:1.4rem; }
     .mobile.open { transform:translateX(0); }
     .mobile a { color:var(--teal); text-decoration:none; font-size:1.3rem; font-weight:500; }
+    .mobile a.btn--primary { color:var(--white); }
     .mobile-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:0; font-size:2rem; color:var(--teal); cursor:pointer; line-height:1; }
 
     /* ---- fade-in (JS-gated: without JS, content renders fully visible) ---- */
@@ -495,6 +496,7 @@
   </div>
 
   <span id="top"></span>
+  <main>
 
   <!-- HERO -->
   <header class="hero">
@@ -652,8 +654,8 @@
             <figure class="inline-frame jframe"><img src="img/scene4-prove.webp" alt="The sample dataset's technical trajectory: overall score and FAIR lines across the remediation readings, with the data table beneath" width="766" height="719" loading="lazy"><figcaption>Sample data · The trajectory: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b> overall, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b> across the waves.</figcaption></figure>
           </div>
         </div>
-        <div class="frame-wrap" aria-hidden="true">
-          <div class="jframe" id="jframe">
+        <div class="frame-wrap">
+          <div class="jframe" id="jframe" aria-hidden="true">
             <figure class="active"><img src="img/scene1-assess.webp" alt="" width="1260" height="780"><figcaption>Sample data · Assess: DQ <b data-facts="capture_baseline.dq_overall">83</b>/100, cleanliness <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
             <figure><img src="img/scene2-diagnose.webp" alt="" width="1260" height="780" loading="lazy"><figcaption>Sample data · Diagnose: <b data-facts="capture_baseline.fair_passed">7</b>/<b data-facts="capture_baseline.fair_total">16</b> FAIR rules passing, interoperability at zero.</figcaption></figure>
             <figure><img src="img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
@@ -821,6 +823,8 @@
     </div>
     <p class="cta-sub">We'll walk you through a technical readiness assessment on an illustrative dataset — read-only, in place.</p>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
