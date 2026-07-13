@@ -351,6 +351,16 @@
     .panel .pcard p { color:#c4d0d5; }
     .panel .pcard .lbl { color:#d99a7e; }
 
+    /* ---- security boundary diagram + trust grid (PR-D) ---- */
+    .boundary { margin-top:3.5rem; }
+    .boundary svg { display:block; width:100%; height:auto; }
+    .trust-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:1.6rem; }
+    .trust-cell { border:1px solid var(--line); border-radius:var(--radius-sm); padding:.9rem 1rem; background:var(--ground-2); }
+    .trust-cell b { display:block; font-size:.68rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.35rem; }
+    .trust-cell span { font-size:.82rem; color:var(--ink); line-height:1.45; }
+    @media (max-width:980px){ .trust-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:680px){ .trust-grid { grid-template-columns:1fr; } }
+
     /* ---- CTA ---- */
     .cta { background:var(--teal); color:#fff; text-align:center; padding:clamp(4rem,8vw,6rem) 28px; }
     .cta h2 { font-weight:400; font-size:clamp(2rem,5vw,3rem); letter-spacing:-.02em; line-height:1.08; }
@@ -781,6 +791,61 @@
           <div class="feat"><span class="dot"></span><div><span class="lbl">Analyze</span><b>50+ algorithms on your warehouse.</b><span>Results return as scores, evidence, and plans — not copies of your data.</span></div></div>
           <div class="feat"><span class="dot"></span><div><span class="lbl">AI you control</span><b>In-environment or customer-approved AI.</b><span>Bridge AI can run against a model endpoint inside your own environment.</span></div></div>
         </div>
+      </div>
+      <div class="boundary fade-in" role="img" aria-label="Architecture diagram: your environment contains your data platforms and the DATA Compass instance. Compass reads the platforms with read-only queries on your compute; source data stays in the systems that own it. Bridge AI uses a model endpoint inside your environment or a customer-approved external one.">
+        <svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- environment boundary -->
+          <rect x="14" y="26" width="932" height="348" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
+          <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
+          <rect x="30" y="6" width="6" height="0"/>
+          <!-- source systems -->
+          <g font-family="Inter,system-ui,sans-serif" font-size="14" fill="#00495D">
+            <rect x="52" y="66" width="200" height="52" rx="10" fill="#F5F3EE" stroke="#d8d1c5"/>
+            <text x="152" y="97" text-anchor="middle" font-weight="600">Databricks</text>
+            <rect x="52" y="130" width="200" height="52" rx="10" fill="#F5F3EE" stroke="#d8d1c5"/>
+            <text x="152" y="161" text-anchor="middle" font-weight="600">Snowflake</text>
+            <rect x="52" y="194" width="200" height="52" rx="10" fill="#F5F3EE" stroke="#d8d1c5"/>
+            <text x="152" y="225" text-anchor="middle" font-weight="600">Veeva Vault</text>
+            <rect x="52" y="258" width="200" height="52" rx="10" fill="#F5F3EE" stroke="#d8d1c5"/>
+            <text x="152" y="289" text-anchor="middle" font-weight="600">Files &amp; APIs</text>
+            <text x="152" y="336" text-anchor="middle" font-size="11" fill="#66615A" letter-spacing="1.2">SOURCE DATA STAYS HERE</text>
+          </g>
+          <!-- read-only flow -->
+          <g>
+            <line x1="262" y1="188" x2="392" y2="188" stroke="#B85C38" stroke-width="2"/>
+            <path d="M392 188 l-11 -6 v12 z" fill="#B85C38"/>
+            <text x="327" y="170" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11.5" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
+            <text x="327" y="212" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" fill="#66615A">your compute</text>
+          </g>
+          <!-- Compass instance -->
+          <g font-family="Inter,system-ui,sans-serif">
+            <rect x="404" y="66" width="292" height="244" rx="14" fill="#00495D"/>
+            <text x="550" y="102" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">DATA Compass instance</text>
+            <g font-size="13.5" fill="#cdd9de">
+              <text x="550" y="146" text-anchor="middle">Assessment</text>
+              <text x="550" y="180" text-anchor="middle">Recommendations</text>
+              <text x="550" y="214" text-anchor="middle">Action plans</text>
+              <text x="550" y="248" text-anchor="middle">Readiness trajectory</text>
+            </g>
+            <text x="550" y="288" text-anchor="middle" font-size="11" fill="#9fb2b9" letter-spacing="1.2">RESULTS LIVE HERE — INSIDE THE BOUNDARY</text>
+          </g>
+          <!-- AI endpoint -->
+          <g font-family="Inter,system-ui,sans-serif">
+            <line x1="696" y1="188" x2="762" y2="188" stroke="#8EA3AC" stroke-width="2" stroke-dasharray="5 5"/>
+            <rect x="762" y="140" width="158" height="96" rx="10" fill="none" stroke="#8EA3AC" stroke-width="1.6" stroke-dasharray="5 5"/>
+            <text x="841" y="172" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">Bridge AI model</text>
+            <text x="841" y="190" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">endpoint</text>
+            <text x="841" y="214" text-anchor="middle" font-size="10.5" fill="#66615A">in-environment, or</text>
+            <text x="841" y="228" text-anchor="middle" font-size="10.5" fill="#66615A">customer-approved external</text>
+          </g>
+        </svg>
+      </div>
+      <div class="trust-grid stagger">
+        <div class="trust-cell"><b>Read-only</b><span>Connected sources are queried, never written — and never copied out.</span></div>
+        <div class="trust-cell"><b>In your environment</b><span>Compass deploys inside your boundary; results stay there too.</span></div>
+        <div class="trust-cell"><b>Encrypted secrets</b><span>Credentials AES-256 encrypted, key-vault managed.</span></div>
+        <div class="trust-cell"><b>Auditable</b><span>Analyses, decisions, and overrides carry an audit trail.</span></div>
+        <div class="trust-cell"><b>Evidence-traced</b><span>Every finding cites the check and the data that produced it.</span></div>
       </div>
       <div class="sec-head" style="margin-top:4rem;">
         <h2 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">How much autonomy<span class="alt">can your data support?</span></h2>
