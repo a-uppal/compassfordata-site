@@ -185,7 +185,7 @@
     .proof-score svg { width:100%; height:100%; transform:rotate(-90deg); }
     .proof-score circle { fill:none; stroke-width:8; }
     .ring-track { stroke:var(--ground-3); }
-    .ring-fill { stroke:var(--terra); stroke-linecap:round; stroke-dasharray:326.7; stroke-dashoffset:189.5; }
+    .ring-fill { stroke:var(--terra); stroke-linecap:round; stroke-dasharray:326.7; stroke-dashoffset:163.4; }
     .score-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:.15rem; }
     .score-num b { font-size:1.7rem; font-weight:300; color:var(--teal); line-height:1; }
     .score-num span { font-size:.7rem; color:var(--muted); align-self:center; margin-top:.55rem; }
@@ -205,6 +205,7 @@
     .pd-eyebrow { display:block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.3rem; }
     .pd-block b { display:block; color:var(--teal); font-size:.88rem; font-weight:700; line-height:1.35; }
     .pd-evidence { display:block; font-size:.74rem; color:var(--muted); margin-top:.25rem; letter-spacing:.02em; }
+    .pd-evidence b, .proof-dimensions b, figcaption b { display:inline; font-size:inherit; color:inherit; font-weight:700; }
     .pd-block p { font-size:.78rem; color:var(--ink); line-height:1.5; margin-top:.3rem; }
     .pd-block--rec { background:var(--ground-2); border:1px solid var(--line); border-left:3px solid var(--terra); border-radius:var(--radius-sm); padding:.8rem .9rem; }
     .proof-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
@@ -243,7 +244,7 @@
     .compare .after { background:var(--teal); }
     .compare h3 { font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
     .compare .before h3 { color:var(--muted); }
-    .compare .after h3 { color:#d99a7e; }
+    .compare .after h3 { color:#e4b29a; }
     .compare ul { list-style:none; }
     .compare li { padding:.5rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
     .compare .after li { color:#e8eef0; border-top-color:rgba(255,255,255,.16); }
@@ -331,9 +332,9 @@
     /* ---- autonomy ladder ---- */
     .ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:3rem; }
     .rung { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; position:relative; }
-    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); }
+    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#8a4227; }
     .rung b { display:block; color:var(--teal); font-size:1.1rem; font-weight:600; margin:.5rem 0 .4rem; }
-    .rung span { font-size:.86rem; color:var(--ink); }
+    .rung span { font-size:.86rem; color:#4f5862; }
     .rung:nth-child(1){ background:var(--ground-2); }
     .rung:nth-child(2){ background:#efeae1; }
     .rung:nth-child(3){ background:#e7e0d4; }
@@ -341,7 +342,7 @@
 
     /* ---- panel (teal full-bleed) ---- */
     .panel { background:var(--teal); color:#fff; }
-    .panel .eyebrow { color:#d99a7e; }
+    .panel .eyebrow { color:#e4b29a; }
     .panel .headline { color:#fff; }
     .panel .headline .alt { color:var(--slate-on-dark); }
     .panel .lead { color:#cdd9de; }
@@ -374,6 +375,7 @@
     .mobile { position:fixed; inset:0; background:var(--ground); z-index:100; transform:translateX(100%); transition:transform .3s; display:flex; flex-direction:column; padding:5rem 2rem 2rem; gap:1.4rem; }
     .mobile.open { transform:translateX(0); }
     .mobile a { color:var(--teal); text-decoration:none; font-size:1.3rem; font-weight:500; }
+    .mobile a.btn--primary { color:var(--white); }
     .mobile-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:0; font-size:2rem; color:var(--teal); cursor:pointer; line-height:1; }
 
     /* ---- fade-in (JS-gated: without JS, content renders fully visible) ---- */
@@ -494,6 +496,7 @@
   </div>
 
   <span id="top"></span>
+  <main>
 
   <!-- HERO -->
   <header class="hero">
@@ -514,7 +517,7 @@
             <header class="proof-header">
               <div class="ph-id">
                 <b>Quality Events Dataset</b>
-                <span class="proof-sources">Databricks · Veeva · Stardog · SOPs</span>
+                <span class="proof-sources">Databricks · Unity Catalog</span>
               </div>
               <div class="ph-ctx">
                 <span class="proof-badge">Illustrative assessment</span>
@@ -522,37 +525,37 @@
             </header>
             <div class="proof-main">
               <section class="proof-score-panel" aria-label="Readiness verdict">
-                <div class="proof-score" role="img" aria-label="AI readiness score: 42 out of 100">
+                <div class="proof-score" role="img" aria-label="AI readiness score: 50 out of 100">
                   <svg viewBox="0 0 120 120" aria-hidden="true">
                     <circle class="ring-track" cx="60" cy="60" r="52"/>
                     <circle class="ring-fill" cx="60" cy="60" r="52"/>
                   </svg>
-                  <div class="score-num" aria-hidden="true"><b>42</b><span>/ 100</span></div>
+                  <div class="score-num" aria-hidden="true"><b data-facts="assessment.score">50</b><span>/ 100</span></div>
                 </div>
                 <span class="score-label">AI readiness</span>
                 <p class="proof-verdict">Not ready for supervised&nbsp;AI</p>
                 <ul class="proof-dimensions">
-                  <li><span>Semantic</span><i data-s="critical">Critical</i></li>
-                  <li><span>Statistical</span><i data-s="risk">At risk</i></li>
-                  <li><span>Contextual</span><i data-s="blocked">Blocked</i></li>
-                  <li><span>Regulatory</span><i data-s="partial">Partial</i></li>
+                  <li><span>Semantic · <b data-facts="assessment.dimensions.semantic">43</b></span><i data-s="critical">Critical</i></li>
+                  <li><span>FAIR core · <b data-facts="assessment.dimensions.fair_foundation">31</b></span><i data-s="blocked">Blocked</i></li>
+                  <li><span>Statistical · <b data-facts="assessment.dimensions.statistical">69</b></span><i data-s="risk">At risk</i></li>
+                  <li><span>ML readiness</span><i data-s="risk">At risk</i></li>
                 </ul>
               </section>
               <section class="proof-diagnosis" aria-label="Diagnosis and recommendation">
                 <div class="pd-block">
                   <span class="pd-eyebrow">Primary blocker</span>
-                  <b>Vocabulary fragmentation across source systems</b>
-                  <span class="pd-evidence">36 status values · 19 severity encodings · inconsistent booleans</span>
-                  <p>Incompatible vocabularies block reliable integration and inflate AI/ML preprocessing.</p>
+                  <b data-facts="assessment.primary_blocker">Cross-system semantic and metadata fragmentation</b>
+                  <span class="pd-evidence"><b data-facts="dataset.event_type_variants">11</b> event-type variants · <b data-facts="dataset.severity_scales">3</b> severity scales · <b data-facts="product_findings_baseline.ontology_inference.mapped_columns">4</b> of <b data-facts="product_findings_baseline.ontology_inference.total_columns">18</b> columns mapped</span>
+                  <p>Two source systems never shared a semantic foundation — the fragmentation blocks reliable integration and inflates AI/ML preparation.</p>
                 </div>
                 <div class="pd-block pd-block--rec">
                   <span class="pd-eyebrow">Recommended next move</span>
-                  <b>Establish one canonical controlled vocabulary across source systems.</b>
-                  <p>Standardize status, severity, priority, and event type before further schema or metadata work.</p>
+                  <b>Establish a governed semantic foundation across source systems.</b>
+                  <p>Canonical vocabularies, documented fields, machine-readable declarations — then re-assess to prove the lift.</p>
                   <div class="proof-meta">
-                    <span><i>Impact</i>High</span>
-                    <span><i>Execution risk</i>Moderate</span>
-                    <span><i>Horizon</i>6–9 months</span>
+                    <span><i>Measured lift</i><b data-facts="measured_lift.score_delta">+8</b>&nbsp;overall</span>
+                    <span><i>FAIR</i><b data-facts="measured_lift.dimension_deltas.fair">+26</b></span>
+                    <span><i>Duplicates removed</i><b data-facts="measured_lift.records_deduplicated">150</b></span>
                   </div>
                 </div>
               </section>
@@ -622,7 +625,7 @@
       <div class="sec-head">
         <span class="eyebrow">02 · How It Works</span>
         <h2 class="headline">One dataset.<span class="alt">Four moments.</span></h2>
-        <p class="lead">Follow a single dataset through the loop Compass runs: assess it, diagnose the root cause, act on an executable plan, and prove the improvement. Every screen below is the product on live data — nothing is a mockup.</p>
+        <p class="lead">Follow one sample dataset through the loop Compass runs: assess it, diagnose the root cause, act, and prove the improvement. Every screen and every number below is the product on that dataset — recorded, not mocked.</p>
       </div>
       <div class="journey">
         <div class="scenes" id="scenes">
@@ -630,33 +633,33 @@
             <span class="lbl">Scene 1 · Assess</span>
             <h3>A verdict, not a vibe.</h3>
             <p>The dataset gets a readiness score with the weak dimension named — eight quality components, ML readiness, FAIR checks, ontology coverage, each traced to its test.</p>
-            <figure class="inline-frame jframe"><img src="img/dq-assessment.webp" alt="A DATA Compass Data Quality Assessment with an eight-component breakdown" width="1600" height="1043" loading="lazy"><figcaption>The Statistical Health read on a live warehouse table: eight components scored, warnings in plain language.</figcaption></figure>
+            <figure class="inline-frame jframe"><img src="img/scene1-assess.webp" alt="The sample dataset's Data Quality Assessment: 83 of 100 with a seven-component breakdown and cleanliness at 45 percent" width="1260" height="780" loading="lazy"><figcaption>Sample data · The Data Quality read: <b data-facts="capture_baseline.dq_overall">83</b>/100 with cleanliness at <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
           </div>
           <div class="scene" data-scene="1">
             <span class="lbl">Scene 2 · Diagnose</span>
             <h3>The root cause, named.</h3>
             <p>Bridge AI runs causal analysis across every finding and separates root causes from symptoms — the story of why the score is what it is, cited to its evidence.</p>
-            <figure class="inline-frame jframe"><img src="img/exec-briefing.webp" alt="A Bridge AI executive briefing connecting vocabulary fragmentation to downstream failures" width="1400" height="1139" loading="lazy"><figcaption>An executive briefing written by Bridge AI: the causal story across every dimension, ending in one keystone recommendation.</figcaption></figure>
+            <figure class="inline-frame jframe"><img src="img/scene2-diagnose.webp" alt="The sample dataset's FAIR Evaluate view: interoperability pillar at zero, rule-by-rule verdicts with evidence and review controls" width="1260" height="780" loading="lazy"><figcaption>Sample data · FAIR Evaluate: <b data-facts="capture_baseline.fair_passed">7</b> of <b data-facts="capture_baseline.fair_total">16</b> rules passing, interoperability at zero — every verdict carries its evidence.</figcaption></figure>
           </div>
           <div class="scene" data-scene="2">
             <span class="lbl">Scene 3 · Act</span>
             <h3>The fix arrives with the finding.</h3>
             <p>Recommendations carry impact, effort, and an executable remediation plan — ranked so the first thing you do is the thing that moves readiness most.</p>
-            <figure class="inline-frame jframe"><img src="img/smart-recommendation.webp" alt="A DATA Compass smart recommendation with impact, effort, timeline, ROI, and the causal chain" width="1198" height="1204" loading="lazy"><figcaption>One finding, fully dressed: the causal chain, the fix, and the ROI — ready to defend in a steering committee.</figcaption></figure>
+            <figure class="inline-frame jframe"><img src="img/scene3-act.webp" alt="The sample dataset's recommendations: impact and effort on every card, with a business-value calculation offered across all of them" width="1260" height="770" loading="lazy"><figcaption>Sample data · <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations with impact and effort on every card — and a business-value calculation over the lot.</figcaption></figure>
           </div>
           <div class="scene" data-scene="3">
             <span class="lbl">Scene 4 · Prove</span>
             <h3>Reassessed. The trajectory is the deliverable.</h3>
             <p>Every re-analysis appends to the dataset's history: score trend per dimension, the delta since your last checkpoint, and the business value of the lift — grounded in the Pistoia Alliance FAIR business-value model.</p>
-            <figure class="inline-frame jframe"><img src="img/trend-trajectory.webp" alt="The DATA Compass technical trajectory view plotting readings over time" width="1532" height="1028" loading="lazy"><figcaption>A real trajectory: readings over time, with the scoring-rubric version pinned to the timeline.</figcaption></figure>
+            <figure class="inline-frame jframe"><img src="img/scene4-prove.webp" alt="The sample dataset's technical trajectory: overall score and FAIR lines across the remediation readings, with the data table beneath" width="766" height="719" loading="lazy"><figcaption>Sample data · The trajectory: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b> overall, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b> across the waves.</figcaption></figure>
           </div>
         </div>
-        <div class="frame-wrap" aria-hidden="true">
-          <div class="jframe" id="jframe">
-            <figure class="active"><img src="img/dq-assessment.webp" alt="" width="1600" height="1043"><figcaption>Assess: eight components scored, warnings in plain language.</figcaption></figure>
-            <figure><img src="img/exec-briefing.webp" alt="" width="1400" height="1139" loading="lazy"><figcaption>Diagnose: the causal story, ending in one keystone recommendation.</figcaption></figure>
-            <figure><img src="img/smart-recommendation.webp" alt="" width="1198" height="1204" loading="lazy"><figcaption>Act: the causal chain, the fix, and the ROI.</figcaption></figure>
-            <figure><img src="img/trend-trajectory.webp" alt="" width="1532" height="1028" loading="lazy"><figcaption>Prove: readings over time, rubric version pinned.</figcaption></figure>
+        <div class="frame-wrap">
+          <div class="jframe" id="jframe" aria-hidden="true">
+            <figure class="active"><img src="img/scene1-assess.webp" alt="" width="1260" height="780"><figcaption>Sample data · Assess: DQ <b data-facts="capture_baseline.dq_overall">83</b>/100, cleanliness <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
+            <figure><img src="img/scene2-diagnose.webp" alt="" width="1260" height="780" loading="lazy"><figcaption>Sample data · Diagnose: <b data-facts="capture_baseline.fair_passed">7</b>/<b data-facts="capture_baseline.fair_total">16</b> FAIR rules passing, interoperability at zero.</figcaption></figure>
+            <figure><img src="img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
+            <figure><img src="img/scene4-prove.webp" alt="" width="766" height="719" loading="lazy"><figcaption>Sample data · Prove: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b>, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b>.</figcaption></figure>
           </div>
           <div class="jrail" id="jrail">
             <button class="active" aria-label="Scene 1: Assess"></button>
@@ -820,6 +823,8 @@
     </div>
     <p class="cta-sub">We'll walk you through a technical readiness assessment on an illustrative dataset — read-only, in place.</p>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
