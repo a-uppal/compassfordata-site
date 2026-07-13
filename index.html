@@ -42,7 +42,7 @@
         "operatingSystem": "Self-hosted (Docker Compose, on-premises or private cloud)",
         "url": "https://compassfordata.com/",
         "publisher": { "@id": "https://compassfordata.com/#org" },
-        "description": "The data platform that evaluates datasets for AI readiness and turns the evaluation into recommendations, an executable action plan, and a quantified ROI. Zero data egress: analyses run against the customer's own warehouse."
+        "description": "The data platform that evaluates datasets for AI readiness and turns the evaluation into recommendations, an executable action plan, and a quantified ROI. Deploys inside the customer environment; analyses run read-only against the customer's own warehouse."
       }
     ]
   }
@@ -60,7 +60,10 @@
       --terra-d:   #9c4b2c;
       --teal:      #00495D;   /* headline 1, subheads, panels */
       --teal-d:    #003543;
-      --slate:     #8EA3AC;   /* headline 2, quotes */
+      --slate:     #8EA3AC;   /* decorative strokes, chart accents, disabled states ONLY */
+      --slate-display: #667C85; /* headline second lines — LARGE display text only (~3.6:1) */
+      --slate-ink: #566A72;   /* quotes + smaller supporting editorial (≥4.5:1 on cream) */
+      --slate-on-dark: #CDD9DE; /* slate role on deep-teal surfaces */
       --ink:       #5C6670;   /* body */
       --muted:     #66615A;   /* meta / footer text (≥4.5:1 on cream) */
       --white:     #FFFFFF;
@@ -74,6 +77,10 @@
     }
 
     *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline:2px solid var(--terra-d); outline-offset:2px; border-radius:3px;
+    }
+    .btn:focus-visible, .nav-cta:focus-visible, .chip:focus-visible { outline-offset:3px; border-radius:100px; }
     html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
     body {
       font-family:var(--ff);
@@ -91,19 +98,20 @@
     /* ---- typography primitives ---- */
     .eyebrow {
       font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
-      color:var(--terra); margin-bottom:1.1rem; display:inline-block;
+      color:var(--terra-d); margin-bottom:1.1rem; display:inline-block;
     }
     .headline {
-      font-weight:300; color:var(--teal); letter-spacing:-.018em; line-height:1.08;
+      font-weight:400; color:var(--teal); letter-spacing:-.018em; line-height:1.08;
       font-size:clamp(1.9rem,4.4vw,2.55rem);
     }
-    .headline .alt { color:var(--slate); display:block; }
+    .headline .alt { color:var(--slate-display); display:block; }
     .lead {
       color:var(--ink); font-size:1.06rem; line-height:1.7; max-width:62ch; margin-top:1.25rem;
     }
     .quote {
-      font-weight:300; color:var(--slate); font-size:clamp(1.15rem,2.3vw,1.5rem);
+      font-weight:400; color:var(--slate-ink); font-size:clamp(1.15rem,2.3vw,1.5rem);
       letter-spacing:-.01em; line-height:1.4; max-width:30ch;
+      border-left:3px solid var(--terra); padding-left:1.1rem;
     }
     .chip {
       display:inline-flex; align-items:center; gap:.5rem; background:var(--terra); color:var(--white);
@@ -155,8 +163,8 @@
     /* ---- hero ---- */
     .hero { padding:clamp(3.5rem,8vw,6.5rem) 0 clamp(3.5rem,7vw,5.5rem); }
     .hero-grid { max-width:var(--maxw); margin:0 auto; padding:0 28px; display:grid; grid-template-columns:minmax(360px,.85fr) minmax(540px,1.15fr); gap:2.8rem; align-items:center; }
-    .hero h1 { font-weight:300; color:var(--teal); letter-spacing:-.022em; line-height:1.04; font-size:clamp(2.6rem,6vw,4.1rem); }
-    .hero h1 .alt { color:var(--slate); display:block; }
+    .hero h1 { font-weight:400; color:var(--teal); letter-spacing:-.022em; line-height:1.04; font-size:clamp(2.6rem,6vw,4.1rem); }
+    .hero h1 .alt { color:var(--slate-display); display:block; }
     .hero-sub { margin-top:1.5rem; font-size:1.16rem; line-height:1.6; color:var(--ink); max-width:50ch; }
     .hero-ctas { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
     .hero-note { margin-top:1.4rem; font-size:.84rem; color:var(--muted); letter-spacing:.01em; }
@@ -167,10 +175,9 @@
     .proof-window { background:var(--white); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-lg); overflow:hidden; }
     .proof-header { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:.85rem 1.15rem; background:var(--ground-2); border-bottom:1px solid var(--line); }
     .ph-id b { display:block; color:var(--teal); font-size:.86rem; font-weight:700; letter-spacing:.01em; }
-    .proof-sources { font-size:.62rem; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+    .proof-sources { font-size:.72rem; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
     .ph-ctx { text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem; }
-    .proof-badge { font-size:.58rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--terra-d); border:1px solid rgba(184,92,56,.35); background:rgba(184,92,56,.07); padding:.22rem .55rem; border-radius:100px; white-space:nowrap; }
-    .proof-secure { font-size:.6rem; color:var(--muted); }
+    .proof-badge { font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--terra-d); border:1px solid rgba(184,92,56,.35); background:rgba(184,92,56,.07); padding:.22rem .55rem; border-radius:100px; white-space:nowrap; }
     .proof-main { display:grid; grid-template-columns:200px 1fr; }
     /* verdict panel */
     .proof-score-panel { padding:1.05rem 1rem 1rem; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:center; text-align:center; }
@@ -181,13 +188,13 @@
     .ring-fill { stroke:var(--terra); stroke-linecap:round; stroke-dasharray:326.7; stroke-dashoffset:189.5; }
     .score-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:.15rem; }
     .score-num b { font-size:1.7rem; font-weight:300; color:var(--teal); line-height:1; }
-    .score-num span { font-size:.62rem; color:var(--muted); align-self:center; margin-top:.55rem; }
-    .score-label { margin-top:.5rem; font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .score-num span { font-size:.7rem; color:var(--muted); align-self:center; margin-top:.55rem; }
+    .score-label { margin-top:.5rem; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
     .proof-verdict { margin-top:.3rem; font-size:.82rem; font-weight:700; color:var(--teal); line-height:1.3; }
     .proof-dimensions { list-style:none; width:100%; margin-top:.8rem; border-top:1px dashed var(--line); padding-top:.6rem; }
-    .proof-dimensions li { display:flex; justify-content:space-between; align-items:center; font-size:.7rem; padding:.22rem 0; }
+    .proof-dimensions li { display:flex; justify-content:space-between; align-items:center; font-size:.74rem; padding:.22rem 0; }
     .proof-dimensions span { color:var(--ink); }
-    .proof-dimensions i { font-style:normal; font-weight:700; font-size:.62rem; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:.32rem; }
+    .proof-dimensions i { font-style:normal; font-weight:700; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:.32rem; }
     .proof-dimensions i::before { content:""; width:7px; height:7px; border-radius:50%; flex:none; }
     .proof-dimensions i[data-s="critical"] { color:var(--terra-d); } .proof-dimensions i[data-s="critical"]::before { background:var(--terra); }
     .proof-dimensions i[data-s="blocked"]  { color:var(--terra-d); } .proof-dimensions i[data-s="blocked"]::before  { background:var(--terra); }
@@ -195,23 +202,20 @@
     .proof-dimensions i[data-s="partial"]  { color:var(--teal); }    .proof-dimensions i[data-s="partial"]::before  { background:var(--teal); }
     /* diagnosis + recommendation */
     .proof-diagnosis { padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.9rem; }
-    .pd-eyebrow { display:block; font-size:.58rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); margin-bottom:.3rem; }
+    .pd-eyebrow { display:block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.3rem; }
     .pd-block b { display:block; color:var(--teal); font-size:.88rem; font-weight:700; line-height:1.35; }
-    .pd-evidence { display:block; font-size:.66rem; color:var(--muted); margin-top:.25rem; letter-spacing:.02em; }
-    .pd-block p { font-size:.74rem; color:var(--ink); line-height:1.5; margin-top:.3rem; }
+    .pd-evidence { display:block; font-size:.74rem; color:var(--muted); margin-top:.25rem; letter-spacing:.02em; }
+    .pd-block p { font-size:.78rem; color:var(--ink); line-height:1.5; margin-top:.3rem; }
     .pd-block--rec { background:var(--ground-2); border:1px solid var(--line); border-left:3px solid var(--terra); border-radius:var(--radius-sm); padding:.8rem .9rem; }
     .proof-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
-    .proof-meta span { display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line); border-radius:7px; padding:.35rem .6rem; font-size:.7rem; font-weight:700; color:var(--teal); }
-    .proof-meta i { font-style:normal; font-size:.54rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
-    /* unlocks + deliverables */
-    .proof-unlocks { display:flex; align-items:center; gap:.9rem; flex-wrap:wrap; padding:.6rem 1.15rem; border-top:1px solid var(--line); font-size:.68rem; color:var(--ink); }
-    .proof-unlocks i { font-style:normal; font-size:.56rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
-    .proof-unlocks span::before { content:"→ "; color:var(--terra); font-weight:700; }
-    .proof-deliverables { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; padding:.65rem 1.15rem; background:var(--ground-2); border-top:1px solid var(--line); font-size:.68rem; font-weight:600; color:var(--teal); }
-    .proof-deliverables i { font-style:normal; font-size:.56rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
+    .proof-meta span { display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line); border-radius:7px; padding:.35rem .6rem; font-size:.74rem; font-weight:700; color:var(--teal); }
+    .proof-meta i { font-style:normal; font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+    /* deliverables */
+    .proof-deliverables { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; padding:.65rem 1.15rem; background:var(--ground-2); border-top:1px solid var(--line); font-size:.74rem; font-weight:600; color:var(--teal); }
+    .proof-deliverables i { font-style:normal; font-size:.68rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
     .proof-loop { margin-left:auto; color:var(--ink); font-weight:600; }
     .proof-loop em { font-style:normal; color:var(--terra); font-weight:700; }
-    .hero-proof figcaption { text-align:center; font-size:.7rem; color:var(--muted); margin-top:.7rem; }
+    .hero-proof figcaption { text-align:center; font-size:.78rem; color:var(--muted); margin-top:.7rem; }
 
     /* ---- generic section header ---- */
     .sec-head { max-width:64ch; }
@@ -221,7 +225,7 @@
     .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:3rem; }
     .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
     .pcard { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.6rem; box-shadow:var(--shadow); }
-    .pcard .lbl { font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra); }
+    .pcard .lbl { font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra-d); }
     .pcard h3 { color:var(--teal); font-size:1.06rem; font-weight:600; margin:.7rem 0 .5rem; line-height:1.3; letter-spacing:-.01em; }
     .pcard p { font-size:.92rem; color:var(--ink); line-height:1.55; }
 
@@ -250,7 +254,7 @@
     /* stage 1 — evidence */
     .ev-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
     .ev-cell { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
-    .ev-cell b { display:block; font-size:.66rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra); margin-bottom:.4rem; }
+    .ev-cell b { display:block; font-size:.66rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.4rem; }
     .ev-cell span { font-size:.84rem; color:var(--ink); line-height:1.5; }
     /* stage 2 — triangulation */
     .tri-src { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:640px; margin:0 auto; }
@@ -295,20 +299,20 @@
     .feat-list { margin-top:1.5rem; display:flex; flex-direction:column; gap:1.25rem; }
     .feat { display:grid; grid-template-columns:auto 1fr; gap:1rem; }
     .feat .dot { width:10px; height:10px; border-radius:50%; background:var(--terra); margin-top:.5rem; }
-    .feat .lbl { font-size:.66rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra); }
+    .feat .lbl { font-size:.66rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra-d); }
     .feat b { display:block; color:var(--teal); font-weight:600; font-size:1rem; margin:.15rem 0 .2rem; }
     .feat span { font-size:.9rem; color:var(--ink); }
 
     /* ---- method / triangulation ---- */
     .tri { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
     .tri-card { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.7rem; text-align:center; box-shadow:var(--shadow); }
-    .tri-card .lbl { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--terra); }
+    .tri-card .lbl { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--terra-d); }
     .tri-card b { display:block; color:var(--teal); font-size:1.15rem; font-weight:600; margin:.6rem 0 .4rem; }
     .tri-card span { font-size:.88rem; color:var(--ink); }
     .tri-chip-wrap { text-align:center; margin-top:1.8rem; }
     .patterns { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin-top:2.4rem; }
     .pat { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
-    .pat b { display:block; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra); }
+    .pat b { display:block; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra-d); }
     .pat span { font-size:.8rem; color:var(--ink); }
     .patterns-note { text-align:center; margin-top:1.4rem; font-size:.84rem; color:#aebfc6; letter-spacing:.02em; }
 
@@ -329,7 +333,7 @@
     /* ---- autonomy ladder ---- */
     .ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:3rem; }
     .rung { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; position:relative; }
-    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); }
+    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); }
     .rung b { display:block; color:var(--teal); font-size:1.1rem; font-weight:600; margin:.5rem 0 .4rem; }
     .rung span { font-size:.86rem; color:var(--ink); }
     .rung:nth-child(1){ background:var(--ground-2); }
@@ -341,7 +345,7 @@
     .panel { background:var(--teal); color:#fff; }
     .panel .eyebrow { color:#d99a7e; }
     .panel .headline { color:#fff; }
-    .panel .headline .alt { color:var(--slate); }
+    .panel .headline .alt { color:var(--slate-on-dark); }
     .panel .lead { color:#cdd9de; }
     .panel .pcard { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
     .panel .pcard h3 { color:#fff; }
@@ -357,8 +361,8 @@
 
     /* ---- CTA ---- */
     .cta { background:var(--teal); color:#fff; text-align:center; padding:clamp(4rem,8vw,6rem) 28px; }
-    .cta h2 { font-weight:300; font-size:clamp(2rem,5vw,3rem); letter-spacing:-.02em; line-height:1.08; }
-    .cta h2 .alt { color:var(--slate); display:block; }
+    .cta h2 { font-weight:400; font-size:clamp(2rem,5vw,3rem); letter-spacing:-.02em; line-height:1.08; }
+    .cta h2 .alt { color:var(--slate-on-dark); display:block; }
     .cta p { color:#cdd9de; max-width:54ch; margin:1.4rem auto 0; font-size:1.08rem; }
     .cta-btns { margin-top:2.2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
     .cta-sub { font-size:.85rem!important; color:#9fb2b9!important; margin-top:1.4rem!important; }
@@ -369,7 +373,7 @@
     .footer-brand { font-weight:600; color:var(--teal); font-size:1.1rem; display:flex; align-items:center; gap:.5rem; }
     .footer-brand b { font-weight:800; } .footer-brand svg.mark { display:block; flex:none; }
     .footer-desc { font-size:.9rem; margin-top:.8rem; max-width:34ch; color:#4E4840; }
-    .footer h4 { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra); margin-bottom:1rem; }
+    .footer h4 { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); margin-bottom:1rem; }
     .footer ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
     .footer a { color:#4E4840; text-decoration:none; font-size:.9rem; transition:color .2s; }
     .footer a:hover { color:var(--teal); }
@@ -404,14 +408,13 @@
     html.js .proof-dimensions { animation:rise .4s ease .7s backwards; }
     html.js .pd-block { animation:rise .4s ease .85s backwards; }
     html.js .pd-block--rec { animation:rise .4s ease 1s backwards; }
-    html.js .proof-unlocks { animation:rise .4s ease 1.15s backwards; }
-    html.js .proof-deliverables { animation:rise .4s ease 1.25s backwards; }
+    html.js .proof-deliverables { animation:rise .4s ease 1.15s backwards; }
     html.js .hero-proof figcaption { animation:rise .4s ease 1.35s backwards; }
 
     @media (prefers-reduced-motion:reduce){
       html.js .fade-in, html.js .fade-in .stagger > * { opacity:1; transform:none; transition:none; }
       html.js .proof-window, html.js .ring-fill, html.js .proof-dimensions, html.js .pd-block,
-      html.js .pd-block--rec, html.js .proof-unlocks, html.js .proof-deliverables,
+      html.js .pd-block--rec, html.js .proof-deliverables,
       html.js .hero-proof figcaption { animation:none; }
       html{scroll-behavior:auto;}
     }
@@ -452,8 +455,9 @@
     .modal-overlay.open .modal-card{ transform:none; }
     .modal-x{ position:absolute; top:1rem; right:1.1rem; background:none; border:0; font-size:1.9rem; line-height:1; color:var(--muted); cursor:pointer; transition:color .2s; }
     .modal-x:hover{ color:var(--teal); }
-    .modal-title{ font-weight:300; color:var(--teal); font-size:clamp(1.5rem,3.5vw,2rem); letter-spacing:-.02em; line-height:1.1; margin-top:.2rem; }
-    .modal-sub{ color:var(--ink); font-size:.98rem; margin-top:.6rem; margin-bottom:1.6rem; }
+    .modal-title{ font-weight:400; color:var(--teal); font-size:clamp(1.5rem,3.5vw,2rem); letter-spacing:-.02em; line-height:1.1; margin-top:.2rem; }
+    .modal-sub{ color:var(--ink); font-size:.98rem; margin-top:.6rem; }
+    .modal-note{ color:var(--muted); font-size:.8rem; letter-spacing:.01em; margin:.55rem 0 1.6rem; }
     #demoForm{ display:flex; flex-direction:column; gap:1rem; }
     #demoForm[hidden]{ display:none; }
     .frow{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
@@ -514,7 +518,7 @@
           <a href="#" class="btn btn--primary btn--lg" data-demo>Request a Demo</a>
           <a href="#synthesis" class="btn btn--outline btn--lg">See a Sample Assessment</a>
         </div>
-        <p class="hero-note">Built for life sciences · Your data never moves · Zero egress</p>
+        <p class="hero-note">Built for life sciences · Source data stays in your environment · Read-only, in place</p>
       </div>
       <div class="hero-visual">
         <figure class="hero-proof">
@@ -526,7 +530,6 @@
               </div>
               <div class="ph-ctx">
                 <span class="proof-badge">Illustrative assessment</span>
-                <span class="proof-secure">Connected in place · zero egress</span>
               </div>
             </header>
             <div class="proof-main">
@@ -566,12 +569,6 @@
                 </div>
               </section>
             </div>
-            <div class="proof-unlocks">
-              <i>What this unlocks</i>
-              <span>Fewer duplicate records</span>
-              <span>Less ML preprocessing</span>
-              <span>Stronger interoperability</span>
-            </div>
             <footer class="proof-deliverables">
               <i>Compass delivers</i>
               <span>✓ Action plan</span>
@@ -601,7 +598,7 @@
         <div class="pcard"><span class="lbl">Data Fragmentation</span><h3>Critical data locked in silos</h3><p>Databricks, Snowflake, Veeva — never assessed together.</p></div>
         <div class="pcard"><span class="lbl">Unquantified ROI</span><h3>No line from data spend to AI outcome</h3><p>Which fixes actually move readiness?</p></div>
       </div>
-      <p class="quote" style="margin-top:3rem;">“Everyone says their data is AI-ready. Almost no one has measured it.”</p>
+      <p class="quote" style="margin-top:3rem;">Everyone says their data is AI-ready. Almost no one has measured it.</p>
     </div>
   </section>
 
@@ -743,7 +740,7 @@
           <span class="eyebrow">§ 04 · Where FAIR Sits</span>
           <h2 class="headline">FAIR is the floor.<span class="alt">Not the finish line.</span></h2>
           <p class="lead">FAIR makes data legible to machines and people — findable, accessible, interoperable, reusable. That is necessary, and it is not sufficient. A perfectly FAIR dataset can still be statistically broken, wrong for your use, non-compliant, or semantically ambiguous. Compass treats FAIR as the substrate and measures what comes next.</p>
-          <p class="quote" style="margin-top:2rem;">“We treat FAIR as table stakes — and measure the readiness it can't.”</p>
+          <p class="quote" style="margin-top:2rem;">We treat FAIR as table stakes — and measure the readiness it can't.</p>
         </div>
         <div class="feat-list">
           <div class="feat"><span class="dot"></span><div><span class="lbl">FAIR guarantees</span><b>The data can move.</b><span>Findable · Accessible · Interoperable · Reusable — the plumbing is in place.</span></div></div>
@@ -908,7 +905,7 @@
         <img src="img/exec-briefing.webp" alt="A Bridge AI executive briefing in DATA Compass: a plain-language narrative connecting vocabulary fragmentation to missing-data rates, FAIR interoperability failures, and ML readiness, ending in a key-takeaway recommendation with a realistic timeline — grounded in the Pistoia Alliance business-value model" width="1400" height="1139" loading="lazy">
         <figcaption>An executive briefing written by Bridge AI: the causal story across every dimension, ending in one keystone recommendation with an honest timeline.</figcaption>
       </figure>
-      <p class="quote" style="margin-top:3rem;">“From four-dimensional signal to a short list of things worth doing.”</p>
+      <p class="quote" style="margin-top:3rem;">From four-dimensional signal to a short list of things worth doing.</p>
     </div>
   </section>
 
@@ -951,7 +948,7 @@
         <img src="img/trend-trajectory.webp" alt="The DATA Compass technical trajectory view: Technical Asset Score and Statistical Health plotted across three readings from March to July, with the scoring-rubric version annotated on the timeline" width="1532" height="1028" loading="lazy">
         <figcaption>A real trajectory: three readings across four months, with the scoring-rubric version pinned to the timeline.</figcaption>
       </figure>
-      <p class="quote" style="margin-top:3rem;">“Readiness is a trajectory. One reading tells you where you stand; the trend tells you if the program works.”</p>
+      <p class="quote" style="margin-top:3rem;">Readiness is a trajectory. One reading tells you where you stand; the trend tells you if the program works.</p>
     </div>
   </section>
 
@@ -968,7 +965,6 @@
         <div class="pcard"><span class="lbl">Quantified benefit</span><h3>Trust · speed · cost · effectiveness.</h3><p>Level-0 outcomes decomposed into measurable benefits.</p></div>
         <div class="pcard"><span class="lbl">A budget case</span><h3>Defensible numbers for the steering committee.</h3><p>The readiness program earns its line item.</p></div>
       </div>
-      <p class="quote" style="margin-top:3rem; color:#cdd9de;">“The first FAIR conversation a CFO will sit through.”</p>
     </div>
   </section>
 
@@ -1011,12 +1007,12 @@
 
   <!-- CTA -->
   <section class="cta">
-    <h2>Know before you deploy.<span class="alt">Prove compliance. Ship AI on evidence.</span></h2>
-    <p>Get a full data-readiness assessment in minutes. No code changes, no data movement, no black boxes.</p>
+    <h2>Know before you deploy.<span class="alt">Measure readiness. Ship AI on evidence.</span></h2>
+    <p>Start with a technical readiness assessment in minutes. No code changes, no data movement, no black boxes.</p>
     <div class="cta-btns">
       <a href="#" class="btn btn--white btn--lg" data-demo>Request a Demo</a>
     </div>
-    <p class="cta-sub">We'll walk you through a full data-readiness assessment on your own data — in minutes, with no data movement.</p>
+    <p class="cta-sub">We'll walk you through a technical readiness assessment on an illustrative dataset — read-only, in place.</p>
   </section>
 
   <!-- FOOTER -->
@@ -1065,6 +1061,7 @@
       <span class="eyebrow">Request a Demo</span>
       <h2 class="modal-title" id="demoTitle">See DATA Compass on your data.</h2>
       <p class="modal-sub">Tell us a little about you and we'll set up a walkthrough.</p>
+      <p class="modal-note">30-minute working session · No source data required · We'll use an illustrative dataset</p>
       <form id="demoForm" novalidate>
         <!-- spam honeypot: real users never fill this -->
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
