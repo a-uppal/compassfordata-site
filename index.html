@@ -221,78 +221,87 @@
     .sec-head { max-width:64ch; }
     .sec-head .lead { margin-top:1.1rem; }
 
-    /* ---- problem cards / generic 4-up ---- */
-    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:3rem; }
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
-    .pcard { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.6rem; box-shadow:var(--shadow); }
+    /* ---- informational cards: flat borders, no shadow (card discipline) ---- */
+    .pcard { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.6rem; }
     .pcard .lbl { font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra-d); }
     .pcard h3 { color:var(--teal); font-size:1.06rem; font-weight:600; margin:.7rem 0 .5rem; line-height:1.3; letter-spacing:-.01em; }
     .pcard p { font-size:.92rem; color:var(--ink); line-height:1.55; }
 
-    /* ---- steps (ASSESS/RECOMMEND/ACT/PROVE) ---- */
-    .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem; margin-top:3rem; }
-    .step .num { font-size:1.6rem; font-weight:300; color:var(--terra); line-height:1; }
-    .step h3 { color:var(--teal); font-size:1.02rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin:.7rem 0 .55rem; }
-    .step p { font-size:.92rem; color:var(--ink); }
-    .step { position:relative; padding-left:0; }
-    .step::after { content:""; }
+    /* ---- nav active-section indicator ---- */
+    .nav-links a.active { color:var(--teal); box-shadow:inset 0 -2px 0 var(--terra); }
 
-    /* ---- §03 capability flow ---- */
-    .flow { background:var(--ground-2); border:1px solid var(--line); border-radius:18px; padding:clamp(1.5rem,3.5vw,2.8rem); margin-top:3rem; box-shadow:var(--shadow); }
-    .flow-head { text-align:center; max-width:64ch; margin:0 auto 2.4rem; }
-    .flow-head b { display:block; color:var(--teal); font-size:clamp(1.15rem,2.2vw,1.45rem); font-weight:600; letter-spacing:-.01em; }
-    .flow-head p { font-size:.92rem; color:var(--ink); margin-top:.6rem; line-height:1.6; }
-    .flow-stages { list-style:none; display:flex; flex-direction:column; }
-    .fstage { position:relative; border:1px solid var(--line); background:var(--white); border-radius:var(--radius); padding:1.5rem 1.6rem 1.6rem; }
-    .fstage + .fstage { margin-top:2.6rem; }
-    .fstage + .fstage::before { content:"▼" / ""; position:absolute; top:-1.95rem; left:50%; transform:translateX(-50%); color:var(--slate); font-size:.8rem; }
-    .fs-head { display:flex; align-items:baseline; gap:.9rem; flex-wrap:wrap; margin-bottom:1.15rem; }
-    .fs-num { font-weight:300; font-size:1.5rem; color:var(--terra); line-height:1; }
-    .fs-title b { color:var(--teal); font-size:1.05rem; font-weight:700; display:block; }
-    .fs-title span { font-size:.85rem; color:var(--ink); }
-    .fs-chip { margin-left:auto; font-size:.64rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra-d); background:rgba(184,92,56,.08); border:1px solid rgba(184,92,56,.3); padding:.35rem .75rem; border-radius:100px; white-space:nowrap; }
-    /* stage 1 — evidence */
-    .ev-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-    .ev-cell { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
-    .ev-cell b { display:block; font-size:.66rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.4rem; }
-    .ev-cell span { font-size:.84rem; color:var(--ink); line-height:1.5; }
-    /* stage 2 — triangulation */
-    .tri-src { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; max-width:640px; margin:0 auto; }
-    .tri-node { text-align:center; border:1px solid var(--line); background:var(--ground-2); border-radius:var(--radius-sm); padding:.85rem .6rem; }
-    .tri-node b { color:var(--teal); font-size:.9rem; display:block; }
-    .tri-node span { font-size:.76rem; color:var(--ink); }
-    .tri-join { height:2.1rem; max-width:640px; margin:0 auto; display:flex; justify-content:center; align-items:stretch; gap:0; position:relative; }
-    .tri-join span { width:1.5px; background:var(--slate); display:block; height:100%; }
-    .tri-join span:nth-child(1){ transform:rotate(38deg) translateY(1px); transform-origin:bottom center; margin-right:4.4rem; }
-    .tri-join span:nth-child(3){ transform:rotate(-38deg) translateY(1px); transform-origin:bottom center; margin-left:4.4rem; }
-    .tri-finding { margin:0 auto; width:max-content; background:var(--teal); color:#fff; font-weight:700; letter-spacing:.07em; text-transform:uppercase; font-size:.78rem; padding:.7rem 1.6rem; border-radius:100px; }
-    .tri-verdict { text-align:center; font-size:.9rem; color:var(--ink); margin-top:1.1rem; }
-    .tri-pats { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:.8rem; }
+    /* ---- credibility strip (ch1) ---- */
+    .strip { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--ground-2); }
+    .strip-inner { display:flex; justify-content:space-between; gap:1.2rem; flex-wrap:wrap; padding-top:1rem; padding-bottom:1rem; }
+    .strip-inner span { font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+    .strip-inner b { color:var(--terra-d); font-weight:800; margin-right:.25rem; }
+
+    /* ---- comparison (ch2) ---- */
+    .compare { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem; }
+    .compare > div { border:1px solid var(--line); border-radius:var(--radius); padding:1.7rem; }
+    .compare .before { background:transparent; }
+    .compare .after { background:var(--teal); }
+    .compare h3 { font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
+    .compare .before h3 { color:var(--muted); }
+    .compare .after h3 { color:#d99a7e; }
+    .compare ul { list-style:none; }
+    .compare li { padding:.5rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
+    .compare .after li { color:#e8eef0; border-top-color:rgba(255,255,255,.16); }
+    .compare li:first-child { border-top:0; }
+
+    /* ---- sticky sample journey (ch3) — P0-gated pattern ---- */
+    .journey { display:grid; grid-template-columns:minmax(320px,.85fr) minmax(420px,1.15fr); gap:2.8rem; align-items:start; margin-top:3rem; }
+    .scenes { display:flex; flex-direction:column; gap:34vh; }
+    .scene h3 { color:var(--teal); font-size:1.35rem; font-weight:500; letter-spacing:-.01em; margin:.5rem 0 .55rem; }
+    .scene .lbl { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--terra-d); }
+    .scene p { font-size:.95rem; color:var(--ink); max-width:44ch; }
+    .scene .inline-frame { display:none; margin-top:1.2rem; }
+    .frame-wrap { position:sticky; top:10vh; }
+    .jframe { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); overflow:hidden; }
+    .jframe figure { display:none; margin:0; }
+    .jframe figure.active { display:block; }
+    html:not(.js) .jframe figure:first-child { display:block; }
+    .jframe img { display:block; width:100%; height:auto; }
+    .jframe figcaption { font-size:.78rem; color:var(--muted); padding:.7rem 1rem; border-top:1px solid var(--line); }
+    .jrail { display:flex; gap:.5rem; margin-top:.9rem; justify-content:center; }
+    .jrail button { width:10px; height:10px; border-radius:50%; border:1px solid var(--terra-d); background:transparent; padding:0; cursor:pointer; }
+    .jrail button.active { background:var(--terra); }
+    @media (max-width:980px), (max-height:700px) {
+      .journey { grid-template-columns:1fr; }
+      .frame-wrap { display:none; }
+      .scene .inline-frame { display:block; }
+      .scenes { gap:3.5rem; }
+    }
+    html:not(.js) .frame-wrap { display:none; }
+    html:not(.js) .scene .inline-frame { display:block; }
+
+    /* ---- dimension selector (ch4) — native details ---- */
+    .dims { margin-top:2.6rem; border-top:1px solid var(--line); }
+    .dims details { border-bottom:1px solid var(--line); }
+    .dims summary { cursor:pointer; padding:1.15rem .2rem; font-size:1.06rem; font-weight:600; color:var(--teal); }
+    .dims summary::marker { color:var(--terra); }
+    .dims .dbody { padding:.3rem .2rem 1.5rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2.2rem; }
+    .dims .q { font-size:1.12rem; color:var(--slate-ink); max-width:36ch; line-height:1.45; }
+    .dims .proof { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); margin-top:1rem; }
+    .dims ul { list-style:none; }
+    .dims li { padding:.45rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
+    .dims li:first-child { border-top:0; }
+    @media (max-width:768px){ .dims .dbody { grid-template-columns:1fr; gap:1rem; } }
+
+    /* ---- named-pattern chips (ch5) ---- */
+    .tri-pats { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:1.6rem; }
     .tri-pat { font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra-d); border:1px solid var(--line); background:var(--ground-2); padding:.35rem .75rem; border-radius:100px; }
     .tri-pat--more { color:var(--muted); font-weight:600; }
-    .tri-fair { margin:1.3rem auto 0; text-align:center; font-size:.8rem; color:var(--muted); max-width:62ch; line-height:1.55; border-top:1px dashed var(--line); padding-top:1rem; }
-    /* stage 3 — engines */
-    .eng-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-    .eng { background:var(--ground-2); border:1px solid var(--line); border-top:3px solid var(--terra); border-radius:var(--radius-sm); padding:1rem 1.05rem; }
-    .eng b { color:var(--teal); font-size:.93rem; display:block; margin-bottom:.45rem; line-height:1.25; }
-    .eng ul { list-style:none; }
-    .eng li { font-size:.79rem; color:var(--ink); padding:.26rem 0; border-top:1px dashed var(--line); line-height:1.4; }
-    .eng li:first-child { border-top:0; }
-    .fs-proof { margin-top:1.15rem; text-align:center; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
-    /* stage 4 — Bridge AI */
-    .fstage--bridge { background:var(--teal); border-color:var(--teal-d); }
-    .fstage--bridge .fs-title b { color:#fff; }
-    .fstage--bridge .fs-title span { color:#cdd9de; }
-    .fstage--bridge .fs-num { color:#d99a7e; }
-    .br-nodes { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; }
-    .br-node { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.17); border-radius:var(--radius-sm); padding:.75rem .8rem; font-size:.81rem; color:#e8eef0; text-align:center; line-height:1.4; }
-    .br-note { margin-top:1.05rem; text-align:center; font-size:.78rem; color:#9fb2b9; }
-    /* stage 5 — outputs + loop */
-    .out-pills { display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; }
-    .out-pill { background:var(--ground-2); border:1px solid var(--line); border-radius:100px; padding:.5rem 1rem; font-size:.83rem; color:var(--teal); font-weight:600; }
-    .flow-loop { margin-top:1.4rem; display:flex; align-items:flex-start; gap:.7rem; justify-content:center; font-size:.85rem; color:var(--ink); max-width:58ch; margin-left:auto; margin-right:auto; border-top:1px dashed var(--line); padding-top:1.1rem; }
-    .flow-loop .loop-mark { color:var(--terra); font-size:1.25rem; font-weight:700; line-height:1; }
-    .flow-loop b { color:var(--teal); }
+
+    /* ---- integration rail (ch7) — monochrome, brand color on hover ---- */
+    .int-rail { display:grid; grid-template-columns:repeat(4,1fr); gap:1.4rem; margin-top:3rem; }
+    .rail-item { border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem 1.5rem; text-align:center; }
+    .rail-item .ic { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin:0 auto 0.9rem; background:var(--ground-3); transition:background .25s; }
+    .rail-item:hover .ic { background:var(--hover-bg, var(--teal)); }
+    .rail-item h3 { color:var(--teal); font-size:1rem; font-weight:600; margin-bottom:.3rem; }
+    .rail-item p { font-size:.85rem; color:var(--ink); }
+    .connector-card { margin-top:1.4rem; border:1px dashed var(--line); border-radius:var(--radius); padding:1.1rem 1.5rem; font-size:.9rem; color:var(--ink); text-align:center; }
+    .connector-card b { color:var(--teal); }
 
     /* ---- two-column feature rows (FAIR floor, connect, dimensions deep) ---- */
     .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; margin-top:1rem; }
@@ -310,10 +319,6 @@
     .tri-card b { display:block; color:var(--teal); font-size:1.15rem; font-weight:600; margin:.6rem 0 .4rem; }
     .tri-card span { font-size:.88rem; color:var(--ink); }
     .tri-chip-wrap { text-align:center; margin-top:1.8rem; }
-    .patterns { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin-top:2.4rem; }
-    .pat { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1rem; }
-    .pat b { display:block; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra-d); }
-    .pat span { font-size:.8rem; color:var(--ink); }
     .patterns-note { text-align:center; margin-top:1.4rem; font-size:.84rem; color:#aebfc6; letter-spacing:.02em; }
 
     /* ---- product screenshots ---- */
@@ -322,13 +327,6 @@
     .shot img { display:block; width:100%; height:auto; border-radius:var(--radius); border:1px solid var(--line); box-shadow:var(--shadow-lg); }
     .shot figcaption { text-align:center; font-size:.84rem; color:var(--muted); margin-top:1rem; letter-spacing:.01em; }
     .panel .shot figcaption { color:#aebfc6; }
-    .shot-pair { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem; align-items:start; }
-    .shot-pair .shot { margin-top:0; max-width:none; }
-    @media (max-width:980px){ .shot-pair { grid-template-columns:1fr; gap:2.5rem; } }
-
-    /* ---- dimensions deep ---- */
-    .dim-block { padding:clamp(3rem,6vw,4.5rem) 0; border-top:1px solid var(--line); }
-    .dim-block:first-of-type { border-top:0; }
 
     /* ---- autonomy ladder ---- */
     .ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:3rem; }
@@ -351,13 +349,6 @@
     .panel .pcard h3 { color:#fff; }
     .panel .pcard p { color:#c4d0d5; }
     .panel .pcard .lbl { color:#d99a7e; }
-
-    /* ---- integrations ---- */
-    .int-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:3rem; }
-    .int-card { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); }
-    .int-card .ic { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
-    .int-card h3 { color:var(--teal); font-size:1.04rem; font-weight:600; margin-bottom:.4rem; }
-    .int-card p { font-size:.9rem; color:var(--ink); }
 
     /* ---- CTA ---- */
     .cta { background:var(--teal); color:#fff; text-align:center; padding:clamp(4rem,8vw,6rem) 28px; }
@@ -424,23 +415,18 @@
       .hero-grid{ grid-template-columns:1fr; gap:2.5rem; }
       .hero-visual{ max-width:640px; }
       .two-col{ grid-template-columns:1fr; gap:1.8rem; }
-      .grid-4,.steps,.ladder{ grid-template-columns:repeat(2,1fr); }
-      .grid-3,.tri,.int-grid{ grid-template-columns:1fr; }
-      .patterns{ grid-template-columns:repeat(2,1fr); }
+      .ladder{ grid-template-columns:repeat(2,1fr); }
+      .tri{ grid-template-columns:1fr; }
+      .compare{ grid-template-columns:1fr; }
+      .int-rail{ grid-template-columns:repeat(2,1fr); }
       .footer-grid{ grid-template-columns:1fr 1fr; gap:2rem; }
-      .ev-grid,.eng-grid{ grid-template-columns:repeat(2,1fr); }
-      .br-nodes{ grid-template-columns:repeat(2,1fr); }
+      .strip-inner{ justify-content:center; }
     }
     @media (max-width:680px){
       .nav-links{ display:none; } .hamburger{ display:flex; }
-      .grid-4,.steps{ grid-template-columns:1fr; }
+      .ladder{ grid-template-columns:1fr; }
+      .int-rail{ grid-template-columns:1fr; }
       .footer-grid{ grid-template-columns:1fr; }
-      .ev-grid,.eng-grid{ grid-template-columns:1fr; }
-      .fs-chip{ margin-left:0; }
-      .tri-src{ grid-template-columns:1fr; gap:.6rem; }
-      .tri-join{ display:none; }
-      .tri-finding{ margin-top:1rem; }
-      .out-pills{ justify-content:flex-start; }
       .proof-main{ grid-template-columns:1fr; }
       .proof-score-panel{ border-right:0; border-bottom:1px solid var(--line); }
       .proof-header{ flex-direction:column; }
@@ -486,10 +472,11 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="#top" class="nav-brand"><svg class="mark" width="21" height="21" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#00495D" stroke-width="2"/><path d="M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z" fill="#00495D"/><path d="M16 4 L19 13 L16 16 L13 13 Z" fill="#B85C38"/></svg> <span><b>DATA</b> Compass</span></a>
-      <div class="nav-links">
-        <a href="#model">The Model</a>
-        <a href="#method">The Method</a>
-        <a href="#dimensions">Dimensions</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#platform">Platform</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#security">Security</a>
         <a href="#integrations">Integrations</a>
         <a href="#" class="nav-cta" data-demo>Request a Demo</a>
       </div>
@@ -498,9 +485,10 @@
   </nav>
   <div class="mobile" id="mobileMenu">
     <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
-    <a href="#model">The Model</a>
-    <a href="#method">The Method</a>
-    <a href="#dimensions">Dimensions</a>
+    <a href="#platform">Platform</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#outcomes">Outcomes</a>
+    <a href="#security">Security</a>
     <a href="#integrations">Integrations</a>
     <a href="#" class="btn btn--primary" data-demo>Request a Demo</a>
   </div>
@@ -584,19 +572,43 @@
     </div>
   </header>
 
-  <!-- §01 PROBLEM -->
-  <section class="section-pad" id="problem">
+  <!-- CREDIBILITY STRIP (ch1) -->
+  <section class="strip" aria-label="Platform proof points">
+    <div class="container strip-inner">
+      <span><b>4</b> readiness dimensions</span>
+      <span><b>50+</b> analytical algorithms</span>
+      <span>Evidence-traced recommendations</span>
+      <span>Deployed inside your environment</span>
+    </div>
+  </section>
+
+  <!-- CH2 · PLATFORM -->
+  <section class="section-pad" id="platform">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 01 · The Problem</span>
+        <span class="eyebrow">01 · Platform</span>
         <h2 class="headline">AI-ready data<span class="alt">isn't the same as AI-ready.</span></h2>
-        <p class="lead">Clean data is not ready data. A dataset can pass every hygiene check and still be the wrong shape for the model, silent on provenance, ambiguous to a machine, or out of compliance. Teams discover the gap in production — the most expensive place to find it.</p>
+        <p class="lead">Clean data is not ready data. A dataset can pass every hygiene check and still be the wrong shape for the model, ambiguous to a machine, or out of compliance — and teams discover it in production. DATA Compass measures AI readiness across four dimensions, grounded in FAIR, and turns every finding into an executable recommendation.</p>
       </div>
-      <div class="grid-4 stagger">
-        <div class="pcard"><span class="lbl">Blind Deployment Risk</span><h3>No way to know if agents will succeed</h3><p>…until they fail in production.</p></div>
-        <div class="pcard"><span class="lbl">Compliance Gaps</span><h3>Regulators want audit trails</h3><p>for autonomous and AI-assisted decisions.</p></div>
-        <div class="pcard"><span class="lbl">Data Fragmentation</span><h3>Critical data locked in silos</h3><p>Databricks, Snowflake, Veeva — never assessed together.</p></div>
-        <div class="pcard"><span class="lbl">Unquantified ROI</span><h3>No line from data spend to AI outcome</h3><p>Which fixes actually move readiness?</p></div>
+      <div class="compare stagger">
+        <div class="before">
+          <h3>The readiness scorecard</h3>
+          <ul>
+            <li>A point-in-time score with no evidence behind it</li>
+            <li>Silos assessed one platform at a time</li>
+            <li>Findings that die in a slide deck</li>
+            <li>No line from data spend to AI outcome</li>
+          </ul>
+        </div>
+        <div class="after">
+          <h3>DATA Compass</h3>
+          <ul>
+            <li>Verdicts traced to named tests and cited evidence</li>
+            <li>Databricks, Snowflake, Veeva, files — assessed in place</li>
+            <li>Every finding ships with an executable remediation plan</li>
+            <li>Readiness lift and value, measured over time</li>
+          </ul>
+        </div>
       </div>
       <p class="quote" style="margin-top:3rem;">Everyone says their data is AI-ready. Almost no one has measured it.</p>
     </div>
@@ -604,179 +616,135 @@
 
   <hr class="divider">
 
-  <!-- §02 WHAT COMPASS DOES -->
-  <section class="section-pad" id="what">
+  <!-- CH3 · HOW IT WORKS — the sample journey -->
+  <section class="section-pad" id="how-it-works">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 02 · What Compass Does</span>
-        <h2 class="headline">Evaluate readiness.<span class="alt">Then close the gap.</span></h2>
-        <p class="lead">DATA Compass evaluates datasets for AI readiness across four dimensions, grounded in FAIR — then turns every finding into a specific, executable recommendation and a quantified ROI, so AI investments succeed instead of stalling in a proof-of-concept.</p>
+        <span class="eyebrow">02 · How It Works</span>
+        <h2 class="headline">One dataset.<span class="alt">Four moments.</span></h2>
+        <p class="lead">Follow a single dataset through the loop Compass runs: assess it, diagnose the root cause, act on an executable plan, and prove the improvement. Every screen below is the product on live data — nothing is a mockup.</p>
       </div>
-      <div class="steps stagger">
-        <div class="step"><div class="num">01</div><h3>Assess</h3><p>Score the dataset across four dimensions of readiness, grounded in FAIR.</p></div>
-        <div class="step"><div class="num">02</div><h3>Recommend</h3><p>Bridge AI turns findings into prioritized, causal recommendations.</p></div>
-        <div class="step"><div class="num">03</div><h3>Act</h3><p>Every recommendation arrives as an executable remediation plan, ready to run.</p></div>
-        <div class="step"><div class="num">04</div><h3>Prove</h3><p>Quantify the readiness lift and the ROI of each fix.</p></div>
+      <div class="journey">
+        <div class="scenes" id="scenes">
+          <div class="scene" data-scene="0">
+            <span class="lbl">Scene 1 · Assess</span>
+            <h3>A verdict, not a vibe.</h3>
+            <p>The dataset gets a readiness score with the weak dimension named — eight quality components, ML readiness, FAIR checks, ontology coverage, each traced to its test.</p>
+            <figure class="inline-frame jframe"><img src="img/dq-assessment.webp" alt="A DATA Compass Data Quality Assessment with an eight-component breakdown" width="1600" height="1043" loading="lazy"><figcaption>The Statistical Health read on a live warehouse table: eight components scored, warnings in plain language.</figcaption></figure>
+          </div>
+          <div class="scene" data-scene="1">
+            <span class="lbl">Scene 2 · Diagnose</span>
+            <h3>The root cause, named.</h3>
+            <p>Bridge AI runs causal analysis across every finding and separates root causes from symptoms — the story of why the score is what it is, cited to its evidence.</p>
+            <figure class="inline-frame jframe"><img src="img/exec-briefing.webp" alt="A Bridge AI executive briefing connecting vocabulary fragmentation to downstream failures" width="1400" height="1139" loading="lazy"><figcaption>An executive briefing written by Bridge AI: the causal story across every dimension, ending in one keystone recommendation.</figcaption></figure>
+          </div>
+          <div class="scene" data-scene="2">
+            <span class="lbl">Scene 3 · Act</span>
+            <h3>The fix arrives with the finding.</h3>
+            <p>Recommendations carry impact, effort, and an executable remediation plan — ranked so the first thing you do is the thing that moves readiness most.</p>
+            <figure class="inline-frame jframe"><img src="img/smart-recommendation.webp" alt="A DATA Compass smart recommendation with impact, effort, timeline, ROI, and the causal chain" width="1198" height="1204" loading="lazy"><figcaption>One finding, fully dressed: the causal chain, the fix, and the ROI — ready to defend in a steering committee.</figcaption></figure>
+          </div>
+          <div class="scene" data-scene="3">
+            <span class="lbl">Scene 4 · Prove</span>
+            <h3>Reassessed. The trajectory is the deliverable.</h3>
+            <p>Every re-analysis appends to the dataset's history: score trend per dimension, the delta since your last checkpoint, and the business value of the lift — grounded in the Pistoia Alliance FAIR business-value model.</p>
+            <figure class="inline-frame jframe"><img src="img/trend-trajectory.webp" alt="The DATA Compass technical trajectory view plotting readings over time" width="1532" height="1028" loading="lazy"><figcaption>A real trajectory: readings over time, with the scoring-rubric version pinned to the timeline.</figcaption></figure>
+          </div>
+        </div>
+        <div class="frame-wrap" aria-hidden="true">
+          <div class="jframe" id="jframe">
+            <figure class="active"><img src="img/dq-assessment.webp" alt="" width="1600" height="1043"><figcaption>Assess: eight components scored, warnings in plain language.</figcaption></figure>
+            <figure><img src="img/exec-briefing.webp" alt="" width="1400" height="1139" loading="lazy"><figcaption>Diagnose: the causal story, ending in one keystone recommendation.</figcaption></figure>
+            <figure><img src="img/smart-recommendation.webp" alt="" width="1198" height="1204" loading="lazy"><figcaption>Act: the causal chain, the fix, and the ROI.</figcaption></figure>
+            <figure><img src="img/trend-trajectory.webp" alt="" width="1532" height="1028" loading="lazy"><figcaption>Prove: readings over time, rubric version pinned.</figcaption></figure>
+          </div>
+          <div class="jrail" id="jrail">
+            <button class="active" aria-label="Scene 1: Assess"></button>
+            <button aria-label="Scene 2: Diagnose"></button>
+            <button aria-label="Scene 3: Act"></button>
+            <button aria-label="Scene 4: Prove"></button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- §03 THE MODEL -->
-  <section class="section-pad" id="model">
+  <!-- CH4 · OUTCOMES — what Compass measures -->
+  <section class="section-pad" id="outcomes">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 03 · The Model</span>
+        <span class="eyebrow">03 · Outcomes</span>
         <h2 class="headline">Four dimensions.<span class="alt">One foundation.</span></h2>
-        <p class="lead">Everyone sells FAIR and stops. Compass treats FAIR as the foundation, then measures the four dimensions of readiness FAIR enables but does not guarantee, with Bridge AI synthesizing it all into what to do next.</p>
+        <p class="lead">FAIR makes data legible — findable, accessible, interoperable, reusable. Necessary, and not sufficient: a perfectly FAIR dataset can still be statistically broken, wrong for your use, or non-compliant. Compass treats FAIR as the substrate and measures the four dimensions it enables but cannot guarantee.</p>
       </div>
-      <div class="flow">
-        <div class="flow-head">
-          <b>From enterprise evidence to defensible AI action</b>
-          <p>Compass connects heterogeneous evidence, reconciles it into a defensible baseline, measures readiness across four dimensions, identifies root causes, and turns findings into executable, measurable action.</p>
-        </div>
-        <ol class="flow-stages stagger">
-
-          <li class="fstage">
-            <div class="fs-head">
-              <span class="fs-num">01</span>
-              <div class="fs-title"><b>Enterprise evidence</b><span>Connect data, knowledge, governance, and stakeholder evidence</span></div>
-              <span class="fs-chip">Read-only · in place · zero egress</span>
+      <div class="dims">
+        <details open>
+          <summary>Semantic Clarity</summary>
+          <div class="dbody">
+            <div>
+              <p class="q">Does the data mean what it says — to a machine?</p>
+              <p class="proof">Proof · ontology inference with labelled confidence</p>
             </div>
-            <div class="ev-grid">
-              <div class="ev-cell"><b>Data platforms</b><span>Databricks · Snowflake · Veeva · files &amp; APIs</span></div>
-              <div class="ev-cell"><b>Knowledge systems</b><span>Stardog · ontologies · metadata · vocabularies</span></div>
-              <div class="ev-cell"><b>Governance evidence</b><span>SOPs · policies · standards · regulatory documents</span></div>
-              <div class="ev-cell"><b>People &amp; purpose</b><span>Interviews · persona sentiment · the declared use case</span></div>
+            <ul>
+              <li>Infer column-to-class alignment before it's tagged</li>
+              <li>Score against your private ontologies — CDISC, IDMP, your taxonomy</li>
+              <li>Interoperability made first-class: declared, inferred, or absent</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Statistical Health</summary>
+          <div class="dbody">
+            <div>
+              <p class="q">Is the data quantitatively sound?</p>
+              <p class="proof">Proof · every score traces to a named test</p>
             </div>
-          </li>
-
-          <li class="fstage">
-            <div class="fs-head">
-              <span class="fs-num">02</span>
-              <div class="fs-title"><b>The triangulated FAIR foundation</b><span>Reconcile what the data shows, what people experience, and what governance requires</span></div>
-              <span class="fs-chip">16 FAIR rules · SHACL</span>
+            <ul>
+              <li>Data quality — eight component algorithms</li>
+              <li>ML readiness — sufficiency, bias, separability, features</li>
+              <li>Named tests: Benford, Pearson, Cohen's Kappa, Shapley</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Contextual Validity</summary>
+          <div class="dbody">
+            <div>
+              <p class="q">Is the data right for your specific use?</p>
+              <p class="proof">Proof · evidence-cited judgment per rule</p>
             </div>
-            <div class="tri-src">
-              <div class="tri-node"><b>Technical</b><span>what the data shows</span></div>
-              <div class="tri-node"><b>Perceived</b><span>what people experience</span></div>
-              <div class="tri-node"><b>Governed</b><span>what policy requires</span></div>
+            <ul>
+              <li>Customer-authoritative Domain Packs, versioned and yours</li>
+              <li>Fit scored against a declared use</li>
+              <li>Deterministic rules first, synthesis only where it must be</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Regulatory Compliance</summary>
+          <div class="dbody">
+            <div>
+              <p class="q">Does the data meet the integrity bar?</p>
+              <p class="proof">Proof · readiness against regulatory expectations — advisory, not certification</p>
             </div>
-            <div class="tri-join" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div class="tri-finding">Defensible finding</div>
-            <p class="tri-verdict">Agreement builds confidence. Divergence reveals the problem — and names it:</p>
-            <div class="tri-pats">
-              <span class="tri-pat">Usability Gap</span>
-              <span class="tri-pat">Policy Theater</span>
-              <span class="tri-pat">Tribal Knowledge</span>
-              <span class="tri-pat">Unformalized Practice</span>
-              <span class="tri-pat tri-pat--more">+ 4 more</span>
-            </div>
-            <p class="tri-fair">FAIR — findable · accessible · interoperable · reusable — is the substrate: necessary for readiness, not sufficient on its own. The engines below measure what it can't.</p>
-          </li>
-
-          <li class="fstage">
-            <div class="fs-head">
-              <span class="fs-num">03</span>
-              <div class="fs-title"><b>Four assessment engines</b><span>Measure readiness across four interdependent dimensions</span></div>
-              <span class="fs-chip">50+ algorithms · named tests</span>
-            </div>
-            <div class="eng-grid">
-              <div class="eng"><b>Semantic Clarity</b><ul><li>Ontology alignment</li><li>Inferred column→class mapping</li><li>Interoperability depth</li></ul></div>
-              <div class="eng"><b>Statistical Health</b><ul><li>Data quality — 8 algorithms</li><li>ML readiness — 4 algorithms</li><li>Bias &amp; class separability</li></ul></div>
-              <div class="eng"><b>Contextual Validity</b><ul><li>Fit to the declared use</li><li>Domain Pack rules</li><li>Evidence-cited judgment</li></ul></div>
-              <div class="eng"><b>Regulatory Compliance</b><ul><li>ALCOA+ integrity</li><li>FDA AI credibility</li><li>Privacy &amp; provenance</li></ul></div>
-            </div>
-            <p class="fs-proof">Statistical tests · deterministic rules · evidence extraction — every score traces to its source</p>
-          </li>
-
-          <li class="fstage fstage--bridge">
-            <div class="fs-head">
-              <span class="fs-num">04</span>
-              <div class="fs-title"><b>Bridge AI</b><span>From multidimensional signal to prioritized, evidence-grounded decisions</span></div>
-            </div>
-            <div class="br-nodes">
-              <div class="br-node">Cross-dimension synthesis</div>
-              <div class="br-node">Causal analysis &amp; root cause</div>
-              <div class="br-node">Prioritized recommendations</div>
-              <div class="br-node">Execution risk &amp; stakeholder readiness</div>
-              <div class="br-node">Value drivers &amp; quantified ROI</div>
-              <div class="br-node">Evidence traceability</div>
-            </div>
-            <p class="br-note">No black-box conclusions — every claim cites the evidence that produced it.</p>
-          </li>
-
-          <li class="fstage">
-            <div class="fs-head">
-              <span class="fs-num">05</span>
-              <div class="fs-title"><b>Execution &amp; proof</b><span>Execute, reassess, and prove improvement</span></div>
-            </div>
-            <div class="out-pills">
-              <span class="out-pill">Executive briefing</span>
-              <span class="out-pill">Prioritized action portfolio</span>
-              <span class="out-pill">Remediation scripts</span>
-              <span class="out-pill">Owners · effort · timeline</span>
-              <span class="out-pill">Business case &amp; ROI</span>
-              <span class="out-pill">Regulatory evidence package</span>
-              <span class="out-pill">Readiness trajectory</span>
-              <span class="out-pill">Supported autonomy level</span>
-            </div>
-            <div class="flow-loop"><span class="loop-mark" aria-hidden="true">↺</span><span><b>Reassess</b> — every re-analysis feeds back through the engines and appends to the trajectory. Readiness is measured over time, never asserted once.</span></div>
-          </li>
-
-        </ol>
+            <ul>
+              <li>ALCOA+ — nine data-integrity attributes</li>
+              <li>FDA credibility — seven steps plus Step 8</li>
+              <li>GDPR · HIPAA · CCPA, cited line-by-line</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
   </section>
 
-  <hr class="divider">
-
-  <!-- §04 WHERE FAIR SITS -->
-  <section class="section-pad" id="fair">
-    <div class="container fade-in">
-      <div class="two-col">
-        <div>
-          <span class="eyebrow">§ 04 · Where FAIR Sits</span>
-          <h2 class="headline">FAIR is the floor.<span class="alt">Not the finish line.</span></h2>
-          <p class="lead">FAIR makes data legible to machines and people — findable, accessible, interoperable, reusable. That is necessary, and it is not sufficient. A perfectly FAIR dataset can still be statistically broken, wrong for your use, non-compliant, or semantically ambiguous. Compass treats FAIR as the substrate and measures what comes next.</p>
-          <p class="quote" style="margin-top:2rem;">We treat FAIR as table stakes — and measure the readiness it can't.</p>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">FAIR guarantees</span><b>The data can move.</b><span>Findable · Accessible · Interoperable · Reusable — the plumbing is in place.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">FAIR does not guarantee</span><b>The data is ready.</b><span>Statistically sound · fit for purpose · compliant · semantically unambiguous.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">So Compass adds</span><b>Four dimensions on the FAIR floor.</b><span>Each measured, evidenced, and triangulated for defensibility.</span></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- §05 CONNECT -->
-  <section class="section-pad" id="connect">
-    <div class="container fade-in">
-      <div class="two-col">
-        <div>
-          <span class="eyebrow">§ 05 · Connect</span>
-          <h2 class="headline">Your data never moves.<span class="alt">We query it in place.</span></h2>
-          <p class="lead">Compass is an API overlay, not a data lake. It connects to your warehouse, runs read-only queries through your own compute, and analyzes the results in memory. No ETL, no copies, no new storage. Source data never leaves your environment — the answer to the first question every pharma security review asks.</p>
-          <div class="chip" style="margin-top:2rem;">Databricks · Snowflake · Stardog · Veeva</div>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Connect</span><b>Unity Catalog / Snowflake, PAT or OAuth.</b><span>Read-only. Credentials AES-256 in Key Vault / Secrets Manager.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Analyze in place</span><b>50+ algorithms run on your warehouse.</b><span>Results return as JSON — scores, recommendations, ROI, fix scripts.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Zero egress</span><b>Source data never leaves.</b><span>Most single-table analyses cost under $0.10 of warehouse compute.</span></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- §06 THE METHOD (teal panel) -->
-  <section class="section-pad panel" id="method">
+  <!-- CH5 · DEFENSIBILITY (teal panel) -->
+  <section class="section-pad panel" id="defensible">
     <div class="container fade-in">
       <div class="sec-head">
-        <span class="eyebrow">§ 06 · The Method</span>
+        <span class="eyebrow">04 · Defensibility</span>
         <h2 class="headline">Three reads on one domain.<span class="alt">The disagreement is the finding.</span></h2>
         <p class="lead">Compass doesn't take the data's word for it. Every FAIR assessment triangulates three independent reads. Where they agree, you have a finding you can defend. Where they diverge, the divergence itself is the insight — and it's named, not hand-waved.</p>
       </div>
@@ -786,195 +754,33 @@
         <div class="tri-card"><span class="lbl">Governed</span><b>What the documents say.</b><span>Governance documents scored against eight frameworks.</span></div>
       </div>
       <div class="tri-chip-wrap"><span class="chip">Agreement = Confidence&nbsp;&nbsp;·&nbsp;&nbsp;Divergence = The Finding</span></div>
-      <div class="patterns stagger">
-        <div class="pat"><b>Confirmed Maturity</b><span>all three legs agree, high</span></div>
-        <div class="pat"><b>Aligned Maturity</b><span>data and people agree; the governed read is pending</span></div>
-        <div class="pat"><b>Greenfield</b><span>little signal anywhere — start clean</span></div>
-        <div class="pat"><b>Usability Gap</b><span>technically strong, people struggle</span></div>
-        <div class="pat"><b>Tribal Knowledge</b><span>people know it, nothing is written</span></div>
-        <div class="pat"><b>Unformalized Practice</b><span>the practice works; no SOP captures it</span></div>
-        <div class="pat"><b>Abandoned Capability</b><span>was there, now decayed</span></div>
-        <div class="pat"><b>Policy Theater</b><span>SOPs exist, practice doesn't follow</span></div>
+      <div class="tri-pats">
+        <span class="tri-pat">Usability Gap</span>
+        <span class="tri-pat">Policy Theater</span>
+        <span class="tri-pat">Tribal Knowledge</span>
+        <span class="tri-pat tri-pat--more">+ 5 more</span>
       </div>
-      <p class="patterns-note">Eight named patterns — each one an actionable diagnosis.</p>
-      <figure class="shot shot--narrow">
-        <img src="img/pillar-card.webp" alt="A DATA Compass pillar card: the Accessible pillar confirmed as a Usability Gap, with Technical, Perceived, and Governed leg scores, coverage sufficiency, coherence, and what-to-do guidance" width="1060" height="1050" loading="lazy">
-        <figcaption>A live pillar card: three legs scored with coverage honesty, the pattern named, and the move spelled out.</figcaption>
-      </figure>
+      <p class="patterns-note">Eight named divergence patterns — each one an actionable diagnosis.</p>
     </div>
   </section>
 
-  <!-- §07 THE FOUR DIMENSIONS (deep) -->
-  <section class="section-pad" id="dimensions">
-    <div class="container">
-      <div class="sec-head fade-in" style="margin-bottom:1rem;">
-        <span class="eyebrow">§ 07 · The Four Dimensions</span>
-        <h2 class="headline">What we measure,<span class="alt">dimension by dimension.</span></h2>
-      </div>
-
-      <!-- D1 Semantic Clarity -->
-      <div class="dim-block fade-in"><div class="two-col">
+  <!-- CH6 · SECURITY & DEPLOYMENT -->
+  <section class="section-pad" id="security">
+    <div class="container fade-in">
+      <div class="two-col">
         <div>
-          <span class="eyebrow">Dimension 1 — Semantic Clarity</span>
-          <h3 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">Does the data mean<span class="alt">what it says — to a machine?</span></h3>
-          <p class="lead">Whether a machine can resolve the meaning of your data unambiguously, against the ontology you actually use. Compass reads your private ontologies, infers which columns map to which classes, and scores the alignment.</p>
+          <span class="eyebrow">05 · Security &amp; Deployment</span>
+          <h2 class="headline">Your data stays.<span class="alt">Compass comes to it.</span></h2>
+          <p class="lead">Compass deploys inside your environment and connects to your platforms read-only. Analyses run through your own compute; source data stays in the systems that own it. No ETL, no copies, no new storage — the answer to the first question every pharma security review asks.</p>
         </div>
         <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Ontology inference</span><b>Infer column→class alignment.</b><span>Credit the meaning that's there even before it's tagged (Tier-2).</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Private ontologies</span><b>Score against your vocabulary.</b><span>Your CDISC / IDMP / internal taxonomy — not a generic dictionary.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">I-pillar depth</span><b>Interoperability, made first-class.</b><span>Declared · Inferred · None, at labelled confidence.</span></div></div>
-        </div>
-      </div></div>
-
-      <!-- D2 Statistical Health -->
-      <div class="dim-block fade-in"><div class="two-col">
-        <div>
-          <span class="eyebrow">Dimension 2 — Statistical Health</span>
-          <h3 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">Is the data<span class="alt">quantitatively sound?</span></h3>
-          <p class="lead">Whether the numbers hold up before a model ever touches them. Compass runs two engines — data quality and ML readiness — across 50+ algorithms, from distribution and anomaly detection to bias, class separability, and feature sufficiency.</p>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Data quality</span><b>Eight algorithms.</b><span>Information content · outliers · sparsity · anomalies · cleanliness · more.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">ML readiness</span><b>Four algorithms.</b><span>Data sufficiency · bias detection · feature engineering · class separability.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Evidenced</span><b>Named statistical tests.</b><span>Benford · Pearson / Chi-square · Cohen's Kappa · Shapley · LOO.</span></div></div>
+          <div class="feat"><span class="dot"></span><div><span class="lbl">Connect</span><b>Read-only, in place.</b><span>Unity Catalog, Snowflake, Veeva — credentials AES-256 encrypted.</span></div></div>
+          <div class="feat"><span class="dot"></span><div><span class="lbl">Analyze</span><b>50+ algorithms on your warehouse.</b><span>Results return as scores, evidence, and plans — not copies of your data.</span></div></div>
+          <div class="feat"><span class="dot"></span><div><span class="lbl">AI you control</span><b>In-environment or customer-approved AI.</b><span>Bridge AI can run against a model endpoint inside your own environment.</span></div></div>
         </div>
       </div>
-      <figure class="shot">
-        <img src="img/dq-assessment.webp" alt="A DATA Compass Data Quality Assessment: overall quality 66 of 100 with an eight-component breakdown — information, statistical quality, independence, outliers, completeness, cleanliness, anomaly detection — plus dataset-size and sparse-data callouts" width="1600" height="1043" loading="lazy">
-        <figcaption>The Statistical Health read on a live warehouse table: eight components scored, warnings in plain language.</figcaption>
-      </figure>
-      </div>
-
-      <!-- D3 Contextual Validity -->
-      <div class="dim-block fade-in"><div class="two-col">
-        <div>
-          <span class="eyebrow">Dimension 3 — Contextual Validity</span>
-          <h3 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">Is the data right<span class="alt">for your specific use?</span></h3>
-          <p class="lead">A dataset that's clean, sound, and FAIR can still be wrong for the job in front of you. Contextual validity scores fit-for-purpose against a declared use — using customer-authoritative Domain Packs that encode your sub-domains, archetypes, and rules.</p>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Domain Packs</span><b>Customer-authoritative.</b><span>Your sub-domains and record archetypes, versioned and yours.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Fit-for-purpose</span><b>Scored against a declared use.</b><span>Validity is relative to the question you're asking of the data.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">5-step pipeline</span><b>Signal → rules → coverage → LLM → judgment.</b><span>Deterministic where it can be, synthesized where it must be.</span></div></div>
-        </div>
-      </div></div>
-
-      <!-- D4 Regulatory Compliance -->
-      <div class="dim-block fade-in"><div class="two-col">
-        <div>
-          <span class="eyebrow">Dimension 4 — Regulatory Compliance</span>
-          <h3 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">Does the data meet<span class="alt">the integrity bar?</span></h3>
-          <p class="lead">In regulated work, readiness includes defensibility to a regulator. Compass scores governance evidence against the frameworks pharma actually answers to — line by line, with citations — so compliance is measured, not asserted.</p>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">ALCOA+</span><b>Nine data-integrity attributes.</b><span>Attributable · legible · contemporaneous · original · accurate · + four.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">FDA credibility</span><b>Seven steps + Step 8.</b><span>Context of use → fit-for-use, plus agent decision provenance.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Privacy</span><b>GDPR · HIPAA · CCPA.</b><span>Cited line-by-line, mapped to FAIR pillars.</span></div></div>
-        </div>
-      </div>
-      <div class="shot-pair">
-        <figure class="shot">
-          <img src="img/alcoa-compliance.webp" alt="A DATA Compass ALCOA+ Compliance card scoring 68, partial: three evidence-backed principles scored, six indicators flagged as requiring source-system evidence, and twelve findings by severity" width="1095" height="1383" loading="lazy">
-          <figcaption>ALCOA+: evidence-backed principles scored; the rest honestly labeled as needing source-system evidence.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="img/fda-credibility.webp" alt="A DATA Compass FDA AI Credibility card: score 55, verdict Not Fit for Use, relevance and reliability sub-scores, and gaps found by severity — two critical, two major, one minor" width="1099" height="958" loading="lazy">
-          <figcaption>FDA AI credibility: a verdict with its gaps attached — including when the answer is “not fit for use.”</figcaption>
-        </figure>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- §08 SYNTHESIS -->
-  <section class="section-pad" id="synthesis">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">§ 08 · Synthesis</span>
-        <h2 class="headline">Bridge AI reads it all<span class="alt">and tells you what to do.</span></h2>
-        <p class="lead">Four dimensions produce a lot of signal. Bridge AI is the synthesis layer: it runs causal analysis across the findings, separates root causes from symptoms, and writes prioritized recommendations in plain language — each one traced back to the evidence that produced it. No black-box conclusions; every claim cites its source.</p>
-      </div>
-      <div class="grid-3 stagger">
-        <div class="pcard"><span class="lbl">Causal analysis</span><h3>Root cause, not symptom.</h3><p>Why the score is what it is — and what fixing it unlocks.</p></div>
-        <div class="pcard"><span class="lbl">Prioritized recommendations</span><h3>Ranked by impact and effort.</h3><p>With an effort estimate on every action.</p></div>
-        <div class="pcard"><span class="lbl">Grounded</span><h3>Every recommendation traces to evidence.</h3><p>From finding to source, auditable end to end.</p></div>
-      </div>
-      <figure class="shot">
-        <img src="img/exec-briefing.webp" alt="A Bridge AI executive briefing in DATA Compass: a plain-language narrative connecting vocabulary fragmentation to missing-data rates, FAIR interoperability failures, and ML readiness, ending in a key-takeaway recommendation with a realistic timeline — grounded in the Pistoia Alliance business-value model" width="1400" height="1139" loading="lazy">
-        <figcaption>An executive briefing written by Bridge AI: the causal story across every dimension, ending in one keystone recommendation with an honest timeline.</figcaption>
-      </figure>
-      <p class="quote" style="margin-top:3rem;">From four-dimensional signal to a short list of things worth doing.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- §09 THE OUTPUT -->
-  <section class="section-pad" id="output">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">§ 09 · The Output</span>
-        <h2 class="headline">Every finding ships<span class="alt">with the fix attached.</span></h2>
-        <p class="lead">Compass is not a scorecard that rots on SharePoint. Every recommendation routes to a structured, executable action plan: an auto-generated remediation script you can read, edit, and run.</p>
-      </div>
-      <div class="grid-3 stagger">
-        <div class="pcard"><span class="lbl">Executable</span><h3>Auto-generated remediation, ready to edit.</h3><p>A Python script per finding — not a to-do line.</p></div>
-        <div class="pcard"><span class="lbl">Routed</span><h3>Findings connect to the plan automatically.</h3><p>No re-keying scores into a separate tracker.</p></div>
-        <div class="pcard"><span class="lbl">Traceable</span><h3>Plan → recommendation → finding → source.</h3><p>The whole chain survives an audit.</p></div>
-      </div>
-      <figure class="shot">
-        <img src="img/smart-recommendation.webp" alt="A DATA Compass smart recommendation: implement controlled-vocabulary master data management — impact, effort, and timeline up top with return, cost, ROI, and payback; below, the causal analysis chain from problem to root cause to fix to outcome, plus stakeholder-readiness context" width="1198" height="1204" loading="lazy">
-        <figcaption>One finding, fully dressed: the causal chain, the stakeholder read, the fix, and the ROI — ready to defend in a steering committee.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- §10 THE TRAJECTORY -->
-  <section class="section-pad" id="trajectory">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">§ 10 · The Trajectory</span>
-        <h2 class="headline">A score is a photograph.<span class="alt">A program needs the film.</span></h2>
-        <p class="lead">Every Compass analysis appends to the dataset's history. Fix something, re-analyze, and the trend view shows each dimension moving — with the delta since your last checkpoint quantified in a progress report your steering committee can actually read.</p>
-      </div>
-      <div class="grid-3 stagger">
-        <div class="pcard"><span class="lbl">Re-analyze in place</span><h3>One click re-runs the full assessment.</h3><p>On a connected dataset — no re-browsing the catalog, no re-upload.</p></div>
-        <div class="pcard"><span class="lbl">Trend per dimension</span><h3>Watch each score move over time.</h3><p>Statistical health, semantic maturity, governance, ML readiness — with FAIR-pillar drill-down.</p></div>
-        <div class="pcard"><span class="lbl">Progress since checkpoint</span><h3>The delta, quantified.</h3><p>What improved, what regressed, and which remediation produced it — evidence attached.</p></div>
-      </div>
-      <figure class="shot">
-        <img src="img/trend-trajectory.webp" alt="The DATA Compass technical trajectory view: Technical Asset Score and Statistical Health plotted across three readings from March to July, with the scoring-rubric version annotated on the timeline" width="1532" height="1028" loading="lazy">
-        <figcaption>A real trajectory: three readings across four months, with the scoring-rubric version pinned to the timeline.</figcaption>
-      </figure>
-      <p class="quote" style="margin-top:3rem;">Readiness is a trajectory. One reading tells you where you stand; the trend tells you if the program works.</p>
-    </div>
-  </section>
-
-  <!-- §11 THE VALUE (teal panel) -->
-  <section class="section-pad panel" id="value">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">§ 11 · The Value</span>
-        <h2 class="headline">Readiness, in dollars.<span class="alt">A line item that defends itself.</span></h2>
-        <p class="lead">Every gap carries a cost and every fix carries a return. Compass quantifies the business value of closing each gap — grounded in the Pistoia Alliance FAIR business-value model — so a data-readiness program competes for budget on the same terms as everything else: ROI.</p>
-      </div>
-      <div class="grid-3 stagger">
-        <div class="pcard"><span class="lbl">Prioritize by return</span><h3>Which fixes move readiness most, per dollar.</h3><p>Rank the backlog by impact, not by who shouted loudest.</p></div>
-        <div class="pcard"><span class="lbl">Quantified benefit</span><h3>Trust · speed · cost · effectiveness.</h3><p>Level-0 outcomes decomposed into measurable benefits.</p></div>
-        <div class="pcard"><span class="lbl">A budget case</span><h3>Defensible numbers for the steering committee.</h3><p>The readiness program earns its line item.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- §12 AUTONOMY / CLOSE -->
-  <section class="section-pad" id="autonomy">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">§ 12 · Know Before You Deploy</span>
-        <h2 class="headline">How much autonomy<span class="alt">can your data actually support?</span></h2>
-        <p class="lead">Readiness isn't a yes/no. Compass tells you which level of AI autonomy your data can support today — and exactly what to fix to climb to the next one.</p>
+      <div class="sec-head" style="margin-top:4rem;">
+        <h2 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">How much autonomy<span class="alt">can your data support?</span></h2>
       </div>
       <div class="ladder stagger">
         <div class="rung"><span class="step-n">Level 1</span><b>Advisory</b><span>AI suggests; a human decides everything.</span></div>
@@ -987,7 +793,7 @@
 
   <hr class="divider">
 
-  <!-- INTEGRATIONS -->
+  <!-- CH7 · INTEGRATIONS -->
   <section class="section-pad" id="integrations">
     <div class="container fade-in">
       <div class="sec-head">
@@ -995,13 +801,13 @@
         <h2 class="headline">Connect your data<span class="alt">where it lives.</span></h2>
         <p class="lead">Native connectors for enterprise data platforms. Assess data in place — without extraction or movement.</p>
       </div>
-      <div class="int-grid stagger">
-        <div class="int-card"><div class="ic" style="background:#ff3621;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Databricks</h3><p>Unity Catalog browser, SQL profiling, and MLflow model assessment via PAT or OAuth2.</p></div>
-        <div class="int-card"><div class="ic" style="background:#29b5e8;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 01-8 8m8-8a8 8 0 00-8-8m8 8H4m8 8a8 8 0 01-8-8m8 8c1.66 0 3-3.58 3-8s-1.34-8-3-8" stroke="#fff" stroke-width="2"/></svg></div><h3>Snowflake</h3><p>Database and schema browser with SQL API profiling for warehouses and data shares.</p></div>
-        <div class="int-card"><div class="ic" style="background:#f68d2e;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Veeva Vault</h3><p>QMS, CDMS, and RIM module adapters with OAuth2 SSO and Direct Data extraction.</p></div>
-        <div class="int-card"><div class="ic" style="background:#1a1a2e;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Stardog</h3><p>SPARQL querying, ICV constraint validation, and reasoning-powered ontology analysis.</p></div>
-        <div class="int-card"><div class="ic" style="background:var(--teal);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>File Upload &amp; API</h3><p>Drag-and-drop CSV, Excel, Parquet, JSON — or a REST API for CI/CD and pipelines.</p></div>
+      <div class="int-rail stagger">
+        <div class="rail-item" style="--hover-bg:#ff3621;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Databricks</h3><p>Unity Catalog browser, SQL profiling, MLflow assessment.</p></div>
+        <div class="rail-item" style="--hover-bg:#29b5e8;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 01-8 8m8-8a8 8 0 00-8-8m8 8H4m8 8a8 8 0 01-8-8m8 8c1.66 0 3-3.58 3-8s-1.34-8-3-8" stroke="#fff" stroke-width="2"/></svg></div><h3>Snowflake</h3><p>Database and schema browser with SQL API profiling.</p></div>
+        <div class="rail-item" style="--hover-bg:#f68d2e;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Veeva Vault</h3><p>QMS, CDMS, and RIM module adapters with OAuth2 SSO.</p></div>
+        <div class="rail-item" style="--hover-bg:#1a1a2e;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Stardog</h3><p>SPARQL querying, ICV validation, reasoning-powered analysis.</p></div>
       </div>
+      <div class="connector-card"><b>Files, APIs, and pipelines</b> — drag-and-drop CSV, Excel, Parquet, and JSON, or a REST API for CI/CD.</div>
     </div>
   </section>
 
@@ -1025,10 +831,10 @@
       <div>
         <h4>Platform</h4>
         <ul>
-          <li><a href="#model">The Model</a></li>
-          <li><a href="#method">The Method</a></li>
-          <li><a href="#dimensions">Dimensions</a></li>
-          <li><a href="#value">ROI</a></li>
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#outcomes">Outcomes</a></li>
+          <li><a href="#security">Security</a></li>
         </ul>
       </div>
       <div>
@@ -1107,6 +913,47 @@
     } else {
       document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
     }
+
+    // nav active-section indicator (enhancement only; anchors work without it)
+    if ('IntersectionObserver' in window) {
+      const navAnchors = Array.from(document.querySelectorAll('#navLinks a[href^="#"]'));
+      const byId = {};
+      navAnchors.forEach(a => { byId[a.getAttribute('href').slice(1)] = a; });
+      const secIo = new IntersectionObserver((es) => {
+        es.forEach(e => {
+          if (e.isIntersecting) {
+            navAnchors.forEach(a => a.classList.remove('active'));
+            const a = byId[e.target.id];
+            if (a) a.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      Object.keys(byId).forEach(id => { const s = document.getElementById(id); if (s) secIo.observe(s); });
+    }
+
+    // sample-journey scene sync (JS toggles active state only; scroll stays native)
+    (function(){
+      const figs  = Array.from(document.querySelectorAll('#jframe figure'));
+      const dots  = Array.from(document.querySelectorAll('#jrail button'));
+      const scenes = Array.from(document.querySelectorAll('.scene'));
+      if (!figs.length || !scenes.length) return;
+      function activate(i){
+        figs.forEach((f,k)=>f.classList.toggle('active', k===i));
+        dots.forEach((d,k)=>d.classList.toggle('active', k===i));
+      }
+      if ('IntersectionObserver' in window) {
+        const jio = new IntersectionObserver(es => {
+          es.forEach(e => { if (e.isIntersecting) activate(Number(e.target.dataset.scene)); });
+        }, { rootMargin:'-40% 0px -40% 0px' });
+        scenes.forEach(s => jio.observe(s));
+      }
+      dots.forEach((d,i)=>d.addEventListener('click', ()=>{
+        scenes[i].scrollIntoView({
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'center'
+        });
+      }));
+    })();
 
     // --- Request a Demo modal ---
     // Web3Forms access key. Public by design; the destination emails are stored
