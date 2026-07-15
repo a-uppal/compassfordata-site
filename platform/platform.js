@@ -107,20 +107,97 @@
     });
   })();
 
-  // ---- three reads: Agreement / Divergence two-state control ----
-  var readsSec = document.getElementById('defensibility');
-  var btnAgree = document.getElementById('btn-agree');
-  var btnDiverge = document.getElementById('btn-diverge');
-  function setReads(isAgree) {
-    readsSec.classList.toggle('state-agree', isAgree);
-    readsSec.classList.toggle('state-diverge', !isAgree);
-    btnAgree.setAttribute('aria-pressed', String(isAgree));
-    btnDiverge.setAttribute('aria-pressed', String(!isAgree));
-  }
-  if (readsSec && btnAgree && btnDiverge) {
+  // ---- three reads: Agreement / Divergence control + the pattern catalog ----
+  // Pattern copy lives ONCE, in the no-JS <details> fallback; the interactive
+  // grid reads it from there. Selecting a pattern moves the three traces into
+  // that pattern's actual signal configuration.
+  (function () {
+    var readsSec = document.getElementById('defensibility');
+    var btnAgree = document.getElementById('btn-agree');
+    var btnDiverge = document.getElementById('btn-diverge');
+    if (!readsSec || !btnAgree || !btnDiverge) return;
+
+    var data = {};
+    document.querySelectorAll('.pat-d').forEach(function (d) {
+      data[d.dataset.pat] = {
+        num: d.dataset.num, name: d.dataset.name, signals: d.dataset.signals,
+        t: d.dataset.t, p: d.dataset.p, g: d.dataset.g,
+        mean: d.querySelector('.pd-mean').textContent,
+        move: d.querySelector('.pd-move').textContent
+      };
+    });
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.pat'));
+    var panel = {
+      num: document.getElementById('ppNum'), name: document.getElementById('ppName'),
+      sig: document.getElementById('ppSig'), mean: document.getElementById('ppMean'),
+      move: document.getElementById('ppMove')
+    };
+    var patWord = document.getElementById('patWord');
+    var traces = { t: document.querySelector('.pt-t'), p: document.querySelector('.pt-p'), g: document.querySelector('.pt-g') };
+    // level → y (user units); per-trace offset keeps converged reads distinct
+    var LEVEL_Y = { high: 84, low: 256, absent: 170, pending: 170 };
+    var OFFSET = { t: -14, p: 0, g: 14 };
+    var LABEL = { high: 'HIGH', low: 'LOW', absent: 'ABSENT', pending: 'NOT YET' };
+    var committed = null; // persistently selected pattern id, or null
+
+    function renderPanel(id) {
+      var d = data[id];
+      panel.num.textContent = d.num; panel.name.textContent = d.name;
+      panel.sig.textContent = d.signals; panel.mean.textContent = d.mean; panel.move.textContent = d.move;
+    }
+    function renderTraces(id) {
+      ['t', 'p', 'g'].forEach(function (leg) {
+        var level = data[id][leg], el = traces[leg];
+        if (!el) return;
+        el.style.transform = 'translateY(' + (LEVEL_Y[level] + OFFSET[leg]) + 'px)';
+        el.classList.toggle('off', level === 'absent' || level === 'pending');
+        el.querySelector('.pt-lab').textContent = LABEL[level];
+      });
+    }
+    function markPressed(id) {
+      cards.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.pat === id)); });
+    }
+    function showPattern(id) {
+      renderPanel(id); renderTraces(id);
+      readsSec.classList.add('state-pattern');
+      patWord.textContent = data[id].name;
+    }
+    function restore() { // pointer/focus left the grid: fall back to the committed state
+      if (committed) { showPattern(committed); markPressed(committed); }
+      else {
+        readsSec.classList.remove('state-pattern');
+        renderPanel(readsSec.classList.contains('state-agree') ? 'confirmed' : 'usability');
+        markPressed('');
+      }
+    }
+    function setReads(isAgree) { // generic toggle clears any pattern selection
+      committed = null;
+      readsSec.classList.remove('state-pattern');
+      readsSec.classList.toggle('state-agree', isAgree);
+      readsSec.classList.toggle('state-diverge', !isAgree);
+      btnAgree.setAttribute('aria-pressed', String(isAgree));
+      btnDiverge.setAttribute('aria-pressed', String(!isAgree));
+      renderPanel(isAgree ? 'confirmed' : 'usability');
+      markPressed('');
+    }
     btnAgree.addEventListener('click', function () { setReads(true); });
     btnDiverge.addEventListener('click', function () { setReads(false); });
-  }
+
+    var grid = document.getElementById('patGrid');
+    cards.forEach(function (c) {
+      var id = c.dataset.pat;
+      c.addEventListener('click', function () { committed = id; showPattern(id); markPressed(id); });
+      c.addEventListener('mouseenter', function () { showPattern(id); }); // preview
+      c.addEventListener('focus', function () { showPattern(id); });      // keyboard preview
+    });
+    if (grid) {
+      grid.addEventListener('mouseleave', restore);
+      grid.addEventListener('focusout', function (e) {
+        if (!grid.contains(e.relatedTarget)) restore();
+      });
+    }
+    renderPanel('usability'); // page loads in Divergence: default the panel accordingly
+  })();
 
   // ---- Request a Demo modal (production behavior, unchanged) ----
   // Web3Forms access key. Public by design; the destination emails are stored
