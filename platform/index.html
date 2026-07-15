@@ -191,7 +191,7 @@
 
 <!-- ============ AI program success (narrative bridge) ============ -->
 <section class="sys-sec" id="ai-success" aria-labelledby="sys-h">
-  <div class="wrap fade-in">
+  <div class="wrap"><!-- the rail sequence is this section's single motion; no generic fade -->
     <div class="sys-head">
       <span class="sec-eyebrow">AI Program Success</span>
       <h2 class="sys-q" id="sys-h">What evidence says your AI program is ready to scale?</h2>
@@ -325,6 +325,7 @@
           <figure><img src="/img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
           <figure><img src="/img/scene4-prove.webp" alt="" width="766" height="719" loading="lazy"><figcaption>Sample data · Prove: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b>, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b>.</figcaption></figure>
         </div>
+        <div class="jprog" aria-hidden="true"><span id="jprogFill"></span></div>
         <div class="jrail" id="jrail">
           <button class="active" aria-pressed="true" aria-label="Stage 1: Assess"></button>
           <button aria-pressed="false" aria-label="Stage 2: Diagnose"></button>
@@ -481,9 +482,11 @@
 
     <div class="boundary" role="img" aria-label="Architecture diagram: your environment contains your data platforms, customer-provided files, the DATA Compass instance, and optionally an in-environment AI model. Connected sources are queried read-only and stay in place; customer-provided files are an authorized copy processed inside the boundary. Bridge AI uses the in-environment model, or - only if you approve it - an external provider outside the boundary.">
       <svg viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="14" y="26" width="700" height="396" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
-        <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
-        <g font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
+        <g class="b-frame">
+          <rect x="14" y="26" width="700" height="396" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
+          <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
+        </g>
+        <g class="b-sources" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
           <rect x="44" y="62" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
           <text x="132" y="89" text-anchor="middle" font-weight="600">Databricks</text>
           <rect x="44" y="116" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
@@ -491,19 +494,23 @@
           <rect x="44" y="170" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
           <text x="132" y="197" text-anchor="middle" font-weight="600">Veeva Vault</text>
           <text x="132" y="238" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">CONNECTED · STAYS IN PLACE</text>
+        </g>
+        <g class="b-files" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
           <rect x="44" y="286" width="176" height="48" rx="9" fill="#F5F3EE" stroke="#9c4b2c" stroke-dasharray="4 4"/>
           <text x="132" y="307" text-anchor="middle" font-weight="600">Customer-provided</text>
           <text x="132" y="323" text-anchor="middle" font-weight="600">files</text>
           <text x="132" y="360" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">AUTHORIZED COPY ·</text>
           <text x="132" y="374" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">PROCESSED INSIDE</text>
+          <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
+          <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
         </g>
-        <line x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
-        <path d="M322 138 l-11 -6 v12 z" fill="#B85C38"/>
-        <text x="275" y="122" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
-        <text x="275" y="158" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#66615A">your compute</text>
-        <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
-        <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
-        <g font-family="Inter,system-ui,sans-serif">
+        <g class="b-flow">
+          <line class="b-flow-line" pathLength="100" x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
+          <path d="M322 138 l-11 -6 v12 z" fill="#B85C38"/>
+          <text x="275" y="122" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
+          <text x="275" y="158" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#66615A">your compute</text>
+        </g>
+        <g class="b-core" font-family="Inter,system-ui,sans-serif">
           <rect x="334" y="62" width="248" height="220" rx="14" fill="#00495D"/>
           <text x="458" y="94" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">DATA Compass instance</text>
           <g font-size="13" fill="#cdd9de">
@@ -514,14 +521,14 @@
           </g>
           <text x="458" y="256" text-anchor="middle" font-size="10" fill="#9fb2b9" letter-spacing="1">RESULTS STAY INSIDE THE BOUNDARY</text>
         </g>
-        <g font-family="Inter,system-ui,sans-serif">
+        <g class="b-model" font-family="Inter,system-ui,sans-serif">
           <line x1="458" y1="282" x2="458" y2="316" stroke="#8EA3AC" stroke-width="1.6"/>
           <rect x="358" y="316" width="200" height="66" rx="10" fill="#F5F3EE" stroke="#8EA3AC"/>
           <text x="458" y="342" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">In-environment AI model</text>
           <text x="458" y="362" text-anchor="middle" font-size="10.5" fill="#66615A">Bridge AI default — nothing leaves</text>
         </g>
-        <g font-family="Inter,system-ui,sans-serif">
-          <line x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
+        <g class="b-ext" font-family="Inter,system-ui,sans-serif">
+          <line class="b-ext-line" x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
           <path d="M756 172 l-11 -6 v12 z" fill="#8EA3AC"/>
           <text x="668" y="156" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="1" fill="#66615A">ONLY IF YOU APPROVE IT</text>
           <rect x="758" y="132" width="176" height="80" rx="10" fill="none" stroke="#8EA3AC" stroke-width="1.6" stroke-dasharray="5 5"/>
@@ -537,6 +544,10 @@
         <div class="bcard"><b>4 · Your selected AI endpoint</b><span>In-environment model by default; an external provider only if you approve it.</span></div>
       </div>
       <p class="boundary-cap">No connected source data crosses this boundary without your approval.</p>
+    </div>
+    <div class="ext-toggle-row">
+      <button type="button" class="ext-toggle" id="extToggle" aria-pressed="false">Customer-approved external endpoint</button>
+      <span class="ext-toggle-note">Off by default — the external path exists only through explicit approval.</span>
     </div>
 
     <div class="trust-grid">

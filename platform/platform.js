@@ -51,15 +51,45 @@
     gap.classList.add('in');
   }
 
+  // ---- explanatory motion: one-time section sequences (observe, play, disconnect) ----
+  function playOnce(el, threshold) {
+    if (!el) return;
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { el.classList.add('play'); io.disconnect(); }
+        });
+      }, { threshold: threshold });
+      io.observe(el);
+    } else {
+      el.classList.add('play'); // no observer support: land on the completed state
+    }
+  }
+  playOnce(document.getElementById('ai-success'), 0.3);
+  playOnce(document.querySelector('.boundary'), 0.35);
+
+  // security: the external path moves only on explicit approval
+  var extBtn = document.getElementById('extToggle');
+  var boundary = document.querySelector('.boundary');
+  if (extBtn && boundary) {
+    extBtn.addEventListener('click', function () {
+      var on = !boundary.classList.contains('ext-on');
+      boundary.classList.toggle('ext-on', on);
+      extBtn.setAttribute('aria-pressed', String(on));
+    });
+  }
+
   // ---- how-it-works: sticky evidence journey (native scroll; JS syncs the surface) ----
   (function () {
     var figs = Array.prototype.slice.call(document.querySelectorAll('#jframe figure'));
     var dots = Array.prototype.slice.call(document.querySelectorAll('#jrail button'));
     var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene'));
+    var progFill = document.getElementById('jprogFill');
     if (!figs.length || !scenes.length) return;
     function activate(i) {
       figs.forEach(function (f, k) { f.classList.toggle('active', k === i); });
       dots.forEach(function (d, k) { d.classList.toggle('active', k === i); d.setAttribute('aria-pressed', String(k === i)); });
+      if (progFill) progFill.style.transform = 'scaleX(' + (i / (figs.length - 1)) + ')';
     }
     if ('IntersectionObserver' in window) {
       var jio = new IntersectionObserver(function (es) {
