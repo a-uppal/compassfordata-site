@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/platform/platform.css">
+  <link rel="stylesheet" href="/platform/platform.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -191,7 +191,7 @@
 
 <!-- ============ AI program success (narrative bridge) ============ -->
 <section class="sys-sec" id="ai-success" aria-labelledby="sys-h">
-  <div class="wrap fade-in">
+  <div class="wrap"><!-- the rail sequence is this section's single motion; no generic fade -->
     <div class="sys-head">
       <span class="sec-eyebrow">AI Program Success</span>
       <h2 class="sys-q" id="sys-h">What evidence says your AI program is ready to scale?</h2>
@@ -325,6 +325,7 @@
           <figure><img src="/img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
           <figure><img src="/img/scene4-prove.webp" alt="" width="766" height="719" loading="lazy"><figcaption>Sample data · Prove: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b>, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b>.</figcaption></figure>
         </div>
+        <div class="jprog" aria-hidden="true"><span id="jprogFill"></span></div>
         <div class="jrail" id="jrail">
           <button class="active" aria-pressed="true" aria-label="Stage 1: Assess"></button>
           <button aria-pressed="false" aria-label="Stage 2: Diagnose"></button>
@@ -456,10 +457,127 @@
       <span class="word agree only-agree">Confidence</span>
       <span class="word diverge only-diverge">The Finding</span>
     </div>
-    <div class="reads-patterns only-diverge" aria-label="Named divergence patterns">
-      <span>Usability Gap</span><span>Policy Theater</span><span>Tribal Knowledge</span><span>+5 more</span>
+
+    <!-- ============ the pattern explorer ============ -->
+    <div class="pattern-explorer" id="patternExplorer">
+      <span class="cal px-lab">Eight canonical patterns</span>
+      <p class="px-intro">Eight canonical patterns turn the relationship among Technical, Perceived, and Governed evidence into a shared diagnostic language. Explore a pattern to see what it means and where to look next.</p>
+
+      <!-- enhanced explorer: hidden until JS validates and initializes -->
+      <div class="px-enhanced" id="pxEnhanced" hidden>
+        <div class="px-grid" id="pxGrid">
+          <button type="button" class="px-tile" data-pat="confirmed" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">01</span><span class="cal px-fam">Coherent</span></span>
+            <b class="px-name">Confirmed Maturity</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="aligned" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">02</span><span class="cal px-fam">Provisional</span></span>
+            <b class="px-name">Aligned Maturity (suspected)</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Not yet gathered</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="greenfield" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">03</span><span class="cal px-fam">Neutral</span></span>
+            <b class="px-name">Greenfield</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · Low or absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="usability" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">04</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Usability Gap</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="tribal" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">05</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Tribal Knowledge</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · High</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="unformalized" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">06</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Unformalized Practice</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Low</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="abandoned" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">07</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Abandoned Capability</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="policy" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">08</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Policy Theater</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+        </div>
+
+        <div class="px-panel">
+          <div class="px-id">
+            <p class="px-id-head"><span class="cal px-id-num" id="pxNum"></span> <b id="pxName"></b></p>
+            <span class="cal px-id-fam" id="pxFam"></span>
+            <dl class="px-sig-list">
+              <div><dt class="cal">Technical</dt><dd id="pxSigT"></dd></div>
+              <div><dt class="cal">Perceived</dt><dd id="pxSigP"></dd></div>
+              <div><dt class="cal">Governed</dt><dd id="pxSigG"></dd></div>
+            </dl>
+          </div>
+          <div class="px-col"><span class="cal px-plab">What it means</span><p id="pxMean"></p></div>
+          <div class="px-col"><span class="cal px-plab">First move</span><p id="pxMove"></p></div>
+        </div>
+        <p class="sr-only" role="status" id="pxStatus"></p>
+      </div>
+
+      <!-- no-JS catalog: native details, hidden by JS only after the explorer initializes -->
+      <div class="px-fallback" id="pxFallback">
+        <details class="px-d">
+          <summary><span class="cal">01</span> <b>Confirmed Maturity</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed High</span></summary>
+          <p><b>What it means.</b> The data, stakeholder experience, and governance evidence all agree that the domain is strong.</p>
+          <p><b>First move.</b> Preserve and propagate. Protect the practices from regression and reuse the controls, artifacts, and working methods that make the domain successful.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">02</span> <b>Aligned Maturity (suspected)</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Not yet gathered</span></summary>
+          <p><b>What it means.</b> Technical evidence and stakeholder experience agree on high maturity, but governance evidence has not yet been reviewed.</p>
+          <p><b>First move.</b> Review the governance documents. Determine whether the pattern resolves to Confirmed Maturity or Unformalized Practice.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">03</span> <b>Greenfield</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed Low or deliberately absent</span></summary>
+          <p><b>What it means.</b> All available signals agree that the domain is early-stage. This is an investment decision, not necessarily a remediation problem.</p>
+          <p><b>First move.</b> Decide whether to invest or accept the current state. Do not treat every Greenfield domain as broken.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">04</span> <b>Usability Gap</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> The data and governance evidence appear strong, but the people who depend on the data cannot use it productively.</p>
+          <p><b>First move.</b> Examine discoverability, training, UX, and the path from the catalog entry to the practitioner.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">05</span> <b>Tribal Knowledge</b> <span class="cal px-d-sig">Technical Low · Perceived High · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> The domain works because a small number of people know its quirks, while metadata and formal governance remain thin or deliberately absent.</p>
+          <p><b>First move.</b> Capture the practice. Externalize the knowledge while the subject-matter experts are still available.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">06</span> <b>Unformalized Practice</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Low</span></summary>
+          <p><b>What it means.</b> The data is strong and the team operates effectively, but the working method has not been formally documented.</p>
+          <p><b>First move.</b> Codify what already works. Write the SOP around the real operating practice rather than replacing it with a generic template.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">07</span> <b>Abandoned Capability</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> A technically sound asset remains, but it has lost users, ownership, and governing practice.</p>
+          <p><b>First move.</b> Make a decision. Reinvest around a current use case or formally retire the capability.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">08</span> <b>Policy Theater</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> Governance documentation describes a mature system that the data and operating experience do not support.</p>
+          <p><b>First move.</b> Audit practice against policy. Reconcile the documented state with operational reality.</p>
+        </details>
+      </div>
+
+      <p class="px-qual">Patterns are diagnostic, not directive. Recommended first moves are starting points for discussion with the people who run the domain.</p>
     </div>
-    <p class="reads-note">Eight named divergence patterns — each one an actionable diagnosis.</p>
   </div>
 </section>
 
@@ -481,9 +599,11 @@
 
     <div class="boundary" role="img" aria-label="Architecture diagram: your environment contains your data platforms, customer-provided files, the DATA Compass instance, and optionally an in-environment AI model. Connected sources are queried read-only and stay in place; customer-provided files are an authorized copy processed inside the boundary. Bridge AI uses the in-environment model, or - only if you approve it - an external provider outside the boundary.">
       <svg viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="14" y="26" width="700" height="396" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
-        <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
-        <g font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
+        <g class="b-frame">
+          <rect x="14" y="26" width="700" height="396" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
+          <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
+        </g>
+        <g class="b-sources" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
           <rect x="44" y="62" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
           <text x="132" y="89" text-anchor="middle" font-weight="600">Databricks</text>
           <rect x="44" y="116" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
@@ -491,19 +611,23 @@
           <rect x="44" y="170" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
           <text x="132" y="197" text-anchor="middle" font-weight="600">Veeva Vault</text>
           <text x="132" y="238" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">CONNECTED · STAYS IN PLACE</text>
+        </g>
+        <g class="b-files" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
           <rect x="44" y="286" width="176" height="48" rx="9" fill="#F5F3EE" stroke="#9c4b2c" stroke-dasharray="4 4"/>
           <text x="132" y="307" text-anchor="middle" font-weight="600">Customer-provided</text>
           <text x="132" y="323" text-anchor="middle" font-weight="600">files</text>
           <text x="132" y="360" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">AUTHORIZED COPY ·</text>
           <text x="132" y="374" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">PROCESSED INSIDE</text>
+          <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
+          <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
         </g>
-        <line x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
-        <path d="M322 138 l-11 -6 v12 z" fill="#B85C38"/>
-        <text x="275" y="122" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
-        <text x="275" y="158" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#66615A">your compute</text>
-        <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
-        <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
-        <g font-family="Inter,system-ui,sans-serif">
+        <g class="b-flow">
+          <line class="b-flow-line" pathLength="100" x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
+          <path d="M322 138 l-11 -6 v12 z" fill="#B85C38"/>
+          <text x="275" y="122" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
+          <text x="275" y="158" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#66615A">your compute</text>
+        </g>
+        <g class="b-core" font-family="Inter,system-ui,sans-serif">
           <rect x="334" y="62" width="248" height="220" rx="14" fill="#00495D"/>
           <text x="458" y="94" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">DATA Compass instance</text>
           <g font-size="13" fill="#cdd9de">
@@ -514,14 +638,14 @@
           </g>
           <text x="458" y="256" text-anchor="middle" font-size="10" fill="#9fb2b9" letter-spacing="1">RESULTS STAY INSIDE THE BOUNDARY</text>
         </g>
-        <g font-family="Inter,system-ui,sans-serif">
+        <g class="b-model" font-family="Inter,system-ui,sans-serif">
           <line x1="458" y1="282" x2="458" y2="316" stroke="#8EA3AC" stroke-width="1.6"/>
           <rect x="358" y="316" width="200" height="66" rx="10" fill="#F5F3EE" stroke="#8EA3AC"/>
           <text x="458" y="342" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">In-environment AI model</text>
           <text x="458" y="362" text-anchor="middle" font-size="10.5" fill="#66615A">Bridge AI default — nothing leaves</text>
         </g>
-        <g font-family="Inter,system-ui,sans-serif">
-          <line x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
+        <g class="b-ext" font-family="Inter,system-ui,sans-serif">
+          <line class="b-ext-line" x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
           <path d="M756 172 l-11 -6 v12 z" fill="#8EA3AC"/>
           <text x="668" y="156" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="1" fill="#66615A">ONLY IF YOU APPROVE IT</text>
           <rect x="758" y="132" width="176" height="80" rx="10" fill="none" stroke="#8EA3AC" stroke-width="1.6" stroke-dasharray="5 5"/>
@@ -537,6 +661,10 @@
         <div class="bcard"><b>4 · Your selected AI endpoint</b><span>In-environment model by default; an external provider only if you approve it.</span></div>
       </div>
       <p class="boundary-cap">No connected source data crosses this boundary without your approval.</p>
+    </div>
+    <div class="ext-toggle-row">
+      <button type="button" class="ext-toggle" id="extToggle" aria-pressed="false">Customer-approved external endpoint</button>
+      <span class="ext-toggle-note">Off by default — the external path exists only through explicit approval.</span>
     </div>
 
     <div class="trust-grid">
@@ -668,6 +796,6 @@
   </div>
 </div>
 
-<script src="/platform/platform.js"></script>
+<script src="/platform/platform.js?v=3"></script>
 </body>
 </html>

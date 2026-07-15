@@ -27,6 +27,7 @@
   --maxw: 1180px;
 }
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+[hidden] { display:none !important; } /* progressive-enhancement gate — never override */
 html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
 body { font-family:var(--sans); font-weight:400; line-height:1.6; color:var(--ink); background:var(--ground); overflow-x:hidden; }
 a { color:inherit; }
@@ -276,9 +277,86 @@ html:not(.js) .frame-wrap { display:none; }
 .reads-state .word.diverge { color:var(--ground); border-bottom:3px solid var(--signal); padding-bottom:.18rem; }
 .state-agree   .only-diverge { display:none; }
 .state-diverge .only-agree   { display:none; }
-.reads-patterns { display:flex; gap:.7rem; flex-wrap:wrap; margin-top:1.6rem; }
-.reads-patterns span { font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; border:1px solid var(--line-dark); border-radius:100px; padding:.34rem .8rem; color:var(--on-field); }
-.reads-note { margin-top:2.2rem; font-size:.86rem; color:var(--slate-2); max-width:56ch; }
+/* ---- the pattern explorer ----
+   Instrument catalog: one grid of eight tiles, one shared detail panel,
+   one native-details fallback. Enhanced UI ships [hidden]; JS validates
+   its targets before swapping the interfaces — a stale script or sheet
+   leaves the fallback alone, never a half-rendered component. */
+.pattern-explorer { margin-top:3.2rem; border-top:1px solid var(--line-dark); padding-top:2.2rem; }
+.px-lab { display:block; color:var(--slate-2); }
+.px-intro { margin-top:.7rem; max-width:64ch; font-size:.98rem; color:var(--on-field); }
+
+.px-grid { margin-top:1.8rem; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.9rem; }
+.px-tile {
+  appearance:none; -webkit-appearance:none; font:inherit; font-family:var(--sans);
+  text-align:left; width:100%; cursor:pointer; min-height:132px;
+  display:flex; flex-direction:column; gap:.4rem;
+  background:rgba(245,243,238,.045); color:var(--on-field);
+  border:1px solid var(--line-dark); border-radius:3px; padding:.85rem .95rem .8rem;
+}
+.px-tile:hover, .px-tile:focus-visible { border-color:var(--slate-2); }
+.px-head { display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; }
+.px-num { color:var(--slate-2); font-size:.6rem; }
+.px-fam { color:var(--slate-2); font-size:.54rem; letter-spacing:.14em; }
+.px-name { font-size:.88rem; font-weight:600; color:var(--white); line-height:1.3; }
+.px-sigs { margin-top:auto; display:flex; flex-direction:column; gap:.1rem;
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--slate-2); }
+.px-sel { display:none; color:var(--signal-d); font-size:.56rem; margin-top:.45rem; }
+/* selected: cream instrument surface — unmistakably distinct from hover */
+.px-tile[aria-pressed="true"] {
+  background:var(--ground); color:var(--ink); border-color:var(--ground);
+  box-shadow:inset 0 3px 0 var(--signal);
+}
+.px-tile[aria-pressed="true"] .px-name { color:var(--field); }
+.px-tile[aria-pressed="true"] .px-num,
+.px-tile[aria-pressed="true"] .px-fam,
+.px-tile[aria-pressed="true"] .px-sigs { color:var(--muted); }
+.px-tile[aria-pressed="true"] .px-sel { display:block; }
+/* toggle interplay: subtly emphasize the matching family, never hide the rest */
+.state-agree   .px-tile[data-group="diverge"]:not([aria-pressed="true"]) { opacity:.62; }
+.state-diverge .px-tile[data-group="align"]:not([aria-pressed="true"])   { opacity:.62; }
+.px-tile:hover, .px-tile:focus-visible { opacity:1 !important; }
+
+.px-panel {
+  margin-top:1.1rem; background:var(--ground); color:var(--ink);
+  border-radius:3px; border-top:3px solid var(--signal);
+  padding:1.3rem 1.5rem; min-height:172px;
+  display:grid; grid-template-columns:.8fr 1.1fr 1.1fr; gap:2rem;
+}
+.px-id-head { display:flex; align-items:baseline; gap:.6rem; }
+.px-id-head b { color:var(--field); font-size:1.05rem; font-weight:600; line-height:1.25; }
+.px-id-num { color:var(--signal-d); }
+.px-id-fam { display:inline-block; margin-top:.5rem; color:var(--muted); font-size:.56rem;
+  border:1px solid var(--line); border-radius:2px; padding:.18rem .5rem; }
+.px-sig-list { margin-top:.9rem; display:flex; flex-direction:column; gap:.3rem; }
+.px-sig-list div { display:grid; grid-template-columns:88px 1fr; gap:.6rem; align-items:baseline; }
+.px-sig-list dt { color:var(--signal-d); font-size:.56rem; }
+.px-sig-list dd { font-family:var(--mono); font-size:.76rem; color:var(--ink-strong); }
+.px-plab { display:block; color:var(--signal-d); font-size:.58rem; margin-bottom:.4rem; }
+.px-col p { font-size:.92rem; line-height:1.65; color:var(--ink); }
+
+.px-qual { margin-top:1.2rem; font-size:.8rem; color:var(--slate-2); max-width:72ch; }
+
+/* fallback: polished native details on the teal field */
+.px-fallback { margin-top:1.6rem; max-width:860px; }
+.px-d { border-bottom:1px solid var(--line-dark); }
+.px-d summary { cursor:pointer; padding:.85rem .2rem; color:var(--white); font-size:.95rem; }
+.px-d summary::marker { color:var(--signal); }
+.px-d summary .cal { color:var(--slate-2); }
+.px-d summary .px-d-sig { display:block; margin:.25rem 0 0 1.15rem; font-size:.6rem; }
+.px-d p { font-size:.9rem; color:var(--on-field); padding:.15rem .2rem .9rem 1.15rem; max-width:70ch; }
+.px-d p b { color:var(--ground); font-weight:600; }
+
+@media (max-width: 1080px) {
+  .px-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .px-panel { grid-template-columns:1fr 1fr; }
+  .px-panel .px-id { grid-column:1 / -1; }
+}
+@media (max-width: 640px) {
+  .px-grid { grid-template-columns:1fr; }
+  .px-tile { min-height:0; }
+  .px-panel { grid-template-columns:1fr; gap:1.1rem; padding:1.1rem 1.15rem; }
+}
 
 /* ---------------- security & deployment ---------------- */
 .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
@@ -374,6 +452,101 @@ html:not(.js) .frame-wrap { display:none; }
 .form-success h3{ color:var(--field); font-weight:600; font-size:1.3rem; }
 .form-success p{ color:var(--ink); margin-top:.5rem; }
 @media (max-width:480px){ .frow{ grid-template-columns:1fr; } }
+
+/* ====================================================================
+   EXPLANATORY MOTION — measure · locate · connect · constrain · prove
+   Every pre-state is gated on BOTH html.js and reduced-motion:
+   no-preference, so no-JS and reduced-motion users always land on the
+   completed state. Each sequence runs once (IO adds .play, disconnects).
+   ==================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- 1 · AI Program Success rail: draw → resolve → lock → hand off ---- */
+  html.js #ai-success .sys-rail::before {
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .5s cubic-bezier(.3,.6,.2,1);
+  }
+  html.js #ai-success.play .sys-rail::before { transform:scaleX(1); }
+  html.js #ai-success .sys-item::before {
+    opacity:0; transform:scale(.4);
+    transition:opacity .28s ease, transform .28s cubic-bezier(.2,.85,.3,1.1);
+  }
+  html.js #ai-success.play .sys-item::before { opacity:1; transform:scale(1); }
+  html.js #ai-success.play .sys-item:nth-child(1)::before { transition-delay:.10s; }
+  html.js #ai-success.play .sys-item:nth-child(2)::before { transition-delay:.55s; } /* the gate locks after the line lands */
+  html.js #ai-success.play .sys-item:nth-child(3)::before { transition-delay:.22s; }
+  html.js #ai-success.play .sys-item:nth-child(4)::before { transition-delay:.28s; }
+  html.js #ai-success.play .sys-item:nth-child(5)::before { transition-delay:.34s; }
+  html.js #ai-success.play .sys-item:nth-child(6)::before { transition-delay:.40s; }
+  html.js #ai-success .sys-item--gate::before { transform:scale(1.8); } /* reticle-style lock-in */
+  html.js #ai-success .sys-item--gate { border-left-color:transparent; transition:border-color .25s ease .6s; }
+  html.js #ai-success.play .sys-item--gate { border-left-color:var(--signal); }
+  html.js #ai-success .sys-item--gate::after { opacity:0; transition:opacity .25s ease .6s; } /* mobile vertical rule */
+  html.js #ai-success.play .sys-item--gate::after { opacity:1; }
+  html.js #ai-success .sys-scope {
+    opacity:0; transform:translateY(4px);
+    transition:opacity .3s ease .78s, transform .3s ease .78s;
+  }
+  html.js #ai-success.play .sys-scope { opacity:1; transform:none; }
+  html.js #ai-success .sys-gate-link::after {
+    transform:scaleY(0); transform-origin:top;
+    transition:transform .3s ease-in .92s;
+  }
+  html.js #ai-success.play .sys-gate-link::after { transform:scaleY(1); }
+  html.js #ai-success .sys-gate-link .cal { opacity:0; transition:opacity .3s ease .95s; }
+  html.js #ai-success.play .sys-gate-link .cal { opacity:1; }
+
+  /* ---- 2 · journey handoff: incoming evidence, not an image swap ---- */
+  @keyframes jf-in { from { opacity:.35; transform:translateY(6px) scale(.99); } }
+  html.js .jframe figure.active { animation:jf-in .3s cubic-bezier(.25,.7,.3,1) both; }
+  .jrail button { transition:background .2s ease, transform .2s ease; }
+  .jrail button.active { transform:scale(1.12); }
+  #jprogFill { transition:transform .32s ease; }
+
+  /* ---- 3 · security boundary: one controlled transaction ---- */
+  html.js .boundary .b-frame,
+  html.js .boundary .b-sources,
+  html.js .boundary .b-flow,
+  html.js .boundary .b-core,
+  html.js .boundary .b-model,
+  html.js .boundary .b-files { opacity:0; }
+  html.js .boundary.play .b-frame   { opacity:1; transition:opacity .35s ease; }
+  html.js .boundary.play .b-sources { opacity:1; transition:opacity .35s ease .2s; }
+  html.js .boundary.play .b-flow    { opacity:1; transition:opacity .25s ease .5s; }
+  html.js .boundary .b-flow-line    { stroke-dasharray:100; stroke-dashoffset:100; }
+  html.js .boundary.play .b-flow-line { stroke-dashoffset:0; transition:stroke-dashoffset .3s ease-out .55s; }
+  html.js .boundary.play .b-core    { opacity:1; transition:opacity .35s ease .78s; }
+  html.js .boundary.play .b-model   { opacity:1; transition:opacity .3s ease 1.08s; }
+  html.js .boundary.play .b-files   { opacity:1; transition:opacity .35s ease 1.2s; } /* appears — never crawls */
+
+  /* pattern explorer: restrained component motion only */
+  .px-tile { transition:border-color .16s ease, background .2s ease, opacity .2s ease, transform .16s ease; }
+  .px-tile:hover, .px-tile:focus-visible { transform:translateY(-2px); }
+  @keyframes px-swap { from { opacity:.45; } }
+  .px-panel.swap > * { animation:px-swap .22s ease both; }
+
+  /* external path: exists only through explicit approval */
+  html.js .boundary .b-ext { opacity:.5; transition:opacity .25s ease; }
+  html.js .boundary.ext-on .b-ext { opacity:1; }
+  @keyframes ext-flow { from { stroke-dashoffset:40; } to { stroke-dashoffset:0; } } /* one outward pass, then still */
+  html.js .boundary.ext-on .b-ext-line { animation:ext-flow .5s ease-out both; }
+}
+
+/* toggle control (outside the reduced-motion gate — it must always work) */
+.ext-toggle-row { margin-top:.9rem; display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap; justify-content:center; }
+.ext-toggle {
+  font-family:var(--mono); font-size:.62rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--field); background:transparent; border:1px solid var(--line); border-radius:100px;
+  padding:.42rem .9rem; cursor:pointer; transition:border-color .2s ease, color .2s ease, background .2s ease;
+}
+.ext-toggle:hover { border-color:var(--field); }
+.ext-toggle[aria-pressed="true"] { border-color:var(--signal); color:var(--signal-d); background:rgba(184,92,56,.07); }
+.ext-toggle-note { font-size:.78rem; color:var(--muted); }
+
+/* journey progress trace */
+.jprog { position:relative; height:2px; background:var(--line); margin:.95rem auto 0; max-width:200px; border-radius:1px; }
+#jprogFill { position:absolute; inset:0; background:var(--signal); transform:scaleX(0); transform-origin:left; border-radius:1px; }
+html:not(.js) .jprog { display:none; }
 
 /* ---------------- section entrance (single, quiet) ---------------- */
 html.js .fade-in { opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease; }
