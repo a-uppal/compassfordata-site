@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/platform/platform.css">
+  <link rel="stylesheet" href="/platform/platform.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -449,12 +449,6 @@
             <line x1="908" y1="298" x2="924" y2="298"/>
           </g>
         </g>
-        <!-- pattern-configuration traces: three translatable reads + level labels -->
-        <g class="g-pattern">
-          <g class="pt pt-t"><line x1="40" y1="0" x2="856" y2="0" stroke="#EBE7E0" stroke-width="2"/><text class="pt-lab" x="866" y="4" font-family="ui-monospace,Consolas,monospace" font-size="12" letter-spacing="1.5" fill="#AEC3CB"></text></g>
-          <g class="pt pt-p"><line x1="40" y1="0" x2="856" y2="0" stroke="#EBE7E0" stroke-width="2" stroke-dasharray="6 4"/><text class="pt-lab" x="866" y="4" font-family="ui-monospace,Consolas,monospace" font-size="12" letter-spacing="1.5" fill="#AEC3CB"></text></g>
-          <g class="pt pt-g"><line x1="40" y1="0" x2="856" y2="0" stroke="#EBE7E0" stroke-width="2" stroke-dasharray="2 4"/><text class="pt-lab" x="866" y="4" font-family="ui-monospace,Consolas,monospace" font-size="12" letter-spacing="1.5" fill="#AEC3CB"></text></g>
-        </g>
       </svg>
     </div>
 
@@ -462,89 +456,127 @@
       <span class="cal">The three reads resolve to</span>
       <span class="word agree only-agree">Confidence</span>
       <span class="word diverge only-diverge">The Finding</span>
-      <span class="word pattern only-pattern" id="patWord"></span>
     </div>
-    <p class="reads-note">Eight canonical triangulation patterns—each one tells you what the signals mean and where to look next.</p>
 
-    <!-- ============ the pattern catalog ============ -->
-    <div class="pat-catalog">
-      <h3 class="pat-title">The Pattern Catalog</h3>
-      <p class="pat-lead">Eight canonical patterns turn the relationship among Technical, Perceived, and Governed evidence into a shared diagnostic language. Select a pattern to see what it means and where to look next.</p>
+    <!-- ============ the pattern explorer ============ -->
+    <div class="pattern-explorer" id="patternExplorer">
+      <span class="cal px-lab">Eight canonical patterns</span>
+      <p class="px-intro">Eight canonical patterns turn the relationship among Technical, Perceived, and Governed evidence into a shared diagnostic language. Explore a pattern to see what it means and where to look next.</p>
 
-      <!-- interactive grid (JS): compact instrument buttons + one shared panel -->
-      <div class="pat-grid" id="patGrid">
-        <div class="pat-group" data-group="aligned">
-          <span class="cal pat-group-lab">Aligned or incomplete readings</span>
-          <div class="pat-row" role="group" aria-label="Aligned or incomplete readings">
-            <button type="button" class="pat" data-pat="confirmed" aria-pressed="false"><span class="cal pnum">01</span><b>Confirmed Maturity</b><span class="psig">H · H · H</span></button>
-            <button type="button" class="pat" data-pat="aligned" aria-pressed="false"><span class="cal pnum">02</span><b>Aligned Maturity — Suspected</b><span class="psig">H · H · —</span></button>
-            <button type="button" class="pat" data-pat="greenfield" aria-pressed="false"><span class="cal pnum">03</span><b>Greenfield</b><span class="psig">L · L · L</span></button>
-          </div>
+      <!-- enhanced explorer: hidden until JS validates and initializes -->
+      <div class="px-enhanced" id="pxEnhanced" hidden>
+        <div class="px-grid" id="pxGrid">
+          <button type="button" class="px-tile" data-pat="confirmed" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">01</span><span class="cal px-fam">Coherent</span></span>
+            <b class="px-name">Confirmed Maturity</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="aligned" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">02</span><span class="cal px-fam">Provisional</span></span>
+            <b class="px-name">Aligned Maturity (suspected)</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Not yet gathered</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="greenfield" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">03</span><span class="cal px-fam">Neutral</span></span>
+            <b class="px-name">Greenfield</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · Low or absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="usability" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">04</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Usability Gap</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="tribal" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">05</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Tribal Knowledge</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · High</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="unformalized" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">06</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Unformalized Practice</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Low</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="abandoned" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">07</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Abandoned Capability</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="policy" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">08</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Policy Theater</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
         </div>
-        <div class="pat-group" data-group="diverge">
-          <span class="cal pat-group-lab">Divergence diagnoses</span>
-          <div class="pat-row" role="group" aria-label="Divergence diagnoses">
-            <button type="button" class="pat" data-pat="usability" aria-pressed="false"><span class="cal pnum">04</span><b>Usability Gap</b><span class="psig">H · L · H</span></button>
-            <button type="button" class="pat" data-pat="tribal" aria-pressed="false"><span class="cal pnum">05</span><b>Tribal Knowledge</b><span class="psig">L · H · —</span></button>
-            <button type="button" class="pat" data-pat="unformalized" aria-pressed="false"><span class="cal pnum">06</span><b>Unformalized Practice</b><span class="psig">H · H · L</span></button>
-            <button type="button" class="pat" data-pat="abandoned" aria-pressed="false"><span class="cal pnum">07</span><b>Abandoned Capability</b><span class="psig">H · L · —</span></button>
-            <button type="button" class="pat" data-pat="policy" aria-pressed="false"><span class="cal pnum">08</span><b>Policy Theater</b><span class="psig">L · L · H</span></button>
+
+        <div class="px-panel">
+          <div class="px-id">
+            <p class="px-id-head"><span class="cal px-id-num" id="pxNum"></span> <b id="pxName"></b></p>
+            <span class="cal px-id-fam" id="pxFam"></span>
+            <dl class="px-sig-list">
+              <div><dt class="cal">Technical</dt><dd id="pxSigT"></dd></div>
+              <div><dt class="cal">Perceived</dt><dd id="pxSigP"></dd></div>
+              <div><dt class="cal">Governed</dt><dd id="pxSigG"></dd></div>
+            </dl>
           </div>
+          <div class="px-col"><span class="cal px-plab">What it means</span><p id="pxMean"></p></div>
+          <div class="px-col"><span class="cal px-plab">First move</span><p id="pxMove"></p></div>
         </div>
-        <div class="pat-panel" id="patPanel" aria-live="polite">
-          <p class="pp-head"><span class="cal pp-num" id="ppNum"></span><b id="ppName"></b><span class="cal pp-sig" id="ppSig"></span></p>
-          <div class="pp-cols">
-            <div><span class="cal pp-label">What it means</span><p id="ppMean"></p></div>
-            <div><span class="cal pp-label">First move</span><p id="ppMove"></p></div>
-          </div>
-        </div>
+        <p class="sr-only" role="status" id="pxStatus"></p>
       </div>
 
-      <!-- no-JS fallback AND single source of pattern copy: native details -->
-      <div class="pat-details" id="patSource">
-        <details class="pat-d" data-pat="confirmed" data-num="01" data-name="Confirmed Maturity" data-signals="Technical HIGH · Perceived HIGH · Governed HIGH" data-t="high" data-p="high" data-g="high">
-          <summary>01 · Confirmed Maturity <span class="psig">H · H · H</span></summary>
-          <p class="pd-mean">The data, stakeholder experience, and governance evidence all agree that the domain is strong.</p>
-          <p class="pd-move">Preserve and propagate. Protect the practices from regression and reuse what works elsewhere.</p>
+      <!-- no-JS catalog: native details, hidden by JS only after the explorer initializes -->
+      <div class="px-fallback" id="pxFallback">
+        <details class="px-d">
+          <summary><span class="cal">01</span> <b>Confirmed Maturity</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed High</span></summary>
+          <p><b>What it means.</b> The data, stakeholder experience, and governance evidence all agree that the domain is strong.</p>
+          <p><b>First move.</b> Preserve and propagate. Protect the practices from regression and reuse the controls, artifacts, and working methods that make the domain successful.</p>
         </details>
-        <details class="pat-d" data-pat="aligned" data-num="02" data-name="Aligned Maturity — Suspected" data-signals="Technical HIGH · Perceived HIGH · Governed NOT YET GATHERED" data-t="high" data-p="high" data-g="pending">
-          <summary>02 · Aligned Maturity — Suspected <span class="psig">H · H · —</span></summary>
-          <p class="pd-mean">Technical evidence and stakeholder experience agree, but governance evidence has not yet been reviewed.</p>
-          <p class="pd-move">Review the governance documents. Determine whether the pattern resolves to Confirmed Maturity or Unformalized Practice.</p>
+        <details class="px-d">
+          <summary><span class="cal">02</span> <b>Aligned Maturity (suspected)</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Not yet gathered</span></summary>
+          <p><b>What it means.</b> Technical evidence and stakeholder experience agree on high maturity, but governance evidence has not yet been reviewed.</p>
+          <p><b>First move.</b> Review the governance documents. Determine whether the pattern resolves to Confirmed Maturity or Unformalized Practice.</p>
         </details>
-        <details class="pat-d" data-pat="greenfield" data-num="03" data-name="Greenfield" data-signals="Technical LOW · Perceived LOW · Governed LOW OR DELIBERATELY ABSENT" data-t="low" data-p="low" data-g="low">
-          <summary>03 · Greenfield <span class="psig">L · L · L</span></summary>
-          <p class="pd-mean">All three signals agree that the domain is early-stage. It is an investment decision, not necessarily a remediation problem.</p>
-          <p class="pd-move">Decide whether to invest or accept. Do not treat every Greenfield domain as broken.</p>
+        <details class="px-d">
+          <summary><span class="cal">03</span> <b>Greenfield</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed Low or deliberately absent</span></summary>
+          <p><b>What it means.</b> All available signals agree that the domain is early-stage. This is an investment decision, not necessarily a remediation problem.</p>
+          <p><b>First move.</b> Decide whether to invest or accept the current state. Do not treat every Greenfield domain as broken.</p>
         </details>
-        <details class="pat-d" data-pat="usability" data-num="04" data-name="Usability Gap" data-signals="Technical HIGH · Perceived LOW · Governed HIGH" data-t="high" data-p="low" data-g="high">
-          <summary>04 · Usability Gap <span class="psig">H · L · H</span></summary>
-          <p class="pd-mean">The data and governance look strong, but the people who need the data cannot use it productively.</p>
-          <p class="pd-move">Examine discoverability and training. The issue is usually UX or operating process, not more metadata.</p>
+        <details class="px-d">
+          <summary><span class="cal">04</span> <b>Usability Gap</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> The data and governance evidence appear strong, but the people who depend on the data cannot use it productively.</p>
+          <p><b>First move.</b> Examine discoverability, training, UX, and the path from the catalog entry to the practitioner.</p>
         </details>
-        <details class="pat-d" data-pat="tribal" data-num="05" data-name="Tribal Knowledge" data-signals="Technical LOW · Perceived HIGH · Governed DELIBERATELY ABSENT" data-t="low" data-p="high" data-g="absent">
-          <summary>05 · Tribal Knowledge <span class="psig">L · H · —</span></summary>
-          <p class="pd-mean">The domain works because a few people know its quirks, while metadata and formal governance remain thin or absent.</p>
-          <p class="pd-move">Capture the practice. Externalize the knowledge while the subject-matter experts are still available.</p>
+        <details class="px-d">
+          <summary><span class="cal">05</span> <b>Tribal Knowledge</b> <span class="cal px-d-sig">Technical Low · Perceived High · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> The domain works because a small number of people know its quirks, while metadata and formal governance remain thin or deliberately absent.</p>
+          <p><b>First move.</b> Capture the practice. Externalize the knowledge while the subject-matter experts are still available.</p>
         </details>
-        <details class="pat-d" data-pat="unformalized" data-num="06" data-name="Unformalized Practice" data-signals="Technical HIGH · Perceived HIGH · Governed LOW" data-t="high" data-p="high" data-g="low">
-          <summary>06 · Unformalized Practice <span class="psig">H · H · L</span></summary>
-          <p class="pd-mean">The data is strong and the team works effectively, but the operating method has not been formally documented.</p>
-          <p class="pd-move">Codify what already works. Write the SOP around the real practice rather than replacing it with a generic template.</p>
+        <details class="px-d">
+          <summary><span class="cal">06</span> <b>Unformalized Practice</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Low</span></summary>
+          <p><b>What it means.</b> The data is strong and the team operates effectively, but the working method has not been formally documented.</p>
+          <p><b>First move.</b> Codify what already works. Write the SOP around the real operating practice rather than replacing it with a generic template.</p>
         </details>
-        <details class="pat-d" data-pat="abandoned" data-num="07" data-name="Abandoned Capability" data-signals="Technical HIGH · Perceived LOW · Governed DELIBERATELY ABSENT" data-t="high" data-p="low" data-g="absent">
-          <summary>07 · Abandoned Capability <span class="psig">H · L · —</span></summary>
-          <p class="pd-mean">A technically sound asset remains, but it has lost users, ownership, and governing practice.</p>
-          <p class="pd-move">Make a decision. Reinvest around a current use case or formally retire the capability.</p>
+        <details class="px-d">
+          <summary><span class="cal">07</span> <b>Abandoned Capability</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> A technically sound asset remains, but it has lost users, ownership, and governing practice.</p>
+          <p><b>First move.</b> Make a decision. Reinvest around a current use case or formally retire the capability.</p>
         </details>
-        <details class="pat-d" data-pat="policy" data-num="08" data-name="Policy Theater" data-signals="Technical LOW · Perceived LOW · Governed HIGH" data-t="low" data-p="low" data-g="high">
-          <summary>08 · Policy Theater <span class="psig">L · L · H</span></summary>
-          <p class="pd-mean">Governance documentation describes a mature system that the data and operating experience do not support.</p>
-          <p class="pd-move">Audit practice against policy. Reconcile the documented state with operational reality.</p>
+        <details class="px-d">
+          <summary><span class="cal">08</span> <b>Policy Theater</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> Governance documentation describes a mature system that the data and operating experience do not support.</p>
+          <p><b>First move.</b> Audit practice against policy. Reconcile the documented state with operational reality.</p>
         </details>
       </div>
 
-      <p class="pat-qual">Patterns are diagnostic, not directive. Recommended first moves are starting points for discussion with the people who run the domain.</p>
+      <p class="px-qual">Patterns are diagnostic, not directive. Recommended first moves are starting points for discussion with the people who run the domain.</p>
     </div>
   </div>
 </section>
@@ -764,6 +796,6 @@
   </div>
 </div>
 
-<script src="/platform/platform.js"></script>
+<script src="/platform/platform.js?v=3"></script>
 </body>
 </html>

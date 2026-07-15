@@ -107,96 +107,125 @@
     });
   })();
 
-  // ---- three reads: Agreement / Divergence control + the pattern catalog ----
-  // Pattern copy lives ONCE, in the no-JS <details> fallback; the interactive
-  // grid reads it from there. Selecting a pattern moves the three traces into
-  // that pattern's actual signal configuration.
+  // ---- three reads: Agreement / Divergence control + the pattern explorer ----
+  // The enhanced explorer ships [hidden]; the native-details fallback is the
+  // default rendering. Only after every target validates do we swap the two —
+  // a stale script or stylesheet can never produce a half-rendered component.
   (function () {
     var readsSec = document.getElementById('defensibility');
     var btnAgree = document.getElementById('btn-agree');
     var btnDiverge = document.getElementById('btn-diverge');
     if (!readsSec || !btnAgree || !btnDiverge) return;
 
-    var data = {};
-    document.querySelectorAll('.pat-d').forEach(function (d) {
-      data[d.dataset.pat] = {
-        num: d.dataset.num, name: d.dataset.name, signals: d.dataset.signals,
-        t: d.dataset.t, p: d.dataset.p, g: d.dataset.g,
-        mean: d.querySelector('.pd-mean').textContent,
-        move: d.querySelector('.pd-move').textContent
-      };
-    });
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.pat'));
-    var panel = {
-      num: document.getElementById('ppNum'), name: document.getElementById('ppName'),
-      sig: document.getElementById('ppSig'), mean: document.getElementById('ppMean'),
-      move: document.getElementById('ppMove')
-    };
-    var patWord = document.getElementById('patWord');
-    var traces = { t: document.querySelector('.pt-t'), p: document.querySelector('.pt-p'), g: document.querySelector('.pt-g') };
-    // level → y (user units); per-trace offset keeps converged reads distinct
-    var LEVEL_Y = { high: 84, low: 256, absent: 170, pending: 170 };
-    var OFFSET = { t: -14, p: 0, g: 14 };
-    var LABEL = { high: 'HIGH', low: 'LOW', absent: 'ABSENT', pending: 'NOT YET' };
-    var committed = null; // persistently selected pattern id, or null
-
-    function renderPanel(id) {
-      var d = data[id];
-      panel.num.textContent = d.num; panel.name.textContent = d.name;
-      panel.sig.textContent = d.signals; panel.mean.textContent = d.mean; panel.move.textContent = d.move;
-    }
-    function renderTraces(id) {
-      ['t', 'p', 'g'].forEach(function (leg) {
-        var level = data[id][leg], el = traces[leg];
-        if (!el) return;
-        el.style.transform = 'translateY(' + (LEVEL_Y[level] + OFFSET[leg]) + 'px)';
-        el.classList.toggle('off', level === 'absent' || level === 'pending');
-        el.querySelector('.pt-lab').textContent = LABEL[level];
-      });
-    }
-    function markPressed(id) {
-      cards.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.pat === id)); });
-    }
-    function showPattern(id) {
-      renderPanel(id); renderTraces(id);
-      readsSec.classList.add('state-pattern');
-      patWord.textContent = data[id].name;
-    }
-    function restore() { // pointer/focus left the grid: fall back to the committed state
-      if (committed) { showPattern(committed); markPressed(committed); }
-      else {
-        readsSec.classList.remove('state-pattern');
-        renderPanel(readsSec.classList.contains('state-agree') ? 'confirmed' : 'usability');
-        markPressed('');
-      }
-    }
-    function setReads(isAgree) { // generic toggle clears any pattern selection
-      committed = null;
-      readsSec.classList.remove('state-pattern');
+    function syncToggle(isAgree) { // visual/aria state of the two toggle buttons only
       readsSec.classList.toggle('state-agree', isAgree);
       readsSec.classList.toggle('state-diverge', !isAgree);
       btnAgree.setAttribute('aria-pressed', String(isAgree));
       btnDiverge.setAttribute('aria-pressed', String(!isAgree));
-      renderPanel(isAgree ? 'confirmed' : 'usability');
-      markPressed('');
     }
-    btnAgree.addEventListener('click', function () { setReads(true); });
-    btnDiverge.addEventListener('click', function () { setReads(false); });
 
-    var grid = document.getElementById('patGrid');
-    cards.forEach(function (c) {
-      var id = c.dataset.pat;
-      c.addEventListener('click', function () { committed = id; showPattern(id); markPressed(id); });
-      c.addEventListener('mouseenter', function () { showPattern(id); }); // preview
-      c.addEventListener('focus', function () { showPattern(id); });      // keyboard preview
-    });
-    if (grid) {
-      grid.addEventListener('mouseleave', restore);
-      grid.addEventListener('focusout', function (e) {
-        if (!grid.contains(e.relatedTarget)) restore();
-      });
+    // single source of enhanced-interface content
+    var PATTERNS = {
+      confirmed:    { num: '01', name: 'Confirmed Maturity', fam: 'Coherent', group: 'align',
+        t: 'High', p: 'High', g: 'High',
+        mean: 'The data, stakeholder experience, and governance evidence all agree that the domain is strong.',
+        move: 'Preserve and propagate. Protect the practices from regression and reuse the controls, artifacts, and working methods that make the domain successful.' },
+      aligned:      { num: '02', name: 'Aligned Maturity (suspected)', fam: 'Provisional', group: 'align',
+        t: 'High', p: 'High', g: 'Not yet gathered',
+        mean: 'Technical evidence and stakeholder experience agree on high maturity, but governance evidence has not yet been reviewed.',
+        move: 'Review the governance documents. Determine whether the pattern resolves to Confirmed Maturity or Unformalized Practice.' },
+      greenfield:   { num: '03', name: 'Greenfield', fam: 'Neutral', group: 'align',
+        t: 'Low', p: 'Low', g: 'Low or deliberately absent',
+        mean: 'All available signals agree that the domain is early-stage. This is an investment decision, not necessarily a remediation problem.',
+        move: 'Decide whether to invest or accept the current state. Do not treat every Greenfield domain as broken.' },
+      usability:    { num: '04', name: 'Usability Gap', fam: 'Divergence', group: 'diverge',
+        t: 'High', p: 'Low', g: 'High',
+        mean: 'The data and governance evidence appear strong, but the people who depend on the data cannot use it productively.',
+        move: 'Examine discoverability, training, UX, and the path from the catalog entry to the practitioner.' },
+      tribal:       { num: '05', name: 'Tribal Knowledge', fam: 'Divergence', group: 'diverge',
+        t: 'Low', p: 'High', g: 'Deliberately absent',
+        mean: 'The domain works because a small number of people know its quirks, while metadata and formal governance remain thin or deliberately absent.',
+        move: 'Capture the practice. Externalize the knowledge while the subject-matter experts are still available.' },
+      unformalized: { num: '06', name: 'Unformalized Practice', fam: 'Divergence', group: 'diverge',
+        t: 'High', p: 'High', g: 'Low',
+        mean: 'The data is strong and the team operates effectively, but the working method has not been formally documented.',
+        move: 'Codify what already works. Write the SOP around the real operating practice rather than replacing it with a generic template.' },
+      abandoned:    { num: '07', name: 'Abandoned Capability', fam: 'Divergence', group: 'diverge',
+        t: 'High', p: 'Low', g: 'Deliberately absent',
+        mean: 'A technically sound asset remains, but it has lost users, ownership, and governing practice.',
+        move: 'Make a decision. Reinvest around a current use case or formally retire the capability.' },
+      policy:       { num: '08', name: 'Policy Theater', fam: 'Divergence', group: 'diverge',
+        t: 'Low', p: 'Low', g: 'High',
+        mean: 'Governance documentation describes a mature system that the data and operating experience do not support.',
+        move: 'Audit practice against policy. Reconcile the documented state with operational reality.' }
+    };
+
+    var enhanced = document.getElementById('pxEnhanced');
+    var fallback = document.getElementById('pxFallback');
+    var grid = document.getElementById('pxGrid');
+    var tiles = Array.prototype.slice.call(document.querySelectorAll('.px-tile'));
+    var panel = document.querySelector('.px-panel');
+    var el = {
+      num: document.getElementById('pxNum'), name: document.getElementById('pxName'),
+      fam: document.getElementById('pxFam'), sigT: document.getElementById('pxSigT'),
+      sigP: document.getElementById('pxSigP'), sigG: document.getElementById('pxSigG'),
+      mean: document.getElementById('pxMean'), move: document.getElementById('pxMove'),
+      status: document.getElementById('pxStatus')
+    };
+
+    // validate before swapping interfaces; on any failure the fallback stays
+    var dataOk = ['confirmed', 'aligned', 'greenfield', 'usability', 'tribal', 'unformalized', 'abandoned', 'policy']
+      .every(function (id) { return PATTERNS[id] && PATTERNS[id].mean && PATTERNS[id].move; });
+    var domOk = enhanced && fallback && grid && panel && tiles.length === 8 &&
+      Object.keys(el).every(function (k) { return el[k]; }) &&
+      tiles.every(function (t) { return PATTERNS[t.dataset.pat]; });
+    if (!dataOk || !domOk) {
+      btnAgree.addEventListener('click', function () { syncToggle(true); });
+      btnDiverge.addEventListener('click', function () { syncToggle(false); });
+      return; // enhanced stays hidden; native details remain the catalog
     }
-    renderPanel('usability'); // page loads in Divergence: default the panel accordingly
+
+    var committed = null;
+    var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+    function renderPattern(id) {
+      var d = PATTERNS[id];
+      el.num.textContent = d.num; el.name.textContent = d.name; el.fam.textContent = d.fam;
+      el.sigT.textContent = d.t; el.sigP.textContent = d.p; el.sigG.textContent = d.g;
+      el.mean.textContent = d.mean; el.move.textContent = d.move;
+      if (!reduceMotion.matches) { // restrained crossfade; instant under reduced motion
+        panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+      }
+    }
+    function previewPattern(id) { renderPattern(id); } // no aria-pressed change, no announcement
+    function commitPattern(id, announce) {
+      committed = id;
+      renderPattern(id);
+      tiles.forEach(function (t) { t.setAttribute('aria-pressed', String(t.dataset.pat === id)); });
+      syncToggle(PATTERNS[id].group === 'align'); // patterns 1–3 read as Agreement, 4–8 as Divergence
+      if (announce !== false) el.status.textContent = 'Selected pattern: ' + PATTERNS[id].name;
+    }
+    function restoreCommittedPattern() { if (committed) renderPattern(committed); }
+
+    tiles.forEach(function (t) {
+      var id = t.dataset.pat;
+      t.addEventListener('click', function () { commitPattern(id); }); // click/tap/Enter/Space
+      t.addEventListener('pointerenter', function () { previewPattern(id); });
+      t.addEventListener('focus', function () { previewPattern(id); });
+    });
+    grid.addEventListener('pointerleave', restoreCommittedPattern);
+    grid.addEventListener('focusout', function (e) {
+      if (!grid.contains(e.relatedTarget)) restoreCommittedPattern();
+    });
+
+    // toggle commits each state's canonical example
+    btnAgree.addEventListener('click', function () { commitPattern('confirmed'); });
+    btnDiverge.addEventListener('click', function () { commitPattern('usability'); });
+
+    // initialization succeeded: swap the interfaces, then select the default
+    enhanced.hidden = false;
+    fallback.hidden = true;
+    commitPattern('usability', false); // page loads in Divergence; no announcement on load
   })();
 
   // ---- Request a Demo modal (production behavior, unchanged) ----
