@@ -11,17 +11,18 @@
   <meta property="og:url" content="https://compassfordata.com/">
   <meta property="og:title" content="DATA Compass — The data-readiness platform for enterprise AI.">
   <meta property="og:description" content="Measure whether data can support a defined AI use case, identify blockers, prioritize remediation, and prove readiness lift—without moving connected source data. Built for regulated industries.">
-  <meta property="og:image" content="https://compassfordata.com/img/og-card.png">
+  <meta property="og:image" content="https://compassfordata.com/img/og-platform.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DATA Compass — The data-readiness platform for enterprise AI.">
   <meta name="twitter:description" content="AI readiness, measured—not asserted. Identify data blockers, prioritize remediation, and prove readiness lift without moving connected source data.">
-  <meta name="twitter:image" content="https://compassfordata.com/img/og-card.png">
+  <meta name="twitter:image" content="https://compassfordata.com/img/og-platform.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13.5' fill='none' stroke='%2300495D' stroke-width='2.5'/><path d='M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z' fill='%2300495D'/><path d='M16 4 L19 13 L16 16 L13 13 Z' fill='%23B85C38'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/platform/platform.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -32,9 +33,15 @@
         "name": "DATA Compass",
         "url": "https://compassfordata.com/",
         "logo": "https://compassfordata.com/img/og-card.png",
-        "email": "contact@compassfordata.com",
-        "description": "DATA Compass is the data-readiness platform for enterprise AI, built for regulated industries. It measures whether data can support a defined AI use case, identifies blockers, prioritizes remediation, and tracks readiness lift.",
-        "slogan": "AI readiness, measured—not asserted."
+        "email": "contact@compassfordata.com"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://compassfordata.com/#webpage",
+        "url": "https://compassfordata.com/",
+        "name": "DATA Compass · The data-readiness platform for enterprise AI",
+        "description": "DATA Compass is the data-readiness platform for enterprise AI. Identify blockers, prioritize remediation, and prove readiness lift without moving source data.",
+        "isPartOf": { "@id": "https://compassfordata.com/#org" }
       },
       {
         "@type": "SoftwareApplication",
@@ -48,1099 +55,738 @@
     ]
   }
   </script>
-  <style>
-    /* ================================================================
-       DATA COMPASS — v0.2 canonical design system (cream/teal/terracotta)
-       ================================================================ */
-    :root {
-      --ground:    #EBE7E0;   /* page cream */
-      --ground-2:  #F5F3EE;   /* light card */
-      --ground-3:  #E3DDD2;   /* platform / foundation strip */
-      --band:      #C9C2B6;   /* footer band */
-      --terra:     #B85C38;   /* accent — eyebrows, numbers, chips */
-      --terra-d:   #9c4b2c;
-      --teal:      #00495D;   /* headline 1, subheads, panels */
-      --teal-d:    #003543;
-      --slate:     #8EA3AC;   /* decorative strokes, chart accents, disabled states ONLY */
-      --slate-display: #667C85; /* headline second lines — LARGE display text only (~3.6:1) */
-      --slate-ink: #566A72;   /* quotes + smaller supporting editorial (≥4.5:1 on cream) */
-      --slate-on-dark: #CDD9DE; /* slate role on deep-teal surfaces */
-      --ink:       #5C6670;   /* body */
-      --muted:     #66615A;   /* meta / footer text (≥4.5:1 on cream) */
-      --white:     #FFFFFF;
-      --line:      #d8d1c5;   /* hairline on cream */
-      --radius:    14px;
-      --radius-sm: 9px;
-      --shadow:    0 1px 2px rgba(40,30,20,.05), 0 6px 24px rgba(40,30,20,.06);
-      --shadow-lg: 0 20px 60px rgba(40,30,20,.13);
-      --maxw:      1140px;
-      --ff:        'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-    }
-
-    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-      outline:2px solid var(--terra-d); outline-offset:2px; border-radius:3px;
-    }
-    .btn:focus-visible, .nav-cta:focus-visible, .chip:focus-visible { outline-offset:3px; border-radius:100px; }
-    html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
-    body {
-      font-family:var(--ff);
-      color:var(--ink);
-      background:var(--ground);
-      line-height:1.62;
-      font-weight:400;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      overflow-x:hidden;
-    }
-    .container { max-width:var(--maxw); margin:0 auto; padding:0 28px; }
-    section { position:relative; }
-
-    /* ---- typography primitives ---- */
-    .eyebrow {
-      font-size:.72rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
-      color:var(--terra-d); margin-bottom:1.1rem; display:inline-block;
-    }
-    .headline {
-      font-weight:400; color:var(--teal); letter-spacing:-.018em; line-height:1.08;
-      font-size:clamp(1.9rem,4.4vw,2.55rem);
-    }
-    .headline .alt { color:var(--slate-display); display:block; }
-    .lead {
-      color:var(--ink); font-size:1.06rem; line-height:1.7; max-width:62ch; margin-top:1.25rem;
-    }
-    .quote {
-      font-weight:400; color:var(--slate-ink); font-size:clamp(1.15rem,2.3vw,1.5rem);
-      letter-spacing:-.01em; line-height:1.4; max-width:30ch;
-      border-left:3px solid var(--terra); padding-left:1.1rem;
-    }
-    .chip {
-      display:inline-flex; align-items:center; gap:.5rem; background:var(--terra); color:var(--white);
-      font-size:.74rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-      padding:.7rem 1.2rem; border-radius:100px; line-height:1.3;
-    }
-    .section-pad { padding:clamp(4.5rem,9vw,7rem) 0; }
-    .divider { height:1px; background:var(--line); border:0; max-width:var(--maxw); margin:0 auto; }
-
-    /* ---- nav ---- */
-    .nav {
-      position:sticky; top:0; z-index:60; background:rgba(235,231,224,.93);
-      backdrop-filter:saturate(140%) blur(16px); -webkit-backdrop-filter:saturate(140%) blur(16px);
-      border-bottom:1px solid transparent; transition:border-color .25s, box-shadow .25s;
-    }
-    .nav.scrolled { border-bottom-color:var(--line); box-shadow:0 4px 24px rgba(40,30,20,.05); }
-    .nav-inner { max-width:var(--maxw); margin:0 auto; padding:.95rem 28px; display:flex; align-items:center; justify-content:space-between; }
-    .nav-brand { font-weight:600; color:var(--teal); text-decoration:none; font-size:1.12rem; letter-spacing:-.01em; display:flex; align-items:center; gap:.5rem; }
-    .nav-brand svg.mark { display:block; flex:none; }
-    .nav-brand b { font-weight:800; }
-    .nav-links { display:flex; align-items:center; gap:2rem; }
-    .nav-links a { color:var(--ink); text-decoration:none; font-size:.92rem; font-weight:500; transition:color .2s; }
-    .nav-links a:hover { color:var(--teal); }
-    .nav-cta {
-      background:var(--teal); color:var(--white)!important; padding:.6rem 1.15rem; border-radius:100px;
-      font-weight:600!important; transition:background .2s, transform .2s;
-    }
-    .nav-cta:hover { background:var(--teal-d); transform:translateY(-1px); }
-    .hamburger { display:none; background:none; border:0; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
-    .hamburger span { width:24px; height:2px; background:var(--teal); border-radius:2px; transition:.25s; }
-
-    /* ---- buttons ---- */
-    .btn {
-      display:inline-flex; align-items:center; gap:.5rem; font-weight:600; font-size:.98rem;
-      padding:.85rem 1.6rem; border-radius:100px; text-decoration:none; cursor:pointer;
-      transition:transform .2s, background .2s, box-shadow .2s, color .2s; border:1.5px solid transparent;
-    }
-    .btn--primary { background:var(--terra); color:var(--white); box-shadow:0 6px 18px rgba(184,92,56,.28); }
-    .btn--primary:hover { background:var(--terra-d); transform:translateY(-2px); box-shadow:0 10px 24px rgba(184,92,56,.34); }
-    .btn--teal { background:var(--teal); color:var(--white); }
-    .btn--teal:hover { background:var(--teal-d); transform:translateY(-2px); }
-    .btn--outline { background:transparent; color:var(--teal); border-color:var(--teal); }
-    .btn--outline:hover { background:var(--teal); color:var(--white); }
-    .btn--ghost-light { background:rgba(255,255,255,.12); color:var(--white); border-color:rgba(255,255,255,.4); }
-    .btn--ghost-light:hover { background:rgba(255,255,255,.2); }
-    .btn--white { background:var(--white); color:var(--teal); }
-    .btn--white:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
-
-    /* ---- hero ---- */
-    .hero { padding:clamp(3.5rem,8vw,6.5rem) 0 clamp(3.5rem,7vw,5.5rem); }
-    .hero-grid { max-width:var(--maxw); margin:0 auto; padding:0 28px; display:grid; grid-template-columns:minmax(360px,.85fr) minmax(540px,1.15fr); gap:2.8rem; align-items:center; }
-    .hero h1 { font-weight:400; color:var(--teal); letter-spacing:-.022em; line-height:1.04; font-size:clamp(2.6rem,6vw,4.1rem); }
-    .hero h1 .alt { color:var(--slate-display); display:block; }
-    .hero-sub { margin-top:1.5rem; font-size:1.16rem; line-height:1.6; color:var(--ink); max-width:50ch; }
-    .hero-ctas { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
-    .hero-note { margin-top:1.4rem; font-size:.84rem; color:var(--muted); letter-spacing:.01em; }
-
-    /* hero: the Data Readiness Decision Brief */
-    .hero-visual { position:relative; }
-    .hero-proof { margin:0; }
-    .proof-window { background:var(--white); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-lg); overflow:hidden; }
-    .proof-header { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:.85rem 1.15rem; background:var(--ground-2); border-bottom:1px solid var(--line); }
-    .ph-id b { display:block; color:var(--teal); font-size:.86rem; font-weight:700; letter-spacing:.01em; }
-    .proof-sources { font-size:.72rem; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
-    .ph-ctx { text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem; }
-    .proof-badge { font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--terra-d); border:1px solid rgba(184,92,56,.35); background:rgba(184,92,56,.07); padding:.22rem .55rem; border-radius:100px; white-space:nowrap; }
-    .proof-main { display:grid; grid-template-columns:200px 1fr; }
-    /* verdict panel */
-    .proof-score-panel { padding:1.05rem 1rem 1rem; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:center; text-align:center; }
-    .proof-score { position:relative; width:104px; height:104px; }
-    .proof-score svg { width:100%; height:100%; transform:rotate(-90deg); }
-    .proof-score circle { fill:none; stroke-width:8; }
-    .ring-track { stroke:var(--ground-3); }
-    .ring-fill { stroke:var(--terra); stroke-linecap:round; stroke-dasharray:326.7; stroke-dashoffset:163.4; }
-    .score-num { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:.15rem; }
-    .score-num b { font-size:1.7rem; font-weight:300; color:var(--teal); line-height:1; }
-    .score-num span { font-size:.7rem; color:var(--muted); align-self:center; margin-top:.55rem; }
-    .score-label { margin-top:.5rem; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
-    .proof-verdict { margin-top:.3rem; font-size:.82rem; font-weight:700; color:var(--teal); line-height:1.3; }
-    .pd-comp-label { display:block; margin-top:.8rem; padding-top:.6rem; border-top:1px dashed var(--line); font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); width:100%; text-align:left; }
-    .proof-dimensions { list-style:none; width:100%; margin-top:.2rem; }
-    .proof-dimensions li { display:flex; justify-content:space-between; align-items:center; font-size:.74rem; padding:.22rem 0; }
-    .proof-dimensions span { color:var(--ink); }
-    .proof-dimensions i { font-style:normal; font-weight:700; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:.32rem; }
-    .proof-dimensions i::before { content:""; width:7px; height:7px; border-radius:50%; flex:none; }
-    .proof-dimensions i[data-s="critical"] { color:var(--terra-d); } .proof-dimensions i[data-s="critical"]::before { background:var(--terra); }
-    .proof-dimensions i[data-s="blocked"]  { color:var(--terra-d); } .proof-dimensions i[data-s="blocked"]::before  { background:var(--terra); }
-    .proof-dimensions i[data-s="risk"]     { color:var(--ink); }     .proof-dimensions i[data-s="risk"]::before     { background:var(--slate); }
-    .proof-dimensions i[data-s="partial"]  { color:var(--teal); }    .proof-dimensions i[data-s="partial"]::before  { background:var(--teal); }
-    /* diagnosis + recommendation */
-    .proof-diagnosis { padding:1rem 1.15rem; display:flex; flex-direction:column; gap:.9rem; }
-    .pd-eyebrow { display:block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.3rem; }
-    .pd-block b { display:block; color:var(--teal); font-size:.88rem; font-weight:700; line-height:1.35; }
-    .pd-evidence { display:block; font-size:.74rem; color:var(--muted); margin-top:.25rem; letter-spacing:.02em; }
-    .pd-evidence b, .proof-dimensions b, figcaption b { display:inline; font-size:inherit; color:inherit; font-weight:700; }
-    .pd-block p { font-size:.78rem; color:var(--ink); line-height:1.5; margin-top:.3rem; }
-    .pd-block--rec { background:var(--ground-2); border:1px solid var(--line); border-left:3px solid var(--terra); border-radius:var(--radius-sm); padding:.8rem .9rem; }
-    .proof-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
-    .proof-meta span { display:flex; flex-direction:column; background:var(--white); border:1px solid var(--line); border-radius:7px; padding:.35rem .6rem; font-size:.74rem; font-weight:700; color:var(--teal); }
-    .proof-meta i { font-style:normal; font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
-    /* deliverables */
-    .proof-deliverables { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; padding:.65rem 1.15rem; background:var(--ground-2); border-top:1px solid var(--line); font-size:.74rem; font-weight:600; color:var(--teal); }
-    .proof-deliverables i { font-style:normal; font-size:.68rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); }
-    .proof-loop { margin-left:auto; color:var(--ink); font-weight:600; }
-    .proof-loop em { font-style:normal; color:var(--terra); font-weight:700; }
-    .hero-proof figcaption { text-align:center; font-size:.78rem; color:var(--muted); margin-top:.7rem; }
-
-    /* ---- generic section header ---- */
-    .sec-head { max-width:64ch; }
-    .sec-head .lead { margin-top:1.1rem; }
-
-    /* ---- informational cards: flat borders, no shadow (card discipline) ---- */
-    .pcard { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.6rem; }
-    .pcard .lbl { font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra-d); }
-    .pcard h3 { color:var(--teal); font-size:1.06rem; font-weight:600; margin:.7rem 0 .5rem; line-height:1.3; letter-spacing:-.01em; }
-    .pcard p { font-size:.92rem; color:var(--ink); line-height:1.55; }
-
-    /* ---- nav active-section indicator ---- */
-    .nav-links a.active { color:var(--teal); box-shadow:inset 0 -2px 0 var(--terra); }
-
-    /* ---- credibility strip (ch1) ---- */
-    .strip { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--ground-2); }
-    .strip-inner { display:flex; justify-content:space-between; gap:1.2rem; flex-wrap:wrap; padding-top:1rem; padding-bottom:1rem; }
-    .strip-inner span { font-size:.8rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); font-weight:600; }
-    .strip-inner b { color:var(--terra-d); font-weight:800; margin-right:.25rem; }
-
-    /* ---- comparison (ch2) ---- */
-    .compare { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3rem; }
-    .compare > div { border:1px solid var(--line); border-radius:var(--radius); padding:1.7rem; }
-    .compare .before { background:transparent; }
-    .compare .after { background:var(--teal); }
-    .compare h3 { font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
-    .compare .before h3 { color:var(--muted); }
-    .compare .after h3 { color:#e4b29a; }
-    .compare ul { list-style:none; }
-    .compare li { padding:.5rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
-    .compare .after li { color:#e8eef0; border-top-color:rgba(255,255,255,.16); }
-    .compare li:first-child { border-top:0; }
-
-    /* ---- sticky sample journey (ch3) — P0-gated pattern ---- */
-    .journey { display:grid; grid-template-columns:minmax(320px,.85fr) minmax(420px,1.15fr); gap:2.8rem; align-items:start; margin-top:3rem; }
-    .scenes { display:flex; flex-direction:column; gap:34vh; }
-    .scene h3 { color:var(--teal); font-size:1.35rem; font-weight:500; letter-spacing:-.01em; margin:.5rem 0 .55rem; }
-    .scene .lbl { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--terra-d); }
-    .scene p { font-size:.95rem; color:var(--ink); max-width:44ch; }
-    .scene .inline-frame { margin-top:1.2rem; }
-    @media (min-width:981px) and (min-height:701px) { html.js .scene .inline-frame { position:absolute; width:1px; height:1px; margin:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; } }
-    .frame-wrap { position:sticky; top:10vh; }
-    .jframe { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); overflow:hidden; }
-    .jframe figure { display:none; margin:0; }
-    .jframe figure.active { display:block; }
-    html:not(.js) .jframe figure:first-child { display:block; }
-    .jframe img { display:block; width:100%; height:auto; }
-    .jframe figcaption { font-size:.78rem; color:var(--muted); padding:.7rem 1rem; border-top:1px solid var(--line); }
-    .jrail { display:flex; gap:.5rem; margin-top:.9rem; justify-content:center; }
-    .jrail button { width:14px; height:14px; border-radius:50%; border:1px solid var(--terra-d); background:transparent; padding:0; cursor:pointer; box-sizing:content-box; border-width:1px; outline-offset:2px; position:relative; }
-    .jrail button::after { content:""; position:absolute; inset:-6px; }
-    .jrail button.active { background:var(--terra); }
-    @media (max-width:980px), (max-height:700px) {
-      .journey { grid-template-columns:1fr; }
-      .frame-wrap { display:none; }
-      .scenes { gap:3.5rem; }
-    }
-    html:not(.js) .frame-wrap { display:none; }
-
-    /* ---- dimension selector (ch4) — native details ---- */
-    .dims { margin-top:2.6rem; border-top:1px solid var(--line); }
-    .dims details { border-bottom:1px solid var(--line); }
-    .dims summary { cursor:pointer; padding:1.15rem .2rem; font-size:1.06rem; font-weight:600; color:var(--teal); }
-    .dims summary::marker { color:var(--terra); }
-    .dims .dbody { padding:.3rem .2rem 1.5rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2.2rem; }
-    .dims .q { font-size:1.12rem; color:var(--slate-ink); max-width:36ch; line-height:1.45; }
-    .dims .proof { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--terra-d); margin-top:1rem; }
-    .dims ul { list-style:none; }
-    .dims li { padding:.45rem 0; border-top:1px dashed var(--line); font-size:.92rem; color:var(--ink); }
-    .dims li:first-child { border-top:0; }
-    @media (max-width:768px){ .dims .dbody { grid-template-columns:1fr; gap:1rem; } }
-
-    /* ---- named-pattern chips (ch5) ---- */
-    .tri-pats { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:1.6rem; }
-    .tri-pat { font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--terra-d); border:1px solid var(--line); background:var(--ground-2); padding:.35rem .75rem; border-radius:100px; }
-    .tri-pat--more { color:var(--muted); font-weight:600; }
-
-    /* ---- integration rail (ch7) — monochrome, brand color on hover ---- */
-    .int-rail { display:grid; grid-template-columns:repeat(4,1fr); gap:1.4rem; margin-top:3rem; }
-    .rail-item { border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem 1.5rem; text-align:center; }
-    .rail-item .ic { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin:0 auto 0.9rem; background:var(--teal); transition:background .25s; }
-    .rail-item:hover .ic { background:var(--hover-bg, var(--teal)); }
-    .rail-item h3 { color:var(--teal); font-size:1rem; font-weight:600; margin-bottom:.3rem; }
-    .rail-item p { font-size:.85rem; color:var(--ink); }
-    .connector-card { margin-top:1.4rem; border:1px dashed var(--line); border-radius:var(--radius); padding:1.1rem 1.5rem; font-size:.9rem; color:var(--ink); text-align:center; }
-    .connector-card b { color:var(--teal); }
-
-    /* ---- two-column feature rows (FAIR floor, connect, dimensions deep) ---- */
-    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; margin-top:1rem; }
-    .feat-list { margin-top:1.5rem; display:flex; flex-direction:column; gap:1.25rem; }
-    .feat { display:grid; grid-template-columns:auto 1fr; gap:1rem; }
-    .feat .dot { width:10px; height:10px; border-radius:50%; background:var(--terra); margin-top:.5rem; }
-    .feat .lbl { font-size:.66rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--terra-d); }
-    .feat b { display:block; color:var(--teal); font-weight:600; font-size:1rem; margin:.15rem 0 .2rem; }
-    .feat span { font-size:.9rem; color:var(--ink); }
-
-    /* ---- method / triangulation ---- */
-    .tri { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
-    .tri-card { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.7rem; text-align:center; box-shadow:var(--shadow); }
-    .tri-card .lbl { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--terra-d); }
-    .tri-card b { display:block; color:var(--teal); font-size:1.15rem; font-weight:600; margin:.6rem 0 .4rem; }
-    .tri-card span { font-size:.88rem; color:var(--ink); }
-    .tri-chip-wrap { text-align:center; margin-top:1.8rem; }
-    .patterns-note { text-align:center; margin-top:1.4rem; font-size:.84rem; color:#aebfc6; letter-spacing:.02em; }
-
-    /* ---- product screenshots ---- */
-    .shot { margin:3rem auto 0; max-width:860px; }
-    .shot--narrow { max-width:560px; }
-    .shot img { display:block; width:100%; height:auto; border-radius:var(--radius); border:1px solid var(--line); box-shadow:var(--shadow-lg); }
-    .shot figcaption { text-align:center; font-size:.84rem; color:var(--muted); margin-top:1rem; letter-spacing:.01em; }
-    .panel .shot figcaption { color:#aebfc6; }
-
-    /* ---- autonomy ladder ---- */
-    .ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:3rem; }
-    .rung { background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; position:relative; }
-    .rung .step-n { font-size:.66rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#8a4227; }
-    .rung b { display:block; color:var(--teal); font-size:1.1rem; font-weight:600; margin:.5rem 0 .4rem; }
-    .rung span { font-size:.86rem; color:#4f5862; }
-    .rung:nth-child(1){ background:var(--ground-2); }
-    .rung:nth-child(2){ background:#efeae1; }
-    .rung:nth-child(3){ background:#e7e0d4; }
-    .rung:nth-child(4){ background:var(--ground-3); }
-
-    /* ---- panel (teal full-bleed) ---- */
-    .panel { background:var(--teal); color:#fff; }
-    .panel .eyebrow { color:#e4b29a; }
-    .panel .headline { color:#fff; }
-    .panel .headline .alt { color:var(--slate-on-dark); }
-    .panel .lead { color:#cdd9de; }
-    .panel .pcard { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.14); box-shadow:none; }
-    .panel .pcard h3 { color:#fff; }
-    .panel .pcard p { color:#c4d0d5; }
-    .panel .pcard .lbl { color:#d99a7e; }
-
-    /* ---- security boundary diagram + trust grid (PR-D) ---- */
-    .boundary { margin-top:3.5rem; }
-    .boundary svg { display:block; width:100%; height:auto; }
-    .boundary-cards { display:none; }
-    @media (max-width:700px){
-      .boundary svg { display:none; }
-      .boundary-cards { display:flex; flex-direction:column; gap:.8rem; }
-      .bcard { border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--ground-2); padding:.95rem 1.1rem; }
-      .bcard b { display:block; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.3rem; }
-      .bcard span { font-size:.86rem; color:var(--ink); line-height:1.5; }
-    }
-    .trust-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:1.6rem; }
-    .trust-cell { border:1px solid var(--line); border-radius:var(--radius-sm); padding:.9rem 1rem; background:var(--ground-2); }
-    .trust-cell b { display:block; font-size:.68rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--terra-d); margin-bottom:.35rem; }
-    .trust-cell span { font-size:.82rem; color:var(--ink); line-height:1.45; }
-    @media (max-width:980px){ .trust-grid { grid-template-columns:repeat(2,1fr); } }
-    @media (max-width:680px){ .trust-grid { grid-template-columns:1fr; } }
-
-    /* ---- CTA ---- */
-    .cta { background:var(--teal); color:#fff; text-align:center; padding:clamp(4rem,8vw,6rem) 28px; }
-    .cta h2 { font-weight:400; font-size:clamp(2rem,5vw,3rem); letter-spacing:-.02em; line-height:1.08; }
-    .cta h2 .alt { color:var(--slate-on-dark); display:block; }
-    .cta p { color:#cdd9de; max-width:54ch; margin:1.4rem auto 0; font-size:1.08rem; }
-    .cta-btns { margin-top:2.2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
-    .cta-sub { font-size:.85rem!important; color:#9fb2b9!important; margin-top:1.4rem!important; }
-
-    /* ---- footer ---- */
-    .footer { background:var(--band); color:#4E4840; padding:3.5rem 28px 2rem; }
-    .footer-grid { max-width:var(--maxw); margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:2.5rem; }
-    .footer-brand { font-weight:600; color:var(--teal); font-size:1.1rem; display:flex; align-items:center; gap:.5rem; }
-    .footer-brand b { font-weight:800; } .footer-brand svg.mark { display:block; flex:none; }
-    .footer-desc { font-size:.9rem; margin-top:.8rem; max-width:34ch; color:#4E4840; }
-    .footer h4 { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); margin-bottom:1rem; }
-    .footer ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-    .footer a { color:#4E4840; text-decoration:none; font-size:.9rem; transition:color .2s; }
-    .footer a:hover { color:var(--teal); }
-    .footer-bar { max-width:var(--maxw); margin:2.5rem auto 0; padding-top:1.5rem; border-top:1px solid rgba(0,0,0,.1); display:flex; justify-content:space-between; font-size:.82rem; color:#554E40; flex-wrap:wrap; gap:.5rem; }
-
-    /* ---- mobile menu ---- */
-    .mobile { position:fixed; inset:0; background:var(--ground); z-index:100; transform:translateX(100%); visibility:hidden; transition:transform .3s, visibility .3s; display:flex; flex-direction:column; padding:5rem 2rem 2rem; gap:1.4rem; }
-    .mobile.open { transform:translateX(0); visibility:visible; }
-    .mobile a { color:var(--teal); text-decoration:none; font-size:1.3rem; font-weight:500; }
-    .mobile a.btn--primary { color:var(--white); }
-    .mobile-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:0; font-size:2rem; color:var(--teal); cursor:pointer; line-height:1; }
-
-    /* ---- fade-in (JS-gated: without JS, content renders fully visible) ---- */
-    html.js .fade-in { opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease; }
-    html.js .fade-in.visible { opacity:1; transform:none; }
-
-    /* staggered children inside a revealed section */
-    html.js .fade-in .stagger > * { opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease; }
-    html.js .fade-in.visible .stagger > * { opacity:1; transform:none; }
-    .stagger > *:nth-child(2){ transition-delay:.06s; }
-    .stagger > *:nth-child(3){ transition-delay:.12s; }
-    .stagger > *:nth-child(4){ transition-delay:.18s; }
-    .stagger > *:nth-child(5){ transition-delay:.24s; }
-    .stagger > *:nth-child(6){ transition-delay:.30s; }
-    .stagger > *:nth-child(7){ transition-delay:.36s; }
-    .stagger > *:nth-child(8){ transition-delay:.42s; }
-
-    /* hero decision brief resolves once: surface, score fill, diagnosis, outputs */
-    @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
-    @keyframes ringfill { from { stroke-dashoffset:326.7; } }
-    html.js .proof-window { animation:rise .5s ease .1s backwards; }
-    html.js .ring-fill { animation:ringfill .9s ease-out .5s backwards; }
-    html.js .proof-dimensions { animation:rise .4s ease .7s backwards; }
-    html.js .pd-block { animation:rise .4s ease .85s backwards; }
-    html.js .pd-block--rec { animation:rise .4s ease 1s backwards; }
-    html.js .proof-deliverables { animation:rise .4s ease 1.15s backwards; }
-    html.js .hero-proof figcaption { animation:rise .4s ease 1.35s backwards; }
-
-    @media (prefers-reduced-motion:reduce){
-      html.js .fade-in, html.js .fade-in .stagger > * { opacity:1; transform:none; transition:none; }
-      html.js .proof-window, html.js .ring-fill, html.js .proof-dimensions, html.js .pd-block,
-      html.js .pd-block--rec, html.js .proof-deliverables,
-      html.js .hero-proof figcaption { animation:none; }
-      html{scroll-behavior:auto;}
-    }
-
-    /* ---- responsive ---- */
-    @media (max-width:980px){
-      .hero-grid{ grid-template-columns:1fr; gap:2.5rem; }
-      .hero-visual{ max-width:640px; }
-      .two-col{ grid-template-columns:1fr; gap:1.8rem; }
-      .ladder{ grid-template-columns:repeat(2,1fr); }
-      .tri{ grid-template-columns:1fr; }
-      .compare{ grid-template-columns:1fr; }
-      .int-rail{ grid-template-columns:repeat(2,1fr); }
-      .footer-grid{ grid-template-columns:1fr 1fr; gap:2rem; }
-      .strip-inner{ justify-content:center; }
-    }
-    @media (max-width:680px){
-      .nav-links{ display:none; } .hamburger{ display:flex; }
-      .ladder{ grid-template-columns:1fr; }
-      .int-rail{ grid-template-columns:1fr; }
-      .footer-grid{ grid-template-columns:1fr; }
-      .proof-main{ grid-template-columns:1fr; }
-      .proof-score-panel{ border-right:0; border-bottom:1px solid var(--line); }
-      .proof-header{ flex-direction:column; }
-      .ph-ctx{ align-items:flex-start; text-align:left; }
-      .proof-loop{ margin-left:0; width:100%; }
-    }
-
-    /* ---- demo modal ---- */
-    .modal-overlay{ position:fixed; inset:0; z-index:120; background:rgba(0,40,52,.55); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:flex-start; justify-content:center; padding:5vh 20px; opacity:0; visibility:hidden; transition:opacity .25s; overflow-y:auto; }
-    .modal-overlay.open{ opacity:1; visibility:visible; }
-    .modal-card{ background:var(--ground-2); border-radius:18px; max-width:560px; width:100%; padding:clamp(1.6rem,4vw,2.6rem); box-shadow:var(--shadow-lg); position:relative; transform:translateY(14px); transition:transform .25s; }
-    .modal-overlay.open .modal-card{ transform:none; }
-    .modal-x{ position:absolute; top:1rem; right:1.1rem; background:none; border:0; font-size:1.9rem; line-height:1; color:var(--muted); cursor:pointer; transition:color .2s; }
-    .modal-x:hover{ color:var(--teal); }
-    .modal-title{ font-weight:400; color:var(--teal); font-size:clamp(1.5rem,3.5vw,2rem); letter-spacing:-.02em; line-height:1.1; margin-top:.2rem; }
-    .modal-sub{ color:var(--ink); font-size:.98rem; margin-top:.6rem; }
-    .modal-note{ color:var(--muted); font-size:.8rem; letter-spacing:.01em; margin:.55rem 0 1.6rem; }
-    #demoForm{ display:flex; flex-direction:column; gap:1rem; }
-    #demoForm[hidden]{ display:none; }
-    .frow{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .ffield{ display:flex; flex-direction:column; gap:.35rem; }
-    .ffield label{ font-size:.78rem; font-weight:600; color:var(--teal); letter-spacing:.01em; }
-    .ffield input,.ffield textarea{ font-family:var(--ff); font-size:.95rem; color:var(--teal); background:var(--white); border:1px solid var(--line); border-radius:9px; padding:.7rem .85rem; transition:border-color .2s, box-shadow .2s; width:100%; }
-    .ffield input:focus,.ffield textarea:focus{ outline:none; border-color:var(--terra); box-shadow:0 0 0 3px rgba(184,92,56,.15); }
-    .ffield textarea{ resize:vertical; min-height:64px; }
-    .ffield input.invalid,.ffield textarea.invalid{ border-color:#c0504d; box-shadow:0 0 0 3px rgba(192,80,77,.12); }
-    .hp{ position:absolute !important; left:-9999px !important; width:1px; height:1px; opacity:0; }
-    .more-fields summary{ cursor:pointer; font-size:.85rem; font-weight:600; color:var(--teal); padding:.2rem 0; }
-    .more-fields summary:focus-visible{ outline:2px solid var(--terra-d); outline-offset:2px; }
-    .modal-actions{ display:flex; gap:.8rem; justify-content:flex-end; margin-top:.6rem; align-items:center; }
-    .modal-actions .btn{ cursor:pointer; }
-    #demoSubmit[disabled]{ opacity:.6; cursor:wait; }
-    .form-msg{ font-size:.85rem; min-height:1.1em; margin:0; color:var(--muted); }
-    .form-msg.error{ color:#c0504d; }
-    .form-success{ text-align:center; padding:1.5rem 0; }
-    .form-success .check{ width:52px; height:52px; border-radius:50%; background:var(--teal); color:#fff; font-size:1.6rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; }
-    .form-success h3{ color:var(--teal); font-weight:600; font-size:1.3rem; }
-    .form-success p{ color:var(--ink); margin-top:.5rem; }
-    @media (max-width:480px){ .frow{ grid-template-columns:1fr; } }
-  </style>
 </head>
 <body>
+<span id="top"></span>
+<a class="skip" href="#main">Skip to content</a>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#top" class="nav-brand"><svg class="mark" width="21" height="21" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#00495D" stroke-width="2"/><path d="M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z" fill="#00495D"/><path d="M16 4 L19 13 L16 16 L13 13 Z" fill="#B85C38"/></svg> <span><b>DATA</b> Compass</span></a>
-      <div class="nav-links" id="navLinks">
-        <a href="/platform/">Platform</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#outcomes">Outcomes</a>
-        <a href="#security">Security</a>
-        <a href="#integrations">Integrations</a>
-        <a href="#" class="nav-cta" data-demo>Request a Demo</a>
-      </div>
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+<!-- ============ production navigation ============ -->
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand"><svg class="mark" width="21" height="21" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#00495D" stroke-width="2"/><path d="M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z" fill="#00495D"/><path d="M16 4 L19 13 L16 16 L13 13 Z" fill="#B85C38"/></svg> <span><b>DATA</b> Compass</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#outcomes">Outcomes</a>
+      <a href="#defensibility">Defensibility</a>
+      <a href="#security">Security</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#" class="nav-cta" data-demo>Request a Demo</a>
     </div>
-  </nav>
-  <div class="mobile" id="mobileMenu">
-    <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
-    <a href="/platform/">Platform</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#outcomes">Outcomes</a>
-    <a href="#security">Security</a>
-    <a href="#integrations">Integrations</a>
-    <a href="#" class="btn btn--primary" data-demo>Request a Demo</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   </div>
+</nav>
+<div class="mobile" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+  <a href="#how-it-works">How It Works</a>
+  <a href="#outcomes">Outcomes</a>
+  <a href="#defensibility">Defensibility</a>
+  <a href="#security">Security</a>
+  <a href="#integrations">Integrations</a>
+  <a href="#" class="btn btn--primary" data-demo>Request a Demo</a>
+</div>
 
-  <span id="top"></span>
-  <main>
+<main id="main">
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-grid">
-      <div class="hero-content fade-in">
-        <span class="eyebrow">The data-readiness platform for enterprise AI</span>
-        <h1>AI readiness,<span class="alt">measured—not asserted.</span></h1>
-        <p class="hero-sub">Know whether your data can support a defined AI use case, what is blocking it, what to fix first, and what the fix is worth—without moving connected source data.</p>
-        <div class="hero-ctas">
-          <a href="#" class="btn btn--primary btn--lg" data-demo>Request a Demo</a>
-          <a href="#how-it-works" class="btn btn--outline btn--lg">See a Sample Assessment</a>
+<!-- ============ hero: the readiness field ============ -->
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="cal">The data-readiness platform for enterprise AI</span>
+      <h1>AI readiness,<br><em>measured—not asserted.</em></h1>
+      <p class="hero-sub">Know whether your data can support a defined AI use case, what is blocking it, what to fix first, and what the fix is worth—without moving connected source data.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn btn--primary" data-demo>Request a Demo</a>
+        <a href="#how-it-works" class="btn btn--ghost-light">See the assessment</a>
+      </div>
+      <p class="hero-qual cal">Built for regulated industries · Source data stays in your environment · Read-only, in place</p>
+    </div>
+
+    <figure class="bearing">
+      <span class="bearing-tag" aria-hidden="true">Illustrative sample data</span>
+      <svg viewBox="0 0 680 680" role="img"
+           aria-label="Illustrative data-readiness assessment for supervised AI. Current score 50 out of 100. Primary blocker: cross-system semantic and metadata fragmentation. Projected score after two remediation waves: 58 out of 100.">
+        <title>The readiness instrument</title>
+        <desc>An instrument dial. A calibration arc runs from 0 to 100. The current readiness needle points to 50. A terracotta trace projects from 50 to a target of 58 after two remediation waves. A reticle marks the primary blocker: semantic fragmentation.</desc>
+        <g class="contour fx-contour" fill="none" stroke="#EBE7E0" stroke-opacity=".07" stroke-width="1" aria-hidden="true">
+          <path d="M-20,120 C 200,205 430,55 700,150"/>
+          <path d="M-20,368 C 175,305 470,435 700,352"/>
+          <path d="M-20,565 C 165,480 330,625 700,515"/>
+        </g>
+        <g stroke="#EBE7E0" stroke-opacity=".28" stroke-width="1" aria-hidden="true" class="fx-nums">
+          <path d="M22,14 v16 M14,22 h16"/><path d="M658,14 v16 M650,22 h16"/>
+          <path d="M22,650 v16 M14,658 h16"/><path d="M658,650 v16 M650,658 h16"/>
+        </g>
+        <g aria-hidden="true">
+          <path class="fx-ticks" d="M 135.6 478 A 236 236 0 1 1 544.4 478" fill="none" stroke="#EBE7E0" stroke-opacity=".38" stroke-width="1.2"/>
+          <path class="ticks-minor fx-ticks" d="M 123.5 485 A 250 250 0 1 1 556.5 485" fill="none" stroke="#8EA3AC" stroke-opacity=".45" stroke-width="9" stroke-dasharray="1.2 19.74" stroke-dashoffset="0.7"/>
+          <path class="fx-ticks" d="M 123.5 485 A 250 250 0 1 1 556.5 485" fill="none" stroke="#EBE7E0" stroke-opacity=".75" stroke-width="17" stroke-dasharray="2.2 41.43" stroke-dashoffset="1.1"/>
+        </g>
+        <g class="fx-nums" fill="#8EA3AC" font-family="ui-monospace,Consolas,monospace" font-size="13" text-anchor="middle" aria-hidden="true">
+          <text x="94" y="506">0</text><text x="94" y="222">25</text><text x="340" y="80">50</text>
+          <text x="586" y="222">75</text><text x="586" y="506">100</text>
+        </g>
+        <g class="fx-dims" fill="#EBE7E0" fill-opacity=".5" font-family="ui-monospace,Consolas,monospace" font-size="11.5" letter-spacing="2.4" aria-hidden="true">
+          <text x="30"  y="62"  text-anchor="start">SEMANTIC CLARITY</text>
+          <text x="650" y="62"  text-anchor="end">STATISTICAL HEALTH</text>
+          <text x="30"  y="632" text-anchor="start">CONTEXTUAL VALIDITY</text>
+          <text x="650" y="632" text-anchor="end">REGULATORY COMPLIANCE</text>
+        </g>
+        <g class="fx-hub" font-family="ui-monospace,Consolas,monospace" text-anchor="middle" aria-hidden="true">
+          <text x="340" y="298" font-size="11" letter-spacing="3" fill="#8EA3AC">USE CASE — SUPERVISED AI</text>
+        </g>
+        <g class="fx-hub" font-family="ui-monospace,Consolas,monospace" text-anchor="middle" aria-hidden="true">
+          <text x="340" y="392" font-size="96" font-weight="600" fill="#FFFFFF" letter-spacing="-2">50</text>
+          <text x="340" y="424" font-size="17" fill="#8EA3AC">/ 100</text>
+          <text x="340" y="456" font-size="11" letter-spacing="3" fill="#CDD9DE">CURRENT READINESS</text>
+        </g>
+        <g class="fx-needle" aria-hidden="true">
+          <line x1="340" y1="268" x2="340" y2="160" stroke="#B85C38" stroke-width="2.6"/>
+          <path d="M333,162 L347,162 L340,144 Z" fill="#B85C38"/>
+        </g>
+        <path class="fx-trace" d="M 340 128 A 232 232 0 0 1 416.3 140.9" fill="none" aria-hidden="true" stroke="#B85C38" stroke-width="3" pathLength="84" stroke-linecap="round"/>
+        <g class="fx-proj" aria-hidden="true">
+          <path d="M 411 130 L 422 141.5 L 407 145 Z" fill="#B85C38"/>
+          <circle cx="422.2" cy="123.9" r="7" fill="none" stroke="#EBE7E0" stroke-width="2"/>
+          <text x="448" y="112" font-family="ui-monospace,Consolas,monospace" font-size="21" font-weight="600" fill="#EBE7E0">58</text>
+          <text x="448" y="130" font-family="ui-monospace,Consolas,monospace" font-size="10" letter-spacing="2" fill="#8EA3AC">PROJECTED · 2 WAVES</text>
+        </g>
+        <g class="fx-reticle" stroke="#B85C38" stroke-width="2" fill="none" aria-hidden="true">
+          <path d="M198,238 v-12 h12 M246,226 v12 M234,226 h12 M198,262 v12 h12 M246,274 v-12 M234,274 h12"/>
+          <circle cx="222" cy="250" r="3.2" fill="#B85C38" stroke="none"/>
+        </g>
+        <g class="fx-blabel" aria-hidden="true">
+          <path d="M218,278 L172,530 L136,530" fill="none" stroke="#B85C38" stroke-width="1" stroke-opacity=".7"/>
+          <text x="136" y="552" font-family="ui-monospace,Consolas,monospace" font-size="10.5" letter-spacing="2.6" fill="#D98B66">PRIMARY BLOCKER</text>
+          <text x="136" y="572" font-family="ui-monospace,Consolas,monospace" font-size="14" fill="#EBE7E0">Semantic fragmentation</text>
+        </g>
+      </svg>
+      <figcaption class="bearing-readout">
+        <div><span class="cal">Use case</span><b>Supervised AI</b></div>
+        <div><span class="cal">Current readiness</span><b>50 / 100</b></div>
+        <div><span class="cal">Projected readiness</span><b class="sig">58 / 100</b></div>
+        <div><span class="cal">Evidence</span><b>Named tests · cited findings</b></div>
+      </figcaption>
+    </figure>
+  </div>
+</header>
+
+<!-- ============ platform proof rail ============ -->
+<section class="rail-strip" aria-label="Platform proof points">
+  <div class="wrap">
+    <span><b>4</b> readiness dimensions</span>
+    <span><b>50+</b> analytical algorithms</span>
+    <span>Evidence-traced recommendations</span>
+    <span>Deployed inside your environment</span>
+  </div>
+</section>
+
+<!-- ============ AI program success (narrative bridge) ============ -->
+<section class="sys-sec" id="ai-success" aria-labelledby="sys-h">
+  <div class="wrap"><!-- the rail sequence is this section's single motion; no generic fade -->
+    <div class="sys-head">
+      <span class="sec-eyebrow">AI Program Success</span>
+      <h2 class="sys-q" id="sys-h">What evidence says your AI program is ready to scale?</h2>
+      <p class="sys-lead">A promising model is not a production system. Scaling depends on an explicit use case, fit-for-purpose data, workflow integration, accountable ownership, feedback and learning, and measurable business outcomes.</p>
+      <p class="sys-note">No single checkpoint guarantees success. The evidence has to hold across the system.</p>
+    </div>
+
+    <ol class="sys-rail" aria-label="Six evidence checkpoints in an AI program">
+      <li class="sys-item">
+        <span class="num">01 · Defined use</span>
+        <p>The business outcome, decision, workflow, and intended level of autonomy are explicit.</p>
+      </li>
+      <li class="sys-item sys-item--gate">
+        <span class="num">02 · Data readiness</span>
+        <p>The data is semantically clear, statistically sound, contextually valid, and assessed against applicable regulatory and data-integrity expectations for the declared use.</p>
+        <ul class="sub-dims">
+          <li>Semantic clarity</li>
+          <li>Statistical health</li>
+          <li>Contextual validity</li>
+          <li>Regulatory compliance</li>
+        </ul>
+        <span class="sys-scope">Measured by DATA Compass</span>
+      </li>
+      <li class="sys-item">
+        <span class="num">03 · Workflow fit</span>
+        <p>The system operates where the work happens rather than beside the workflow.</p>
+      </li>
+      <li class="sys-item">
+        <span class="num">04 · Ownership</span>
+        <p>Business, operational, and technical accountability are clear.</p>
+      </li>
+      <li class="sys-item">
+        <span class="num">05 · Learning</span>
+        <p>Feedback and changing context improve the system over time.</p>
+      </li>
+      <li class="sys-item">
+        <span class="num">06 · Business outcome</span>
+        <p>Operational value is measured after deployment.</p>
+      </li>
+    </ol>
+
+    <div class="sys-scope-note">
+      <span class="cal">DATA Compass direct scope</span>
+      <span>DATA Compass directly measures Checkpoint 02—the data gate. The other five remain program responsibilities.</span>
+    </div>
+
+    <div class="sys-thesis">
+      <p class="stmt">AI success is a system. Data readiness is a critical gate.</p>
+      <p class="role">DATA Compass makes that gate measurable—and reassesses it to prove the lift.</p>
+    </div>
+
+    <div class="sys-gate-link" aria-hidden="true">
+      <span class="cal">The data gate</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ signature: 83 ≠ 50 ============ -->
+<section class="gap-sec" id="gap" aria-labelledby="gap-h">
+  <h2 id="gap-h" class="sr-only">Data quality is not data readiness</h2>
+  <div class="wrap">
+    <div class="gap-row">
+      <div class="gap-num left" data-rv>
+        <span class="n">83</span><span class="d">/100</span>
+        <span class="cal">Data quality</span>
+      </div>
+      <div class="gap-neq" data-rv aria-hidden="true">≠</div>
+      <span class="sr-only">is not equal to</span>
+      <div class="gap-num right" data-rv>
+        <span class="n">50</span><span class="d">/100</span>
+        <span class="cal">Data readiness<br>for supervised AI</span>
+      </div>
+    </div>
+    <ol class="gap-risks" aria-label="Four classes of readiness risk inside the gap">
+      <li data-rv><i aria-hidden="true"></i><span class="cal">Semantic ambiguity</span></li>
+      <li data-rv><i aria-hidden="true"></i><span class="cal">Statistical risk</span></li>
+      <li data-rv><i aria-hidden="true"></i><span class="cal">Contextual mismatch</span></li>
+      <li data-rv><i aria-hidden="true"></i><span class="cal">Regulatory exposure</span></li>
+    </ol>
+    <div class="gap-state">
+      <p class="stmt" data-rv>The gap is the work.</p>
+      <p class="sup">A dataset can pass conventional quality checks and still be unsuitable, ambiguous, contextually invalid, or non-compliant for a defined AI use case.</p>
+      <span class="cal">Illustrative sample dataset</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ how it works: the evidence journey ============ -->
+<section class="ev-sec section-pad" id="how-it-works" aria-labelledby="ev-h">
+  <div class="wrap fade-in">
+    <span class="sec-eyebrow">How It Works</span>
+    <h2 class="sec-title" id="ev-h">Measurement becomes direction.</h2>
+    <p class="sec-lead">Every finding resolves into evidence, a recommended next move, and a measurable reassessment target. Every screen and every number below is the product on one illustrative sample dataset — recorded, not mocked.</p>
+
+    <div class="journey">
+      <div class="scenes" id="scenes">
+        <div class="scene" data-scene="0">
+          <span class="lbl">01 · Assess</span>
+          <h3>Clean data is not ready data.</h3>
+          <p class="val"><b data-facts="capture_baseline.dq_overall">83</b> data quality · <b data-facts="assessment.score">50</b> data readiness for supervised AI</p>
+          <p>Data quality scores 83/100—yet technical data readiness for supervised AI is 50, because semantic, FAIR-foundation, and ML-readiness gaps remain. The gap between those two numbers is the argument.</p>
+          <figure class="inline-frame jframe"><a href="/img/scene1-assess.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="/img/scene1-assess.webp" alt="The sample dataset's Data Quality Assessment: 83 of 100 with a seven-component breakdown and cleanliness at 45 percent" width="1260" height="780" loading="lazy"></a><figcaption>Sample data · The Data Quality read: <b data-facts="capture_baseline.dq_overall">83</b>/100 with cleanliness at <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
         </div>
-        <p class="hero-note">Built for regulated industries · Source data stays in your environment · Read-only, in place</p>
+        <div class="scene" data-scene="1">
+          <span class="lbl">02 · Diagnose</span>
+          <h3>The gaps, named and evidenced.</h3>
+          <p class="val sig" style="color:var(--signal-d)">Cross-system semantic and metadata fragmentation</p>
+          <p class="val"><b data-facts="dataset.event_type_variants">11</b> event-type variants · <b data-facts="dataset.severity_scales">3</b> severity scales · <b data-facts="product_findings_baseline.ontology_inference.mapped_columns">4</b> of <b data-facts="product_findings_baseline.ontology_inference.total_columns">18</b> columns mapped</p>
+          <p>Every failed check carries its evidence: the interoperability pillar at zero, no machine-readable identifiers or vocabulary bindings — the fragmentation made visible, rule by rule, with review controls on each verdict.</p>
+          <figure class="inline-frame jframe"><a href="/img/scene2-diagnose.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="/img/scene2-diagnose.webp" alt="The sample dataset's FAIR Evaluate view: interoperability pillar at zero, rule-by-rule verdicts with evidence and review controls" width="1260" height="780" loading="lazy"></a><figcaption>Sample data · FAIR Evaluate: <b data-facts="capture_baseline.fair_passed">7</b> of <b data-facts="capture_baseline.fair_total">16</b> rules passing, interoperability at zero — every verdict carries its evidence.</figcaption></figure>
+        </div>
+        <div class="scene" data-scene="2">
+          <span class="lbl">03 · Act</span>
+          <h3>The fix arrives with the finding.</h3>
+          <p class="val">Establish a governed semantic foundation across source systems.</p>
+          <p>Recommendations arrive ranked, with impact and effort attached — and a business-value calculation offered across the full set, so the first thing you do is the thing that moves readiness most.</p>
+          <figure class="inline-frame jframe"><a href="/img/scene3-act.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="/img/scene3-act.webp" alt="The sample dataset's recommendations: impact and effort on every card, with a business-value calculation offered across all of them" width="1260" height="770" loading="lazy"></a><figcaption>Sample data · <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations with impact and effort on every card — and a business-value calculation over the lot.</figcaption></figure>
+        </div>
+        <div class="scene" data-scene="3">
+          <span class="lbl">04 · Prove</span>
+          <h3>Reassessed. The trajectory is the deliverable.</h3>
+          <p class="val"><span style="color:var(--signal-d)"><b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b></span> overall · FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b> · <b data-facts="measured_lift.records_deduplicated">150</b> duplicate records removed</p>
+          <p>Every re-analysis appends a reading: the score trend per dimension and the delta since your last checkpoint — the readiness lift measured, the business value modeled from your assumptions.</p>
+          <figure class="inline-frame jframe"><a href="/img/scene4-prove.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="/img/scene4-prove.webp" alt="The sample dataset's technical trajectory: overall score and FAIR lines across the remediation readings, with the data table beneath" width="766" height="719" loading="lazy"></a><figcaption>Sample data · The trajectory: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b> overall, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b> across the waves.</figcaption></figure>
+        </div>
       </div>
-      <div class="hero-visual">
-        <figure class="hero-proof">
-          <div class="proof-window">
-            <header class="proof-header">
-              <div class="ph-id">
-                <b>Quality Events Dataset</b>
-                <span class="proof-sources">Databricks · Unity Catalog</span>
-              </div>
-              <div class="ph-ctx">
-                <span class="proof-badge">Technical assessment · sample data</span>
-              </div>
-            </header>
-            <div class="proof-main">
-              <section class="proof-score-panel" aria-label="Data-readiness verdict">
-                <div class="proof-score" role="img" aria-label="Data readiness score for supervised AI: 50 out of 100">
-                  <svg viewBox="0 0 120 120" aria-hidden="true">
-                    <circle class="ring-track" cx="60" cy="60" r="52"/>
-                    <circle class="ring-fill" cx="60" cy="60" r="52"/>
-                  </svg>
-                  <div class="score-num" aria-hidden="true"><b data-facts="assessment.score">50</b><span>/ 100</span></div>
-                </div>
-                <span class="score-label">Data readiness · baseline</span>
-                <p class="proof-verdict">Not ready for supervised&nbsp;AI</p>
-                <span class="pd-comp-label">Technical assessment components</span>
-                <ul class="proof-dimensions">
-                  <li><span>Semantic · <b data-facts="assessment.dimensions.semantic">43</b></span><i data-s="critical">Critical</i></li>
-                  <li><span>FAIR core · <b data-facts="assessment.dimensions.fair_foundation">31</b></span><i data-s="blocked">Blocked</i></li>
-                  <li><span>Statistical · <b data-facts="assessment.dimensions.statistical">69</b></span><i data-s="risk">At risk</i></li>
-                  <li><span>ML readiness</span><i data-s="risk">At risk</i></li>
-                </ul>
-              </section>
-              <section class="proof-diagnosis" aria-label="Diagnosis and recommendation">
-                <div class="pd-block">
-                  <span class="pd-eyebrow">Primary blocker</span>
-                  <b data-facts="assessment.primary_blocker">Cross-system semantic and metadata fragmentation</b>
-                  <span class="pd-evidence"><b data-facts="dataset.event_type_variants">11</b> event-type variants · <b data-facts="dataset.severity_scales">3</b> severity scales · <b data-facts="product_findings_baseline.ontology_inference.mapped_columns">4</b> of <b data-facts="product_findings_baseline.ontology_inference.total_columns">18</b> columns mapped</span>
-                  <p>Two source systems never shared a semantic foundation — the fragmentation blocks reliable integration and inflates AI/ML preparation.</p>
-                </div>
-                <div class="pd-block pd-block--rec">
-                  <span class="pd-eyebrow">Recommended next move</span>
-                  <b>Establish a governed semantic foundation across source systems.</b>
-                  <p>Canonical vocabularies, documented fields, machine-readable declarations — then re-assess to prove the lift.</p>
-                  <div class="proof-meta">
-                    <span><i>Measured lift · 2 waves</i><b data-facts="measured_lift.score_from">50</b>&nbsp;→&nbsp;<b data-facts="measured_lift.score_to">58</b></span>
-                    <span><i>FAIR</i><b data-facts="measured_lift.dimension_deltas.fair">+26</b></span>
-                    <span><i>Duplicates removed</i><b data-facts="measured_lift.records_deduplicated">150</b></span>
-                  </div>
-                </div>
-              </section>
-            </div>
-            <footer class="proof-deliverables">
-              <i>Compass delivers</i>
-              <span>✓ Action plan</span>
-              <span>✓ Remediation script</span>
-              <span>✓ ROI model</span>
-              <span>✓ Evidence trace</span>
-              <span class="proof-loop"><em aria-hidden="true">↺</em> Reassess to prove lift</span>
-            </footer>
-          </div>
-          <figcaption>Illustrative assessment using sample data.</figcaption>
-        </figure>
+      <div class="frame-wrap">
+        <div class="jframe" id="jframe" aria-hidden="true">
+          <figure class="active"><img src="/img/scene1-assess.webp" alt="" width="1260" height="780"><figcaption>Sample data · Assess: DQ <b data-facts="capture_baseline.dq_overall">83</b>/100, cleanliness <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
+          <figure><img src="/img/scene2-diagnose.webp" alt="" width="1260" height="780" loading="lazy"><figcaption>Sample data · Diagnose: <b data-facts="capture_baseline.fair_passed">7</b>/<b data-facts="capture_baseline.fair_total">16</b> FAIR rules passing, interoperability at zero.</figcaption></figure>
+          <figure><img src="/img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
+          <figure><img src="/img/scene4-prove.webp" alt="" width="766" height="719" loading="lazy"><figcaption>Sample data · Prove: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b>, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b>.</figcaption></figure>
+        </div>
+        <div class="jprog" aria-hidden="true"><span id="jprogFill"></span></div>
+        <div class="jrail" id="jrail">
+          <button class="active" aria-pressed="true" aria-label="Stage 1: Assess"></button>
+          <button aria-pressed="false" aria-label="Stage 2: Diagnose"></button>
+          <button aria-pressed="false" aria-label="Stage 3: Act"></button>
+          <button aria-pressed="false" aria-label="Stage 4: Prove"></button>
+        </div>
       </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <!-- CREDIBILITY STRIP (ch1) -->
-  <section class="strip" aria-label="Platform proof points">
-    <div class="container strip-inner">
-      <span><b>4</b> readiness dimensions</span>
-      <span><b>50+</b> analytical algorithms</span>
-      <span>Evidence-traced recommendations</span>
-      <span>Deployed inside your environment</span>
-    </div>
-  </section>
+<!-- ============ outcomes: four dimensions, one foundation ============ -->
+<section class="section-pad" id="outcomes" aria-labelledby="out-h">
+  <div class="wrap fade-in">
+    <span class="sec-eyebrow">Outcomes</span>
+    <h2 class="sec-title" id="out-h">Four dimensions. One foundation.</h2>
+    <p class="sec-lead">FAIR makes data legible — findable, accessible, interoperable, reusable. Necessary, and not sufficient: a perfectly FAIR dataset can still be statistically broken, wrong for your use, or non-compliant. Compass treats FAIR as the substrate and measures the four dimensions it enables but cannot guarantee.</p>
 
-  <!-- CH2 · PLATFORM -->
-  <section class="section-pad" id="platform">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">01 · Platform</span>
-        <h2 class="headline">AI-ready data<span class="alt">is more than clean data.</span></h2>
-        <p class="lead">Clean data is not ready data. A dataset can pass every hygiene check and still be semantically ambiguous, statistically unsuitable, contextually invalid, or non-compliant for a defined AI use case. DATA Compass measures data readiness for enterprise AI across four dimensions, grounded in FAIR, and turns every finding into an evidence-traced recommendation, executable action plan, and modeled business case.</p>
+    <div class="outcomes-grid">
+      <div class="o-hub">
+        <span class="cal">Declared AI use case</span>
+        <b>Supervised AI</b>
+        <span class="note">Every dimension is read against the use you declare — sample shown.</span>
       </div>
-      <div class="compare stagger">
-        <div class="before">
-          <h3>The readiness scorecard</h3>
+      <details class="o-sector" data-area="d1" open>
+        <summary>Semantic Clarity</summary>
+        <div class="dbody">
+          <p class="q">Does the data mean what it says — to a machine?</p>
+          <p class="proof">Proof · ontology inference with labelled confidence</p>
           <ul>
-            <li>A point-in-time score with no evidence behind it</li>
-            <li>Silos assessed one platform at a time</li>
-            <li>Findings that die in a slide deck</li>
-            <li>No line from data spend to AI outcome</li>
+            <li>Infer column-to-class alignment before it's tagged</li>
+            <li>Score against your private ontologies — CDISC, IDMP, your taxonomy</li>
+            <li>Interoperability made first-class: declared, inferred, or absent</li>
           </ul>
         </div>
-        <div class="after">
-          <h3>DATA Compass</h3>
+      </details>
+      <details class="o-sector" data-area="d2">
+        <summary>Statistical Health</summary>
+        <div class="dbody">
+          <p class="q">Is the data quantitatively sound?</p>
+          <p class="proof">Proof · every score traces to a named test</p>
           <ul>
-            <li>Verdicts traced to named tests and cited evidence</li>
-            <li>Databricks, Snowflake, Veeva, files — assessed in place</li>
-            <li>Every finding ships with an executable remediation plan</li>
-            <li>Readiness lift measured, business value modeled — over time</li>
+            <li>Data quality — eight component algorithms</li>
+            <li>ML readiness — sufficiency, bias, separability, features</li>
+            <li>Named tests: Benford, Pearson, Cohen's Kappa, Shapley</li>
           </ul>
         </div>
-      </div>
-      <p class="quote" style="margin-top:3rem;">Most teams say their data is AI-ready. Few have measured it.</p>
+      </details>
+      <details class="o-sector" data-area="d3">
+        <summary>Contextual Validity</summary>
+        <div class="dbody">
+          <p class="q">Is the data right for your specific use?</p>
+          <p class="proof">Proof · evidence-cited judgment per rule</p>
+          <ul>
+            <li>Customer-authoritative Domain Packs, versioned and yours</li>
+            <li>Fit scored against a declared use</li>
+            <li>Deterministic rules first, synthesis only where it must be</li>
+          </ul>
+        </div>
+      </details>
+      <details class="o-sector" data-area="d4">
+        <summary>Regulatory Compliance</summary>
+        <div class="dbody">
+          <p class="q">Does the data meet the integrity bar?</p>
+          <p class="proof">Proof · readiness against regulatory expectations — advisory, not certification</p>
+          <ul>
+            <li>ALCOA+ — nine data-integrity attributes</li>
+            <li>FDA credibility — seven steps plus Step 8</li>
+            <li>GDPR · HIPAA · CCPA, cited line-by-line</li>
+          </ul>
+        </div>
+      </details>
     </div>
-  </section>
+  </div>
+</section>
 
-  <hr class="divider">
-
-  <!-- CH3 · HOW IT WORKS — the sample journey -->
-  <section class="section-pad" id="how-it-works">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">02 · How It Works</span>
-        <h2 class="headline">One dataset.<span class="alt">Four moments.</span></h2>
-        <p class="lead">Follow one sample dataset through the loop Compass runs: assess it, diagnose the root cause, act, and prove the improvement. Every screen and every number below is the product on that dataset — recorded, not mocked.</p>
+<!-- ============ three reads: defensibility ============ -->
+<section class="reads-sec section-pad state-diverge" id="defensibility" aria-labelledby="reads-h">
+  <div class="wrap fade-in">
+    <div class="reads-top">
+      <div>
+        <span class="sec-eyebrow">Defensibility</span>
+        <h2 id="reads-h">Three reads on one domain.<br><em>The disagreement is the finding.</em></h2>
+        <p class="reads-lead">Compass doesn't take the data's word for it. Every FAIR assessment triangulates three independent reads. Where they agree, you have a finding you can defend. Where they diverge, the divergence itself is the insight — and it's named, not hand-waved.</p>
       </div>
-      <div class="journey">
-        <div class="scenes" id="scenes">
-          <div class="scene" data-scene="0">
-            <span class="lbl">Scene 1 · Assess</span>
-            <h3>Clean data is not ready data.</h3>
-            <p>Data quality scores <b data-facts="capture_baseline.dq_overall">83</b>/100—yet technical data readiness for supervised AI is <b data-facts="assessment.score">50</b>, because semantic, FAIR-foundation, and ML-readiness gaps remain. The gap between those two numbers is the argument.</p>
-            <figure class="inline-frame jframe"><a href="img/scene1-assess.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="img/scene1-assess.webp" alt="The sample dataset's Data Quality Assessment: 83 of 100 with a seven-component breakdown and cleanliness at 45 percent" width="1260" height="780" loading="lazy"></a><figcaption>Sample data · The Data Quality read: <b data-facts="capture_baseline.dq_overall">83</b>/100 with cleanliness at <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
-          </div>
-          <div class="scene" data-scene="1">
-            <span class="lbl">Scene 2 · Diagnose</span>
-            <h3>The gaps, named and evidenced.</h3>
-            <p>Every failed check carries its evidence: the interoperability pillar at zero, no machine-readable identifiers or vocabulary bindings — the fragmentation made visible, rule by rule, with review controls on each verdict.</p>
-            <figure class="inline-frame jframe"><a href="img/scene2-diagnose.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="img/scene2-diagnose.webp" alt="The sample dataset's FAIR Evaluate view: interoperability pillar at zero, rule-by-rule verdicts with evidence and review controls" width="1260" height="780" loading="lazy"></a><figcaption>Sample data · FAIR Evaluate: <b data-facts="capture_baseline.fair_passed">7</b> of <b data-facts="capture_baseline.fair_total">16</b> rules passing, interoperability at zero — every verdict carries its evidence.</figcaption></figure>
-          </div>
-          <div class="scene" data-scene="2">
-            <span class="lbl">Scene 3 · Act</span>
-            <h3>The fix arrives with the finding.</h3>
-            <p>Recommendations arrive ranked, with impact and effort attached — and a business-value calculation offered across the full set, so the first thing you do is the thing that moves readiness most.</p>
-            <figure class="inline-frame jframe"><a href="img/scene3-act.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="img/scene3-act.webp" alt="The sample dataset's recommendations: impact and effort on every card, with a business-value calculation offered across all of them" width="1260" height="770" loading="lazy"></a><figcaption>Sample data · <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations with impact and effort on every card — and a business-value calculation over the lot.</figcaption></figure>
-          </div>
-          <div class="scene" data-scene="3">
-            <span class="lbl">Scene 4 · Prove</span>
-            <h3>Reassessed. The trajectory is the deliverable.</h3>
-            <p>Every re-analysis appends a reading: the score trend per dimension and the delta since your last checkpoint — the readiness lift measured, the business value modeled from your assumptions.</p>
-            <figure class="inline-frame jframe"><a href="img/scene4-prove.webp" target="_blank" rel="noopener" aria-label="Open full-size screenshot"><img src="img/scene4-prove.webp" alt="The sample dataset's technical trajectory: overall score and FAIR lines across the remediation readings, with the data table beneath" width="766" height="719" loading="lazy"></a><figcaption>Sample data · The trajectory: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b> overall, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b> across the waves.</figcaption></figure>
-          </div>
-        </div>
-        <div class="frame-wrap">
-          <div class="jframe" id="jframe" aria-hidden="true">
-            <figure class="active"><img src="img/scene1-assess.webp" alt="" width="1260" height="780"><figcaption>Sample data · Assess: DQ <b data-facts="capture_baseline.dq_overall">83</b>/100, cleanliness <b data-facts="capture_baseline.dq_cleanliness_pct">45</b>% — the weak component, named.</figcaption></figure>
-            <figure><img src="img/scene2-diagnose.webp" alt="" width="1260" height="780" loading="lazy"><figcaption>Sample data · Diagnose: <b data-facts="capture_baseline.fair_passed">7</b>/<b data-facts="capture_baseline.fair_total">16</b> FAIR rules passing, interoperability at zero.</figcaption></figure>
-            <figure><img src="img/scene3-act.webp" alt="" width="1260" height="770" loading="lazy"><figcaption>Sample data · Act: <b data-facts="capture_baseline.recommendations_banner_count">15</b> recommendations, impact and effort attached.</figcaption></figure>
-            <figure><img src="img/scene4-prove.webp" alt="" width="766" height="719" loading="lazy"><figcaption>Sample data · Prove: <b data-facts="checkpoints[0].score">50</b> → <b data-facts="checkpoints[3].score">58</b>, FAIR <b data-facts="checkpoints[0].components.fair">31</b> → <b data-facts="checkpoints[3].components.fair">57</b>.</figcaption></figure>
-          </div>
-          <div class="jrail" id="jrail">
-            <button class="active" aria-pressed="true" aria-label="Scene 1: Assess"></button>
-            <button aria-pressed="false" aria-label="Scene 2: Diagnose"></button>
-            <button aria-pressed="false" aria-label="Scene 3: Act"></button>
-            <button aria-pressed="false" aria-label="Scene 4: Prove"></button>
-          </div>
-        </div>
+      <div class="seg" role="group" aria-label="Evidence state">
+        <button type="button" id="btn-agree" aria-pressed="false">Agreement</button>
+        <button type="button" id="btn-diverge" aria-pressed="true">Divergence</button>
       </div>
     </div>
-  </section>
 
-  <hr class="divider">
+    <div class="reads-legend">
+      <div><span class="cal"><svg width="30" height="4" aria-hidden="true"><line x1="0" y1="2" x2="30" y2="2" stroke="#EBE7E0" stroke-width="2"/></svg>Technical</span>What the data shows.</div>
+      <div><span class="cal"><svg width="30" height="4" aria-hidden="true"><line x1="0" y1="2" x2="30" y2="2" stroke="#EBE7E0" stroke-width="2" stroke-dasharray="6 4"/></svg>Perceived</span>What people experience.</div>
+      <div><span class="cal"><svg width="30" height="4" aria-hidden="true"><line x1="0" y1="2" x2="30" y2="2" stroke="#EBE7E0" stroke-width="2" stroke-dasharray="2 4"/></svg>Governed</span>What the documents say.</div>
+    </div>
 
-  <!-- CH4 · OUTCOMES — what Compass measures -->
-  <section class="section-pad" id="outcomes">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">03 · Outcomes</span>
-        <h2 class="headline">Four dimensions.<span class="alt">One foundation.</span></h2>
-        <p class="lead">FAIR makes data legible — findable, accessible, interoperable, reusable. Necessary, and not sufficient: a perfectly FAIR dataset can still be statistically broken, wrong for your use, or non-compliant. Compass treats FAIR as the substrate and measures the four dimensions it enables but cannot guarantee.</p>
+    <div class="reads-fig">
+      <svg viewBox="0 0 960 340" aria-hidden="true">
+        <g stroke="#EBE7E0" stroke-opacity=".18" stroke-width="1">
+          <line x1="40" y1="20" x2="40" y2="320"/><line x1="880" y1="20" x2="880" y2="320"/>
+        </g>
+        <g class="g-agree" fill="none" stroke="#EBE7E0" stroke-width="2">
+          <path d="M40,60 C 240,66 420,96 640,138 C 760,160 830,168 878,170"/>
+          <path d="M40,176 C 220,168 460,180 660,174 C 760,171 830,170 878,170" stroke-dasharray="6 4"/>
+          <path d="M40,284 C 240,278 430,240 640,198 C 760,176 830,171 878,170" stroke-dasharray="2 4"/>
+          <circle cx="880" cy="170" r="8" fill="#EBE7E0" stroke="none"/>
+        </g>
+        <g class="g-diverge" fill="none" stroke="#EBE7E0" stroke-width="2">
+          <path d="M40,60 C 240,66 480,56 660,44 C 760,37 830,36 880,38"/>
+          <path d="M40,176 C 220,168 460,182 660,172 C 760,167 830,169 880,170" stroke-dasharray="6 4"/>
+          <path d="M40,284 C 240,278 480,290 660,296 C 760,299 830,298 880,298" stroke-dasharray="2 4"/>
+          <g stroke="#B85C38" stroke-width="2.4">
+            <line x1="880" y1="24" x2="880" y2="52"/>
+            <line x1="880" y1="156" x2="880" y2="184"/>
+            <line x1="880" y1="284" x2="880" y2="312"/>
+          </g>
+          <g stroke="#B85C38" stroke-width="1.6">
+            <line x1="916" y1="38" x2="916" y2="298"/>
+            <line x1="908" y1="38" x2="924" y2="38"/>
+            <line x1="908" y1="298" x2="924" y2="298"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="reads-state" aria-live="polite">
+      <span class="cal">The three reads resolve to</span>
+      <span class="word agree only-agree">Confidence</span>
+      <span class="word diverge only-diverge">The Finding</span>
+    </div>
+
+    <!-- ============ the pattern explorer ============ -->
+    <div class="pattern-explorer" id="patternExplorer">
+      <span class="cal px-lab">Eight canonical patterns</span>
+      <p class="px-intro">Eight canonical patterns turn the relationship among Technical, Perceived, and Governed evidence into a shared diagnostic language. Explore a pattern to see what it means and where to look next.</p>
+
+      <!-- enhanced explorer: hidden until JS validates and initializes -->
+      <div class="px-enhanced" id="pxEnhanced" hidden>
+        <div class="px-grid" id="pxGrid">
+          <button type="button" class="px-tile" data-pat="confirmed" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">01</span><span class="cal px-fam">Coherent</span></span>
+            <b class="px-name">Confirmed Maturity</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="aligned" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">02</span><span class="cal px-fam">Provisional</span></span>
+            <b class="px-name">Aligned Maturity (suspected)</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Not yet gathered</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="greenfield" data-group="align" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">03</span><span class="cal px-fam">Neutral</span></span>
+            <b class="px-name">Greenfield</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · Low or absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="usability" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">04</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Usability Gap</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="tribal" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">05</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Tribal Knowledge</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · High</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="unformalized" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">06</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Unformalized Practice</b>
+            <span class="px-sigs"><span>T · High</span><span>P · High</span><span>G · Low</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="abandoned" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">07</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Abandoned Capability</b>
+            <span class="px-sigs"><span>T · High</span><span>P · Low</span><span>G · Deliberately absent</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+          <button type="button" class="px-tile" data-pat="policy" data-group="diverge" aria-pressed="false">
+            <span class="px-head"><span class="cal px-num">08</span><span class="cal px-fam">Divergence</span></span>
+            <b class="px-name">Policy Theater</b>
+            <span class="px-sigs"><span>T · Low</span><span>P · Low</span><span>G · High</span></span>
+            <span class="cal px-sel" aria-hidden="true">◆ Selected</span>
+          </button>
+        </div>
+
+        <div class="px-panel">
+          <div class="px-id">
+            <p class="px-id-head"><span class="cal px-id-num" id="pxNum"></span> <b id="pxName"></b></p>
+            <span class="cal px-id-fam" id="pxFam"></span>
+            <dl class="px-sig-list">
+              <div><dt class="cal">Technical</dt><dd id="pxSigT"></dd></div>
+              <div><dt class="cal">Perceived</dt><dd id="pxSigP"></dd></div>
+              <div><dt class="cal">Governed</dt><dd id="pxSigG"></dd></div>
+            </dl>
+          </div>
+          <div class="px-col"><span class="cal px-plab">What it means</span><p id="pxMean"></p></div>
+          <div class="px-col"><span class="cal px-plab">First move</span><p id="pxMove"></p></div>
+        </div>
+        <p class="sr-only" role="status" id="pxStatus"></p>
       </div>
-      <div class="dims">
-        <details open>
-          <summary>Semantic Clarity</summary>
-          <div class="dbody">
-            <div>
-              <p class="q">Does the data mean what it says — to a machine?</p>
-              <p class="proof">Proof · ontology inference with labelled confidence</p>
-            </div>
-            <ul>
-              <li>Infer column-to-class alignment before it's tagged</li>
-              <li>Score against your private ontologies — CDISC, IDMP, your taxonomy</li>
-              <li>Interoperability made first-class: declared, inferred, or absent</li>
-            </ul>
-          </div>
+
+      <!-- no-JS catalog: native details, hidden by JS only after the explorer initializes -->
+      <div class="px-fallback" id="pxFallback">
+        <details class="px-d">
+          <summary><span class="cal">01</span> <b>Confirmed Maturity</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed High</span></summary>
+          <p><b>What it means.</b> The data, stakeholder experience, and governance evidence all agree that the domain is strong.</p>
+          <p><b>First move.</b> Preserve and propagate. Protect the practices from regression and reuse the controls, artifacts, and working methods that make the domain successful.</p>
         </details>
-        <details>
-          <summary>Statistical Health</summary>
-          <div class="dbody">
-            <div>
-              <p class="q">Is the data quantitatively sound?</p>
-              <p class="proof">Proof · every score traces to a named test</p>
-            </div>
-            <ul>
-              <li>Data quality — eight component algorithms</li>
-              <li>ML readiness — sufficiency, bias, separability, features</li>
-              <li>Named tests: Benford, Pearson, Cohen's Kappa, Shapley</li>
-            </ul>
-          </div>
+        <details class="px-d">
+          <summary><span class="cal">02</span> <b>Aligned Maturity (suspected)</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Not yet gathered</span></summary>
+          <p><b>What it means.</b> Technical evidence and stakeholder experience agree on high maturity, but governance evidence has not yet been reviewed.</p>
+          <p><b>First move.</b> Review the governance documents. Determine whether the pattern resolves to Confirmed Maturity or Unformalized Practice.</p>
         </details>
-        <details>
-          <summary>Contextual Validity</summary>
-          <div class="dbody">
-            <div>
-              <p class="q">Is the data right for your specific use?</p>
-              <p class="proof">Proof · evidence-cited judgment per rule</p>
-            </div>
-            <ul>
-              <li>Customer-authoritative Domain Packs, versioned and yours</li>
-              <li>Fit scored against a declared use</li>
-              <li>Deterministic rules first, synthesis only where it must be</li>
-            </ul>
-          </div>
+        <details class="px-d">
+          <summary><span class="cal">03</span> <b>Greenfield</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed Low or deliberately absent</span></summary>
+          <p><b>What it means.</b> All available signals agree that the domain is early-stage. This is an investment decision, not necessarily a remediation problem.</p>
+          <p><b>First move.</b> Decide whether to invest or accept the current state. Do not treat every Greenfield domain as broken.</p>
         </details>
-        <details>
-          <summary>Regulatory Compliance</summary>
-          <div class="dbody">
-            <div>
-              <p class="q">Does the data meet the integrity bar?</p>
-              <p class="proof">Proof · readiness against regulatory expectations — advisory, not certification</p>
-            </div>
-            <ul>
-              <li>ALCOA+ — nine data-integrity attributes</li>
-              <li>FDA credibility — seven steps plus Step 8</li>
-              <li>GDPR · HIPAA · CCPA, cited line-by-line</li>
-            </ul>
-          </div>
+        <details class="px-d">
+          <summary><span class="cal">04</span> <b>Usability Gap</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> The data and governance evidence appear strong, but the people who depend on the data cannot use it productively.</p>
+          <p><b>First move.</b> Examine discoverability, training, UX, and the path from the catalog entry to the practitioner.</p>
         </details>
+        <details class="px-d">
+          <summary><span class="cal">05</span> <b>Tribal Knowledge</b> <span class="cal px-d-sig">Technical Low · Perceived High · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> The domain works because a small number of people know its quirks, while metadata and formal governance remain thin or deliberately absent.</p>
+          <p><b>First move.</b> Capture the practice. Externalize the knowledge while the subject-matter experts are still available.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">06</span> <b>Unformalized Practice</b> <span class="cal px-d-sig">Technical High · Perceived High · Governed Low</span></summary>
+          <p><b>What it means.</b> The data is strong and the team operates effectively, but the working method has not been formally documented.</p>
+          <p><b>First move.</b> Codify what already works. Write the SOP around the real operating practice rather than replacing it with a generic template.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">07</span> <b>Abandoned Capability</b> <span class="cal px-d-sig">Technical High · Perceived Low · Governed Deliberately absent</span></summary>
+          <p><b>What it means.</b> A technically sound asset remains, but it has lost users, ownership, and governing practice.</p>
+          <p><b>First move.</b> Make a decision. Reinvest around a current use case or formally retire the capability.</p>
+        </details>
+        <details class="px-d">
+          <summary><span class="cal">08</span> <b>Policy Theater</b> <span class="cal px-d-sig">Technical Low · Perceived Low · Governed High</span></summary>
+          <p><b>What it means.</b> Governance documentation describes a mature system that the data and operating experience do not support.</p>
+          <p><b>First move.</b> Audit practice against policy. Reconcile the documented state with operational reality.</p>
+        </details>
+      </div>
+
+      <p class="px-qual">Patterns are diagnostic, not directive. Recommended first moves are starting points for discussion with the people who run the domain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ security, deployment & autonomy ============ -->
+<section class="section-pad" id="security" aria-labelledby="sec-h">
+  <div class="wrap fade-in">
+    <div class="two-col">
+      <div>
+        <span class="sec-eyebrow">Security &amp; Deployment</span>
+        <h2 class="sec-title" id="sec-h">Your data stays. Compass comes to it.</h2>
+        <p class="sec-lead">Compass deploys inside your environment and connects to your platforms read-only. Analyses run through your own compute. Connected source data stays in the systems that own it—no ETL and no copies out. When you provide a file, that authorized copy is processed inside your deployment boundary.</p>
+      </div>
+      <div class="feat-list">
+        <div class="feat"><span class="dot"></span><div><span class="lbl">Connect</span><b>Read-only, in place.</b><span>Unity Catalog, Snowflake, Veeva — credentials AES-256 encrypted.</span></div></div>
+        <div class="feat"><span class="dot"></span><div><span class="lbl">Analyze</span><b>50+ algorithms on your warehouse.</b><span>Results return as scores, evidence, and plans — not copies of your data.</span></div></div>
+        <div class="feat"><span class="dot"></span><div><span class="lbl">AI you control</span><b>In-environment or customer-approved AI.</b><span>Bridge AI can run against a model endpoint inside your own environment.</span></div></div>
       </div>
     </div>
-  </section>
 
-  <!-- CH5 · DEFENSIBILITY (teal panel) -->
-  <section class="section-pad panel" id="defensible">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">04 · Defensibility</span>
-        <h2 class="headline">Three reads on one domain.<span class="alt">The disagreement is the finding.</span></h2>
-        <p class="lead">Compass doesn't take the data's word for it. Every FAIR assessment triangulates three independent reads. Where they agree, you have a finding you can defend. Where they diverge, the divergence itself is the insight — and it's named, not hand-waved.</p>
-      </div>
-      <div class="tri stagger">
-        <div class="tri-card"><span class="lbl">Technical</span><b>What the data shows.</b><span>SHACL + scoring across 16 FAIR rules.</span></div>
-        <div class="tri-card"><span class="lbl">Perceived</span><b>What people experience.</b><span>Persona-weighted organizational interviews.</span></div>
-        <div class="tri-card"><span class="lbl">Governed</span><b>What the documents say.</b><span>Governance documents scored against eight frameworks.</span></div>
-      </div>
-      <div class="tri-chip-wrap"><span class="chip">Agreement = Confidence&nbsp;&nbsp;·&nbsp;&nbsp;Divergence = The Finding</span></div>
-      <div class="tri-pats">
-        <span class="tri-pat">Usability Gap</span>
-        <span class="tri-pat">Policy Theater</span>
-        <span class="tri-pat">Tribal Knowledge</span>
-        <span class="tri-pat tri-pat--more">+ 5 more</span>
-      </div>
-      <p class="patterns-note">Eight named divergence patterns — each one an actionable diagnosis.</p>
-    </div>
-  </section>
-
-  <!-- CH6 · SECURITY & DEPLOYMENT -->
-  <section class="section-pad" id="security">
-    <div class="container fade-in">
-      <div class="two-col">
-        <div>
-          <span class="eyebrow">05 · Security &amp; Deployment</span>
-          <h2 class="headline">Your data stays.<span class="alt">Compass comes to it.</span></h2>
-          <p class="lead">Compass deploys inside your environment and connects to your platforms read-only. Analyses run through your own compute; source data stays in the systems that own it. No ETL, no copies, no new storage — the answer to the first question every regulated enterprise asks during security review.</p>
-        </div>
-        <div class="feat-list">
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Connect</span><b>Read-only, in place.</b><span>Unity Catalog, Snowflake, Veeva — credentials AES-256 encrypted.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">Analyze</span><b>50+ algorithms on your warehouse.</b><span>Results return as scores, evidence, and plans — not copies of your data.</span></div></div>
-          <div class="feat"><span class="dot"></span><div><span class="lbl">AI you control</span><b>In-environment or customer-approved AI.</b><span>Bridge AI can run against a model endpoint inside your own environment.</span></div></div>
-        </div>
-      </div>
-      <div class="boundary fade-in" role="img" aria-label="Architecture diagram: your environment contains your data platforms, customer-provided files, the DATA Compass instance, and optionally an in-environment AI model. Connected sources are queried read-only and stay in place; customer-provided files are an authorized copy processed inside the boundary. Bridge AI uses the in-environment model, or - only if you approve it - an external provider outside the boundary.">
-        <svg viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- environment boundary -->
+    <div class="boundary" role="img" aria-label="Architecture diagram: your environment contains your data platforms, customer-provided files, the DATA Compass instance, and optionally an in-environment AI model. Connected sources are queried read-only and stay in place; customer-provided files are an authorized copy processed inside the boundary. Bridge AI uses the in-environment model, or - only if you approve it - an external provider outside the boundary.">
+      <svg viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g class="b-frame">
           <rect x="14" y="26" width="700" height="396" rx="18" fill="none" stroke="#00495D" stroke-width="2" stroke-dasharray="7 6"/>
           <text x="42" y="16" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#00495D">YOUR ENVIRONMENT</text>
-          <g font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
-            <!-- connected sources -->
-            <rect x="44" y="62" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
-            <text x="132" y="89" text-anchor="middle" font-weight="600">Databricks</text>
-            <rect x="44" y="116" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
-            <text x="132" y="143" text-anchor="middle" font-weight="600">Snowflake</text>
-            <rect x="44" y="170" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
-            <text x="132" y="197" text-anchor="middle" font-weight="600">Veeva Vault</text>
-            <text x="132" y="238" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">CONNECTED · STAYS IN PLACE</text>
-            <!-- customer-provided files: a distinct mode -->
-            <rect x="44" y="286" width="176" height="48" rx="9" fill="#F5F3EE" stroke="#9c4b2c" stroke-dasharray="4 4"/>
-            <text x="132" y="307" text-anchor="middle" font-weight="600">Customer-provided</text>
-            <text x="132" y="323" text-anchor="middle" font-weight="600">files</text>
-            <text x="132" y="360" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">AUTHORIZED COPY ·</text>
-            <text x="132" y="374" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">PROCESSED INSIDE</text>
-          </g>
-          <!-- read-only flow from connected sources -->
-          <line x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
+        </g>
+        <g class="b-sources" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
+          <rect x="44" y="62" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
+          <text x="132" y="89" text-anchor="middle" font-weight="600">Databricks</text>
+          <rect x="44" y="116" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
+          <text x="132" y="143" text-anchor="middle" font-weight="600">Snowflake</text>
+          <rect x="44" y="170" width="176" height="44" rx="9" fill="#F5F3EE" stroke="#d8d1c5"/>
+          <text x="132" y="197" text-anchor="middle" font-weight="600">Veeva Vault</text>
+          <text x="132" y="238" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">CONNECTED · STAYS IN PLACE</text>
+        </g>
+        <g class="b-files" font-family="Inter,system-ui,sans-serif" font-size="13.5" fill="#00495D">
+          <rect x="44" y="286" width="176" height="48" rx="9" fill="#F5F3EE" stroke="#9c4b2c" stroke-dasharray="4 4"/>
+          <text x="132" y="307" text-anchor="middle" font-weight="600">Customer-provided</text>
+          <text x="132" y="323" text-anchor="middle" font-weight="600">files</text>
+          <text x="132" y="360" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">AUTHORIZED COPY ·</text>
+          <text x="132" y="374" text-anchor="middle" font-size="10" fill="#66615A" letter-spacing="1">PROCESSED INSIDE</text>
+          <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
+          <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
+        </g>
+        <g class="b-flow">
+          <line class="b-flow-line" pathLength="100" x1="228" y1="138" x2="322" y2="138" stroke="#B85C38" stroke-width="2"/>
           <path d="M322 138 l-11 -6 v12 z" fill="#B85C38"/>
           <text x="275" y="122" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" letter-spacing="1" fill="#9c4b2c">READ-ONLY</text>
           <text x="275" y="158" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="#66615A">your compute</text>
-          <!-- upload flow from files -->
-          <path d="M228 310 C 280 310 300 250 330 220" stroke="#9c4b2c" stroke-width="1.6" fill="none" stroke-dasharray="4 4"/>
-          <path d="M332 218 l-12 1 6 10 z" fill="#9c4b2c"/>
-          <!-- Compass instance -->
-          <g font-family="Inter,system-ui,sans-serif">
-            <rect x="334" y="62" width="248" height="220" rx="14" fill="#00495D"/>
-            <text x="458" y="94" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">DATA Compass instance</text>
-            <g font-size="13" fill="#cdd9de">
-              <text x="458" y="130" text-anchor="middle">Assessment</text>
-              <text x="458" y="158" text-anchor="middle">Recommendations</text>
-              <text x="458" y="186" text-anchor="middle">Action plans</text>
-              <text x="458" y="214" text-anchor="middle">Readiness trajectory</text>
-            </g>
-            <text x="458" y="256" text-anchor="middle" font-size="10" fill="#9fb2b9" letter-spacing="1">RESULTS STAY INSIDE THE BOUNDARY</text>
+        </g>
+        <g class="b-core" font-family="Inter,system-ui,sans-serif">
+          <rect x="334" y="62" width="248" height="220" rx="14" fill="#00495D"/>
+          <text x="458" y="94" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">DATA Compass instance</text>
+          <g font-size="13" fill="#cdd9de">
+            <text x="458" y="130" text-anchor="middle">Assessment</text>
+            <text x="458" y="158" text-anchor="middle">Recommendations</text>
+            <text x="458" y="186" text-anchor="middle">Action plans</text>
+            <text x="458" y="214" text-anchor="middle">Readiness trajectory</text>
           </g>
-          <!-- in-environment model (default) -->
-          <g font-family="Inter,system-ui,sans-serif">
-            <line x1="458" y1="282" x2="458" y2="316" stroke="#8EA3AC" stroke-width="1.6"/>
-            <rect x="358" y="316" width="200" height="66" rx="10" fill="#F5F3EE" stroke="#8EA3AC"/>
-            <text x="458" y="342" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">In-environment AI model</text>
-            <text x="458" y="362" text-anchor="middle" font-size="10.5" fill="#66615A">Bridge AI default — nothing leaves</text>
-          </g>
-          <!-- external provider: OUTSIDE the boundary, opt-in -->
-          <g font-family="Inter,system-ui,sans-serif">
-            <line x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
-            <path d="M756 172 l-11 -6 v12 z" fill="#8EA3AC"/>
-            <text x="668" y="156" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="1" fill="#66615A">ONLY IF YOU APPROVE IT</text>
-            <rect x="758" y="132" width="176" height="80" rx="10" fill="none" stroke="#8EA3AC" stroke-width="1.6" stroke-dasharray="5 5"/>
-            <text x="846" y="164" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">External AI provider</text>
-            <text x="846" y="184" text-anchor="middle" font-size="10.5" fill="#66615A">customer-approved</text>
-            <text x="846" y="198" text-anchor="middle" font-size="10.5" fill="#66615A">endpoint — outside</text>
-          </g>
-        </svg>
-        <div class="boundary-cards" aria-hidden="true">
-          <div class="bcard"><b>1 · Your data systems</b><span>Databricks, Snowflake, Veeva stay in place; customer-provided files are an authorized copy inside the boundary.</span></div>
-          <div class="bcard"><b>2 · Read-only connection</b><span>Compass queries connected sources on your compute — never writes, never copies out.</span></div>
-          <div class="bcard"><b>3 · Compass inside your environment</b><span>Assessment, recommendations, plans, and the trajectory all live inside the boundary.</span></div>
-          <div class="bcard"><b>4 · Your selected AI endpoint</b><span>In-environment model by default; an external provider only if you approve it.</span></div>
-        </div>
+          <text x="458" y="256" text-anchor="middle" font-size="10" fill="#9fb2b9" letter-spacing="1">RESULTS STAY INSIDE THE BOUNDARY</text>
+        </g>
+        <g class="b-model" font-family="Inter,system-ui,sans-serif">
+          <line x1="458" y1="282" x2="458" y2="316" stroke="#8EA3AC" stroke-width="1.6"/>
+          <rect x="358" y="316" width="200" height="66" rx="10" fill="#F5F3EE" stroke="#8EA3AC"/>
+          <text x="458" y="342" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">In-environment AI model</text>
+          <text x="458" y="362" text-anchor="middle" font-size="10.5" fill="#66615A">Bridge AI default — nothing leaves</text>
+        </g>
+        <g class="b-ext" font-family="Inter,system-ui,sans-serif">
+          <line class="b-ext-line" x1="582" y1="172" x2="756" y2="172" stroke="#8EA3AC" stroke-width="1.8" stroke-dasharray="5 5"/>
+          <path d="M756 172 l-11 -6 v12 z" fill="#8EA3AC"/>
+          <text x="668" y="156" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="1" fill="#66615A">ONLY IF YOU APPROVE IT</text>
+          <rect x="758" y="132" width="176" height="80" rx="10" fill="none" stroke="#8EA3AC" stroke-width="1.6" stroke-dasharray="5 5"/>
+          <text x="846" y="164" text-anchor="middle" font-size="12.5" font-weight="600" fill="#00495D">External AI provider</text>
+          <text x="846" y="184" text-anchor="middle" font-size="10.5" fill="#66615A">customer-approved</text>
+          <text x="846" y="198" text-anchor="middle" font-size="10.5" fill="#66615A">endpoint — outside</text>
+        </g>
+      </svg>
+      <div class="boundary-cards" aria-hidden="true">
+        <div class="bcard"><b>1 · Your data systems</b><span>Databricks, Snowflake, Veeva stay in place; customer-provided files are an authorized copy inside the boundary.</span></div>
+        <div class="bcard"><b>2 · Read-only connection</b><span>Compass queries connected sources on your compute — never writes, never copies out.</span></div>
+        <div class="bcard"><b>3 · Compass inside your environment</b><span>Assessment, recommendations, plans, and the trajectory all live inside the boundary.</span></div>
+        <div class="bcard"><b>4 · Your selected AI endpoint</b><span>In-environment model by default; an external provider only if you approve it.</span></div>
       </div>
-      <div class="trust-grid stagger">
-        <div class="trust-cell"><b>Read-only</b><span>Connected sources are queried, never written — and never copied out.</span></div>
-        <div class="trust-cell"><b>In your environment</b><span>Compass deploys inside your boundary; results stay there too.</span></div>
-        <div class="trust-cell"><b>Encrypted secrets</b><span>Credentials AES-256 encrypted, key-vault managed.</span></div>
-        <div class="trust-cell"><b>Auditable</b><span>Analyses, decisions, and overrides carry an audit trail.</span></div>
-        <div class="trust-cell"><b>Evidence-traced</b><span>Every finding cites the check and the data that produced it.</span></div>
-      </div>
-      <div class="sec-head" style="margin-top:4rem;">
-        <h2 class="headline" style="font-size:clamp(1.5rem,3vw,1.9rem);">How much autonomy<span class="alt">can your data support?</span></h2>
-      </div>
-      <div class="ladder stagger">
-        <div class="rung"><span class="step-n">Level 1</span><b>Advisory</b><span>AI suggests; a human decides everything.</span></div>
-        <div class="rung"><span class="step-n">Level 2</span><b>Copilot</b><span>AI drafts; a human reviews and approves.</span></div>
-        <div class="rung"><span class="step-n">Level 3</span><b>Supervised</b><span>AI acts within bounds; a human monitors.</span></div>
-        <div class="rung"><span class="step-n">Level 4</span><b>Autonomous</b><span>AI acts; humans audit the trail.</span></div>
-      </div>
+      <p class="boundary-cap">No connected source data crosses this boundary without your approval.</p>
     </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- CH7 · INTEGRATIONS -->
-  <section class="section-pad" id="integrations">
-    <div class="container fade-in">
-      <div class="sec-head">
-        <span class="eyebrow">06 · Integrations</span>
-        <h2 class="headline">Connect your data<span class="alt">where it lives.</span></h2>
-        <p class="lead">Connected sources are assessed read-only and in place. Customer-provided files stay inside your deployment boundary.</p>
-      </div>
-      <div class="int-rail stagger">
-        <div class="rail-item" style="--hover-bg:#ff3621;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Databricks</h3><p>Unity Catalog browser, SQL profiling, MLflow assessment.</p></div>
-        <div class="rail-item" style="--hover-bg:#29b5e8;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 01-8 8m8-8a8 8 0 00-8-8m8 8H4m8 8a8 8 0 01-8-8m8 8c1.66 0 3-3.58 3-8s-1.34-8-3-8" stroke="#fff" stroke-width="2"/></svg></div><h3>Snowflake</h3><p>Database and schema browser with SQL API profiling.</p></div>
-        <div class="rail-item" style="--hover-bg:#f68d2e;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Veeva Vault</h3><p>QMS, CDMS, and RIM module adapters with OAuth2 SSO.</p></div>
-        <div class="rail-item" style="--hover-bg:#1a1a2e;"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Stardog</h3><p>SPARQL querying, ICV validation, reasoning-powered analysis.</p></div>
-      </div>
-      <div class="connector-card"><b>Files, APIs, and pipelines</b> — drag-and-drop CSV, Excel, Parquet, and JSON, or a REST API for CI/CD.</div>
+    <div class="ext-toggle-row">
+      <button type="button" class="ext-toggle" id="extToggle" aria-pressed="false">Customer-approved external endpoint</button>
+      <span class="ext-toggle-note">Off by default — the external path exists only through explicit approval.</span>
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Know before you deploy.<span class="alt">Measure data readiness. Ship AI on evidence.</span></h2>
-    <p>Start with a technical data-readiness assessment in minutes. No code changes, no movement of connected source data, no black boxes.</p>
-    <div class="cta-btns">
-      <a href="#" class="btn btn--white btn--lg" data-demo>Request a Demo</a>
+    <div class="trust-grid">
+      <div class="trust-cell"><b>Read-only</b><span>Connected sources are queried, never written — and never copied out.</span></div>
+      <div class="trust-cell"><b>In your environment</b><span>Compass deploys inside your boundary; results stay there too.</span></div>
+      <div class="trust-cell"><b>Encrypted secrets</b><span>Credentials AES-256 encrypted, key-vault managed.</span></div>
+      <div class="trust-cell"><b>Auditable</b><span>Analyses, decisions, and overrides carry an audit trail.</span></div>
+      <div class="trust-cell"><b>Evidence-traced</b><span>Every finding cites the check and the data that produced it.</span></div>
     </div>
-    <p class="cta-sub">We'll walk you through a technical data-readiness assessment on an illustrative dataset — read-only, in place.</p>
-  </section>
 
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand"><svg class="mark" width="19" height="19" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#00495D" stroke-width="2"/><path d="M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z" fill="#00495D"/><path d="M16 4 L19 13 L16 16 L13 13 Z" fill="#B85C38"/></svg> <span><b>DATA</b> Compass</span></div>
-        <p class="footer-desc">The data-readiness platform for enterprise AI. AI readiness, measured—not asserted. Built for regulated industries.</p>
-      </div>
-      <div>
-        <h4>Platform</h4>
-        <ul>
-          <li><a href="/platform/">Platform</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#outcomes">Outcomes</a></li>
-          <li><a href="#security">Security</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Integrations</h4>
-        <ul>
-          <li><a href="#integrations">Databricks</a></li>
-          <li><a href="#integrations">Snowflake</a></li>
-          <li><a href="#integrations">Veeva Vault</a></li>
-          <li><a href="#integrations">Stardog</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="#how-it-works">Sample assessment</a></li>
-          <li><a href="/download">Download</a></li>
-          <li><a href="mailto:contact@compassfordata.com">Contact</a></li>
-        </ul>
-      </div>
+    <div class="autonomy-head">
+      <h3>How much autonomy can your data support?</h3>
+      <p>Higher autonomy raises the evidence bar.</p>
     </div>
-    <div class="footer-bar">
-      <span>© 2026 DATA Compass. All rights reserved.</span>
-      <span>compassfordata.com</span>
-    </div>
-  </footer>
-
-  <!-- REQUEST A DEMO MODAL -->
-  <div class="modal-overlay" id="demoModal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
-      <button class="modal-x" id="demoClose" aria-label="Close">&times;</button>
-      <span class="eyebrow">Request a Demo</span>
-      <h2 class="modal-title" id="demoTitle">See DATA Compass in action.</h2>
-      <p class="modal-sub">Tell us a little about you and we'll set up a walkthrough.</p>
-      <p class="modal-note">30-minute working session · No source data required · We'll use an illustrative dataset</p>
-      <form id="demoForm" novalidate>
-        <!-- spam honeypot: real users never fill this -->
-        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="frow">
-          <div class="ffield"><label for="f_first">First name *</label><input id="f_first" name="first_name" autocomplete="given-name" required></div>
-          <div class="ffield"><label for="f_last">Last name *</label><input id="f_last" name="last_name" autocomplete="family-name" required></div>
-        </div>
-        <div class="ffield"><label for="f_company">Company *</label><input id="f_company" name="company" autocomplete="organization" required></div>
-        <div class="ffield"><label for="f_email">Work email *</label><input id="f_email" type="email" name="email" autocomplete="email" required></div>
-        <details class="more-fields">
-          <summary>Anything else? (optional)</summary>
-          <div class="frow" style="margin-top:.8rem;">
-            <div class="ffield"><label for="f_phone">Phone</label><input id="f_phone" type="tel" name="phone" autocomplete="tel"></div>
-          </div>
-          <div class="ffield" style="margin-top:.8rem;"><label for="f_notes">Notes</label><textarea id="f_notes" name="notes" rows="3" placeholder="What would you like to see?"></textarea></div>
-        </details>
-        <div class="modal-actions">
-          <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-          <button type="button" class="btn btn--outline" id="demoCancel">Cancel</button>
-          <button type="submit" class="btn btn--primary" id="demoSubmit">Send</button>
-        </div>
-      </form>
-      <div class="form-success" id="formSuccess" hidden>
-        <div class="check" aria-hidden="true">&checkmark;</div>
-        <h3>Thanks — we'll be in touch.</h3>
-        <p>Your request is on its way. We'll reach out shortly to schedule your walkthrough.</p>
-      </div>
+    <div class="ladder">
+      <div class="rung"><span class="step-n">Level 1</span><b>Advisory</b><span>AI suggests; a human decides everything.</span></div>
+      <div class="rung"><span class="step-n">Level 2</span><b>Copilot</b><span>AI drafts; a human reviews and approves.</span></div>
+      <div class="rung"><span class="step-n">Level 3</span><b>Supervised</b><span>AI acts within bounds; a human monitors.</span></div>
+      <div class="rung"><span class="step-n">Level 4</span><b>Autonomous</b><span>AI acts; humans audit the trail.</span></div>
     </div>
   </div>
+</section>
 
-  <script>
-    // JS is running: enable scroll-reveal styling (no-JS renderers see everything)
-    document.documentElement.classList.add('js');
-    // nav scroll state
-    const nav = document.getElementById('nav');
-    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), { passive:true });
-    // mobile menu
-    const mm = document.getElementById('mobileMenu');
-    const hb = document.getElementById('hamburger');
-    hb.addEventListener('click', () => { mm.classList.add('open'); hb.setAttribute('aria-expanded', 'true'); });
-    document.getElementById('mobileClose').addEventListener('click', () => { mm.classList.remove('open'); hb.setAttribute('aria-expanded', 'false'); });
-    mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mm.classList.remove('open'); hb.setAttribute('aria-expanded', 'false'); }));
-    // fade-in
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold:.12, rootMargin:'0px 0px -40px 0px' });
-      document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
-    } else {
-      document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-    }
+<hr class="divider">
 
-    // nav active-section indicator (enhancement only; anchors work without it)
-    if ('IntersectionObserver' in window) {
-      const navAnchors = Array.from(document.querySelectorAll('#navLinks a[href^="#"]'));
-      const byId = {};
-      navAnchors.forEach(a => { byId[a.getAttribute('href').slice(1)] = a; });
-      const secIo = new IntersectionObserver((es) => {
-        es.forEach(e => {
-          if (e.isIntersecting) {
-            navAnchors.forEach(a => a.classList.remove('active'));
-            const a = byId[e.target.id];
-            if (a) a.classList.add('active');
-          }
-        });
-      }, { rootMargin: '-30% 0px -60% 0px' });
-      Object.keys(byId).forEach(id => { const s = document.getElementById(id); if (s) secIo.observe(s); });
-    }
+<!-- ============ integrations ============ -->
+<section class="section-pad" id="integrations" aria-labelledby="int-h">
+  <div class="wrap fade-in">
+    <span class="sec-eyebrow">Integrations</span>
+    <h2 class="sec-title" id="int-h">Connect your data where it lives.</h2>
+    <p class="sec-lead">Connected sources are assessed read-only and in place. Customer-provided files stay inside your deployment boundary.</p>
+    <div class="int-rail">
+      <div class="rail-item"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Databricks</h3><p>Unity Catalog browser, SQL profiling, MLflow assessment.</p></div>
+      <div class="rail-item"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 01-8 8m8-8a8 8 0 00-8-8m8 8H4m8 8a8 8 0 01-8-8m8 8c1.66 0 3-3.58 3-8s-1.34-8-3-8" stroke="#fff" stroke-width="2"/></svg></div><h3>Snowflake</h3><p>Database and schema browser with SQL API profiling.</p></div>
+      <div class="rail-item"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Veeva Vault</h3><p>QMS, CDMS, and RIM module adapters with OAuth2 SSO.</p></div>
+      <div class="rail-item"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Stardog</h3><p>SPARQL querying, ICV validation, reasoning-powered analysis.</p></div>
+    </div>
+    <div class="connector-card"><b>Files, APIs, and pipelines</b> — drag-and-drop CSV, Excel, Parquet, and JSON, or a REST API for CI/CD.</div>
+  </div>
+</section>
 
-    // sample-journey scene sync (JS toggles active state only; scroll stays native)
-    (function(){
-      const figs  = Array.from(document.querySelectorAll('#jframe figure'));
-      const dots  = Array.from(document.querySelectorAll('#jrail button'));
-      const scenes = Array.from(document.querySelectorAll('.scene'));
-      if (!figs.length || !scenes.length) return;
-      function activate(i){
-        figs.forEach((f,k)=>f.classList.toggle('active', k===i));
-        dots.forEach((d,k)=>{ d.classList.toggle('active', k===i); d.setAttribute('aria-pressed', String(k===i)); });
-      }
-      if ('IntersectionObserver' in window) {
-        const jio = new IntersectionObserver(es => {
-          es.forEach(e => { if (e.isIntersecting) activate(Number(e.target.dataset.scene)); });
-        }, { rootMargin:'-40% 0px -40% 0px' });
-        scenes.forEach(s => jio.observe(s));
-      }
-      dots.forEach((d,i)=>d.addEventListener('click', ()=>{
-        scenes[i].scrollIntoView({
-          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-          block: 'center'
-        });
-      }));
-    })();
+<!-- ============ CTA ============ -->
+<section class="cta" aria-labelledby="cta-h">
+  <h2 id="cta-h">Know before you deploy.<span class="disp">Measure data readiness. Ship AI on evidence.</span></h2>
+  <p>Start with a technical data-readiness assessment in minutes. No code changes, no movement of connected source data, no black boxes.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn btn--white" data-demo>Request a Demo</a>
+  </div>
+  <p class="cta-sub">We'll walk you through a technical data-readiness assessment on an illustrative dataset—read-only, in place.</p>
+</section>
 
-    // --- Request a Demo modal ---
-    // Web3Forms access key. Public by design; the destination emails are stored
-    // server-side at web3forms.com and never appear on this page.
-    const WEB3FORMS_ACCESS_KEY = "16f5a6ca-b05b-40e4-9a29-7a91324f4c92";
+</main>
 
-    const demoModal   = document.getElementById('demoModal');
-    const demoForm    = document.getElementById('demoForm');
-    const formMsg     = document.getElementById('formMsg');
-    const formSuccess = document.getElementById('formSuccess');
-    const submitBtn   = document.getElementById('demoSubmit');
-    let lastFocus = null;
+<!-- ============ footer ============ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand"><svg class="mark" width="19" height="19" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#00495D" stroke-width="2"/><path d="M16 4 L19 13 L28 16 L19 19 L16 28 L13 19 L4 16 L13 13 Z" fill="#00495D"/><path d="M16 4 L19 13 L16 16 L13 13 Z" fill="#B85C38"/></svg> <span><b>DATA</b> Compass</span></div>
+      <p class="footer-desc">The data-readiness platform for enterprise AI. AI readiness, measured—not asserted. Built for regulated industries.</p>
+    </div>
+    <div>
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#outcomes">Outcomes</a></li>
+        <li><a href="#defensibility">Defensibility</a></li>
+        <li><a href="#security">Security</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Integrations</h4>
+      <ul>
+        <li><a href="#integrations">Databricks</a></li>
+        <li><a href="#integrations">Snowflake</a></li>
+        <li><a href="#integrations">Veeva Vault</a></li>
+        <li><a href="#integrations">Stardog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#how-it-works">Sample assessment</a></li>
+        <li><a href="/download">Download</a></li>
+        <li><a href="mailto:contact@compassfordata.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <span>© 2026 DATA Compass. All rights reserved.</span>
+    <span>compassfordata.com</span>
+  </div>
+</footer>
 
-    function openDemo(){
-      lastFocus = document.activeElement;
-      demoModal.classList.add('open');
-      demoModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => document.getElementById('f_first').focus(), 80);
-    }
-    function closeDemo(){
-      demoModal.classList.remove('open');
-      demoModal.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
-    }
-    document.querySelectorAll('[data-demo]').forEach(el =>
-      el.addEventListener('click', e => { e.preventDefault(); openDemo(); }));
-    document.getElementById('demoClose').addEventListener('click', closeDemo);
-    document.getElementById('demoCancel').addEventListener('click', closeDemo);
-    demoModal.addEventListener('click', e => { if (e.target === demoModal) closeDemo(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && demoModal.classList.contains('open')) closeDemo(); });
-    // focus trap while the modal is open
-    demoModal.addEventListener('keydown', e => {
-      if (e.key !== 'Tab' || !demoModal.classList.contains('open')) return;
-      const els = Array.from(demoModal.querySelectorAll('button, input, textarea, summary, [href]'))
-        .filter(el => el.offsetParent !== null);
-      if (!els.length) return;
-      const first = els[0], last = els[els.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    });
+<!-- ============ request a demo modal (production) ============ -->
+<div class="modal-overlay" id="demoModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+    <button class="modal-x" id="demoClose" aria-label="Close">&times;</button>
+    <span class="modal-eyebrow">Request a Demo</span>
+    <h2 class="modal-title" id="demoTitle">See DATA Compass in action.</h2>
+    <p class="modal-sub">Tell us a little about you and we'll set up a walkthrough.</p>
+    <p class="modal-note">30-minute working session · No source data required · We'll use an illustrative dataset</p>
+    <form id="demoForm" novalidate>
+      <!-- spam honeypot: real users never fill this -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="frow">
+        <div class="ffield"><label for="f_first">First name *</label><input id="f_first" name="first_name" autocomplete="given-name" required></div>
+        <div class="ffield"><label for="f_last">Last name *</label><input id="f_last" name="last_name" autocomplete="family-name" required></div>
+      </div>
+      <div class="ffield"><label for="f_company">Company *</label><input id="f_company" name="company" autocomplete="organization" required></div>
+      <div class="ffield"><label for="f_email">Work email *</label><input id="f_email" type="email" name="email" autocomplete="email" required></div>
+      <details class="more-fields">
+        <summary>Anything else? (optional)</summary>
+        <div class="frow" style="margin-top:.8rem;">
+          <div class="ffield"><label for="f_phone">Phone</label><input id="f_phone" type="tel" name="phone" autocomplete="tel"></div>
+        </div>
+        <div class="ffield" style="margin-top:.8rem;"><label for="f_notes">Notes</label><textarea id="f_notes" name="notes" rows="3" placeholder="What would you like to see?"></textarea></div>
+      </details>
+      <div class="modal-actions">
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+        <button type="button" class="btn btn--outline" id="demoCancel">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="demoSubmit">Send</button>
+      </div>
+    </form>
+    <div class="form-success" id="formSuccess" hidden>
+      <div class="check" aria-hidden="true">&checkmark;</div>
+      <h3>Thanks — we'll be in touch.</h3>
+      <p>Your request is on its way. We'll reach out shortly to schedule your walkthrough.</p>
+    </div>
+  </div>
+</div>
 
-    demoForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      formMsg.textContent = ''; formMsg.classList.remove('error');
-
-      // client-side validation
-      let ok = true;
-      demoForm.querySelectorAll('[required]').forEach(f => {
-        if (!f.value.trim()) { f.classList.add('invalid'); ok = false; }
-        else f.classList.remove('invalid');
-      });
-      const email = demoForm.elements.email;
-      if (email.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value)) { email.classList.add('invalid'); ok = false; }
-      if (!ok) { formMsg.textContent = 'Please complete the required fields.'; formMsg.classList.add('error'); return; }
-
-      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.indexOf('REPLACE') === 0) {
-        formMsg.textContent = 'This form is not configured yet.'; formMsg.classList.add('error'); return;
-      }
-
-      submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
-      const data = Object.fromEntries(new FormData(demoForm).entries());
-      data.access_key = WEB3FORMS_ACCESS_KEY;
-      data.subject    = 'New demo request — compassfordata.com';
-      data.from_name  = 'DATA Compass Website';
-
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const json = await res.json();
-        if (json.success) { demoForm.hidden = true; formSuccess.hidden = false; }
-        else { formMsg.textContent = json.message || 'Something went wrong. Please try again.'; formMsg.classList.add('error'); submitBtn.disabled = false; submitBtn.textContent = 'Send'; }
-      } catch (err) {
-        formMsg.textContent = 'Network error — please try again.'; formMsg.classList.add('error');
-        submitBtn.disabled = false; submitBtn.textContent = 'Send';
-      }
-    });
-  </script>
+<script src="/platform/platform.js?v=3"></script>
 </body>
 </html>
