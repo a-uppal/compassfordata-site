@@ -33,7 +33,7 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="3.0.0"
+VERSION="1.1.8"
 PRODUCT_NAME="DATA Compass"
 GITHUB_REPO="compassfordata/data-compass"
 DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
@@ -688,7 +688,7 @@ deploy_azure() {
   read -r db_user
   db_user="${db_user:-compassadmin}"
 
-  echo -n "  Database admin password (min 12 chars, Enter to auto-generate): "
+  echo -n "  Database admin password (min 8 chars, Enter to auto-generate): "
   read -rs db_pass
   echo ""
   if [[ -z "$db_pass" ]]; then
@@ -707,7 +707,7 @@ deploy_azure() {
   read -r admin_name
   echo -n "  Organization name: "
   read -r admin_org
-  echo -n "  Admin password (min 12 chars): "
+  echo -n "  Admin password (min 8 chars): "
   read -rs admin_pass
   echo ""
 
@@ -921,7 +921,7 @@ deploy_azure() {
 
   local app_url="https://${app_name}.azurewebsites.net"
   info "Waiting for ${PRODUCT_NAME} to start (this takes 3-8 minutes on first deploy)..."
-  info "First start pulls the container image and runs 146 database migrations."
+  info "First start pulls the container image and runs 95 database migrations."
   echo ""
 
   local attempts=0
