@@ -33,7 +33,7 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Configuration — change these for your deployment
 # ---------------------------------------------------------------------------
-VERSION="3.0.1"
+VERSION="3.0.2"
 PRODUCT_NAME="DATA Compass"
 GITHUB_REPO="compassfordata/data-compass"
 DOCKER_IMAGE="ghcr.io/compassfordata/data-compass"
