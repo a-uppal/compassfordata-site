@@ -363,7 +363,13 @@ html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal:nth-child(4) { trans
   .banking-page .nb-rail__grid > div:first-child { padding-top: 16px; border-top: 0; }
   .banking-page .bk-ledger__row { grid-template-columns: 1fr; gap: 5px; }
   .banking-page #how-it-works .nb-stage:nth-child(even) { border-left: 0; }
+  .banking-page .bk-coverage__text { font-size: 11.5px; }
   .banking-page .bk-record__table-region { overflow-x: auto; overscroll-behavior-inline: contain; }
+  .banking-page .bk-record__table caption,
+  .banking-page .bk-record__table th,
+  .banking-page .bk-record__table td,
+  .banking-page .bk-record__table thead th { font-size: 14px; }
+  .banking-page .bk-record__disclaimer { font-size: 16px; line-height: 1.55; }
   .banking-page .bk-regulatory > * { grid-column: 1; }
   .banking-page .nb-dep > .nb-dep__list { grid-column: 1 / -1; }
   .banking-page .bk-foot__copy { text-align: left; }
