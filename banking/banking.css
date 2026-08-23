@@ -1,0 +1,382 @@
+/* Compass for Banking: scoped additions over the immutable /new/ snapshot. */
+
+.banking-page section[id] { scroll-margin-top: 80px; }
+
+.banking-page .nb-wrap { max-width: 1280px; }
+.banking-page .nb-hero__h1 { font-size: clamp(2.9rem, 4.6vw, 4.3rem); line-height: .99; }
+.banking-page .nb-h2 { font-size: clamp(2rem, 4vw, 3.05rem); line-height: 1.08; }
+.banking-page .nb-lead { font-size: 17.5px; }
+
+.banking-page .bk-preview-status {
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 12px;
+  padding: 5px 8px;
+  border: 1px solid var(--nb-line);
+  font-family: var(--nb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: .1em;
+  color: var(--nb-quiet);
+}
+
+.banking-page .nb-hero__qual { color: var(--nb-teal); font-weight: 700; }
+.banking-page .nb-hero__proof { font-weight: 500; }
+.banking-page .nb-textlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* The record is an operating artifact: compact, tabular, and prepared for challenge. */
+.banking-page .bk-record,
+.banking-page .bk-record__table { font-variant-numeric: tabular-nums; }
+.banking-page .bk-record,
+.banking-page .bk-regulatory { border-radius: 5px; }
+.banking-page .bk-record--hero { align-self: start; }
+.banking-page .bk-record--full {
+  grid-column: 1 / -1;
+  margin-top: 48px;
+}
+
+.banking-page .bk-record__reveal-list { padding: 20px 20px 0; }
+.banking-page .bk-record__reveal + .bk-record__reveal { margin-top: 18px; }
+.banking-page .bk-record__decision {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--nb-line);
+}
+.banking-page .bk-record__decision-label,
+.banking-page .bk-record__section-title,
+.banking-page .bk-coverage__heading,
+.banking-page .bk-sources__label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.banking-page .bk-record__decision-label {
+  font-family: var(--nb-mono);
+  color: var(--nb-quiet);
+}
+.banking-page .bk-record__decision-value {
+  color: var(--nb-terra-ink);
+  font-size: 18px;
+  line-height: 1.25;
+  text-align: right;
+}
+
+.banking-page .bk-record__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 24px;
+  padding: 24px 20px 0;
+}
+.banking-page .bk-record__column { min-width: 0; }
+.banking-page .bk-record__section-title,
+.banking-page .bk-coverage__heading {
+  font-family: var(--nb-mono);
+  font-weight: 700;
+  color: var(--nb-quiet);
+}
+
+.banking-page .bk-ledger { margin-top: 12px; }
+.banking-page .bk-ledger--compact { margin-top: 0; }
+.banking-page .bk-ledger__row {
+  display: grid;
+  grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr);
+  gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid var(--nb-line);
+}
+.banking-page .bk-ledger__row:last-child { border-bottom: 1px solid var(--nb-line); }
+.banking-page .bk-ledger__row dt {
+  font-family: var(--nb-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--nb-quiet);
+}
+.banking-page .bk-ledger__row dd {
+  min-width: 0;
+  color: var(--nb-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.banking-page .bk-coverage { min-width: 0; }
+.banking-page .bk-coverage__heading { margin-bottom: 10px; }
+.banking-page .bk-coverage__segments {
+  display: grid;
+  grid-template-columns: 14fr 8fr 18fr;
+  gap: 8px;
+}
+.banking-page .bk-coverage__segment { min-width: 0; }
+.banking-page .bk-coverage__bar {
+  display: block;
+  min-height: 44px;
+}
+.banking-page .bk-coverage__segment--measured .bk-coverage__bar { background: var(--nb-teal); }
+.banking-page .bk-coverage__segment--attested .bk-coverage__bar {
+  background: repeating-linear-gradient(135deg, var(--nb-card) 0 6px, var(--nb-teal) 6px 8px);
+  border: 1px solid var(--nb-teal);
+}
+.banking-page .bk-coverage__segment--open .bk-coverage__bar {
+  background: var(--nb-card);
+  border: 1px solid var(--nb-teal);
+}
+.banking-page .bk-coverage__text {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7px;
+  color: var(--nb-quiet);
+  font-family: var(--nb-mono);
+  font-size: 9.5px;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.banking-page .bk-coverage__text b {
+  color: var(--nb-ink);
+  font-size: 14px;
+}
+.banking-page .bk-coverage__metric { margin-top: 12px; color: var(--nb-teal); }
+.banking-page .bk-coverage > p + p { margin-top: 7px; font-size: 15px; }
+
+.banking-page .bk-record__table-region {
+  margin-top: 24px;
+  border: 1px solid var(--nb-line);
+}
+.banking-page .bk-record__table { width: 100%; border-collapse: collapse; }
+.banking-page .bk-record__table caption {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--nb-line);
+  background: var(--nb-card);
+  color: var(--nb-quiet);
+  font-family: var(--nb-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.banking-page .bk-record__table th,
+.banking-page .bk-record__table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--nb-line);
+  color: var(--nb-ink);
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-align: left;
+}
+.banking-page .bk-record__table thead th {
+  color: var(--nb-quiet);
+  font-family: var(--nb-mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.banking-page .bk-record__table th:last-child,
+.banking-page .bk-record__table td:last-child { width: 72px; text-align: right; }
+.banking-page .bk-record__table tbody tr:last-child > * { border-bottom: 0; }
+.banking-page .bk-record__disclaimer {
+  margin: 20px 20px 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--nb-line);
+  color: var(--nb-quiet);
+  font-family: var(--nb-mono);
+  font-size: 10.5px;
+  line-height: 1.55;
+  letter-spacing: .025em;
+}
+.banking-page .bk-record__reveal-list .bk-record__disclaimer { margin-inline: 0; }
+
+/* Role rail: three accountable parties, separated by rules rather than arrows. */
+.banking-page .nb-rail__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.banking-page .nb-rail__grid > div {
+  min-width: 0;
+  padding: 20px 24px;
+  border-left: 1px solid var(--nb-line);
+}
+.banking-page .nb-rail__grid > div:first-child { padding-left: 0; border-left: 0; }
+.banking-page .nb-rail__grid > div > p {
+  padding: 0;
+  border: 0;
+  color: var(--nb-teal);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.banking-page .nb-rail__grid .bk-rail__provenance {
+  margin-top: 9px;
+  color: var(--nb-quiet);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.banking-page .nb-cons p,
+.banking-page .nb-stage__t p,
+.banking-page .nb-reads p { font-size: 17px; }
+
+.banking-page #how-it-works .nb-stages {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-block: 1px solid var(--nb-line);
+}
+.banking-page #how-it-works .nb-stage {
+  display: block;
+  min-width: 0;
+  padding: 24px;
+  border: 0;
+  border-left: 1px solid var(--nb-line);
+}
+.banking-page #how-it-works .nb-stage:first-child { border-left: 0; }
+.banking-page #how-it-works .nb-stage__t,
+.banking-page #how-it-works .nb-stage:nth-child(even) .nb-stage__t {
+  grid-column: auto;
+  grid-row: auto;
+  padding: 0;
+}
+.banking-page #how-it-works .nb-stage__t h3 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+.banking-page #how-it-works .nb-stage__t p { line-height: 1.55; }
+
+.banking-page #defensible .nb-reads { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.banking-page .bk-defensible__close {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(169,195,204,.28);
+  color: var(--nb-on-teal);
+  font-size: 17.5px;
+  font-weight: 600;
+}
+
+.banking-page .bk-regulatory {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr);
+  gap: 24px 48px;
+}
+.banking-page .bk-regulatory > .nb-eyebrow,
+.banking-page .bk-regulatory > .nb-h2,
+.banking-page .bk-regulatory > .nb-close,
+.banking-page .bk-regulatory > .bk-sources { grid-column: 1 / -1; }
+.banking-page .bk-regulatory__body p,
+.banking-page .bk-regulatory__classification p { font-size: 17px; }
+.banking-page .bk-regulatory__body p + p { margin-top: 18px; }
+.banking-page .bk-regulatory__classification {
+  align-self: start;
+  padding: 22px;
+  border: 1px solid var(--nb-line);
+  border-top: 3px solid var(--nb-teal);
+  background: var(--nb-card);
+}
+.banking-page .bk-regulatory__classification h3 {
+  color: var(--nb-teal);
+  font-size: 18px;
+  line-height: 1.35;
+}
+.banking-page .bk-regulatory__classification p { margin-top: 12px; }
+.banking-page .bk-sources {
+  padding-top: 20px;
+  border-top: 1px solid var(--nb-line);
+}
+.banking-page .bk-sources__label {
+  font-family: var(--nb-mono);
+  font-weight: 700;
+  color: var(--nb-quiet);
+}
+.banking-page .bk-sources__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 9px;
+}
+.banking-page .bk-sources__list a {
+  display: inline-block;
+  min-height: 44px;
+  padding-block: 9px;
+  font-size: 14px;
+}
+
+.banking-page .nb-dep > .nb-dep__list {
+  grid-column: 8 / span 5;
+  margin-top: 0;
+}
+.banking-page .nb-dep__list li { font-size: 17px; }
+
+.banking-page .bk-foot__copy {
+  color: var(--nb-quiet);
+  font-size: 12.5px;
+  line-height: 1.55;
+  text-align: right;
+}
+
+/* The immutable behavior maps its one load transition onto these four record rows. */
+html.js .banking-page #nbHeroBrief .bk-record__reveal-list > .bk-record__reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal-list > .bk-record__reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity 300ms var(--nb-ease-out), transform 300ms var(--nb-ease-out);
+}
+html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal:nth-child(1) { transition-delay: 0ms; }
+html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal:nth-child(2) { transition-delay: 90ms; }
+html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal:nth-child(3) { transition-delay: 180ms; }
+html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal:nth-child(4) { transition-delay: 270ms; }
+
+@media (max-width: 1279px) {
+  .banking-page { --nb-pad: 68px; --nb-gut: 22px; }
+  .banking-page #how-it-works .nb-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .banking-page #how-it-works .nb-stage { border-left: 0; border-bottom: 1px solid var(--nb-line); }
+  .banking-page #how-it-works .nb-stage:nth-child(even) { border-left: 1px solid var(--nb-line); }
+  .banking-page #how-it-works .nb-stage:last-child { grid-column: 1 / -1; border-left: 0; border-bottom: 0; }
+  .banking-page #defensible .nb-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+  .banking-page .nb-rail__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .banking-page { --nb-pad: 52px; --nb-gut: 18px; font-size: 16px; }
+  .banking-page .nb-rail__grid,
+  .banking-page .bk-record__grid,
+  .banking-page #how-it-works .nb-stages,
+  .banking-page #defensible .nb-reads,
+  .banking-page .bk-regulatory { grid-template-columns: 1fr; }
+  .banking-page .nb-rail__grid > div {
+    padding: 16px 0;
+    border-top: 1px solid var(--nb-line);
+    border-left: 0;
+  }
+  .banking-page .nb-rail__grid > div:first-child { padding-top: 16px; border-top: 0; }
+  .banking-page .bk-ledger__row { grid-template-columns: 1fr; gap: 5px; }
+  .banking-page #how-it-works .nb-stage:nth-child(even) { border-left: 0; }
+  .banking-page .bk-record__table-region { overflow-x: auto; overscroll-behavior-inline: contain; }
+  .banking-page .bk-regulatory > * { grid-column: 1; }
+  .banking-page .nb-dep > .nb-dep__list { grid-column: 1 / -1; }
+  .banking-page .bk-foot__copy { text-align: left; }
+  .banking-page button { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .banking-page #nbHeroBrief .bk-record__reveal-list > .bk-record__reveal,
+  html.js .banking-page #nbHeroBrief.nb-in .bk-record__reveal-list > .bk-record__reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
