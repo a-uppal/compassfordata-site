@@ -213,12 +213,12 @@
   font-weight: 600;
   line-height: 1.45;
 }
-.banking-page .nb-rail__grid .bk-rail__provenance {
+.banking-page .nb-rail__grid .bk-rail__detail {
   margin-top: 9px;
   color: var(--nb-quiet);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .banking-page .nb-cons p,
