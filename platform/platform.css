@@ -602,3 +602,14 @@ html.js .fade-in.visible { opacity:1; transform:none; }
   .contour, .ticks-minor { display:none; }
   .hero h1 { font-size:2.55rem; }
 }
+
+/* Evidence-field graphics, drawn by /assets/field.js (adds .field-js to <html>). */
+.field-canvas { display:none; }
+.field-js .field-canvas { display:block; width:100%; }
+.field-js .hero > .field-canvas { position:absolute; inset:0; height:100%; pointer-events:none; }
+.hero-grid { position:relative; }
+.field-js .field-gates { height:92px; margin-top:3.4rem; }
+.field-js .field-gates + .sys-rail { margin-top:1.1rem; }
+.field-js .field-pillars { height:250px; margin:2.8rem 0 .4rem; }
+.field-js .cta .field-canvas { height:110px; max-width:var(--maxw); margin:2.8rem auto 0; }
+@media (max-width: 900px) { .field-js .field-gates { display:none; } .field-js .field-gates + .sys-rail { margin-top:4.2rem; } }

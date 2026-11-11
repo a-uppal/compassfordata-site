@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/platform/platform.css?v=3">
+  <link rel="stylesheet" href="/platform/platform.css?v=4">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -93,6 +93,7 @@
 
 <!-- ============ hero: the readiness field ============ -->
 <header class="hero">
+  <canvas class="field-canvas" data-field="ambient" data-tone="dark" data-center=".bearing svg" data-avoid=".hero-grid > div:first-child, .bearing" aria-hidden="true"></canvas>
   <div class="hero-grid">
     <div>
       <span class="cal">The data-readiness platform for enterprise AI</span>
@@ -194,6 +195,7 @@
       <p class="sys-note">No single checkpoint guarantees success. The evidence has to hold across the system.</p>
     </div>
 
+    <canvas class="field-canvas field-gates" data-field="gates" data-measured="1" aria-hidden="true"></canvas>
     <ol class="sys-rail" aria-label="Six evidence checkpoints in an AI program">
       <li class="sys-item">
         <span class="num">01 · Defined use</span>
@@ -339,6 +341,7 @@
     <h2 class="sec-title" id="out-h">Four dimensions. One foundation.</h2>
     <p class="sec-lead">FAIR makes data legible — findable, accessible, interoperable, reusable. Necessary, and not sufficient: a perfectly FAIR dataset can still be statistically broken, wrong for your use, or non-compliant. Compass treats FAIR as the substrate and measures the four dimensions it enables but cannot guarantee.</p>
 
+    <canvas class="field-canvas field-pillars" data-field="pillars" data-labels="Semantic Clarity|Statistical Health|Contextual Validity|Regulatory Compliance" data-foundation="FAIR foundation · illustrative" role="img" aria-label="Illustrative figure: four dimensions of evidence marks standing on one FAIR foundation."></canvas>
     <div class="outcomes-grid">
       <div class="o-hub">
         <span class="cal">Declared AI use case</span>
@@ -709,6 +712,7 @@
     <a href="#" class="btn btn--white" data-demo>Request a Demo</a>
   </div>
   <p class="cta-sub">We'll walk you through a technical data-readiness assessment on an illustrative dataset—read-only, in place.</p>
+  <canvas class="field-canvas" data-field="bearing" data-tone="dark" aria-hidden="true"></canvas>
 </section>
 
 </main>
@@ -791,5 +795,6 @@
 </div>
 
 <script src="/platform/platform.js?v=3"></script>
+<script src="/assets/field.js?v=1" defer></script>
 </body>
 </html>
