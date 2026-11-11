@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/home.css?v=1">
+  <link rel="stylesheet" href="/assets/home.css?v=2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -89,11 +89,26 @@
 
   <main id="main" tabindex="-1">
     <header class="home-hero" aria-labelledby="hero-title">
+      <canvas class="home-hero__canvas" aria-hidden="true"></canvas>
       <div class="home-wrap home-hero__field">
         <div class="home-hero__copy">
           <p class="home-eyebrow">READINESS, MEASURED—NOT ASSERTED</p>
           <h1 id="hero-title">Evidence-based readiness for enterprise data and AI.</h1>
           <p class="home-hero__body">Start with a dataset, a data domain, or an AI initiative. DATA Compass evaluates readiness using evidence across data quality, meaning, statistical integrity, risk, and compliance—showing what is fit for use, what can withstand scrutiny, and what needs to change next.</p>
+        </div>
+
+        <div class="home-hero__dial" role="group" aria-label="Illustrative readiness dial. The asserted word ready resolves into evidence that is mostly measured, partly attributed, partly missing and partly contradictory.">
+          <div class="home-dial__stage"></div>
+          <div class="home-dial__meta">
+            <p class="home-dial__caption" aria-hidden="true"><span>Asserted</span><span>Measured</span></p>
+            <ul class="home-dial__legend">
+              <li data-state="measured">Measured</li>
+              <li data-state="attributed">Attributed</li>
+              <li data-state="missing">Missing</li>
+              <li data-state="contradictory">Contradictory</li>
+            </ul>
+            <p class="home-dial__note">Illustrative example <button type="button" data-field-replay>Replay</button></p>
+          </div>
         </div>
 
         <div class="home-hero__choices" aria-label="Explore an industry">
@@ -127,12 +142,15 @@
           <p>DATA Compass can begin with a dataset, data domain, AI initiative, or governed decision. The starting object changes; the product motion does not.</p>
         </div>
 
+        <div class="home-stage">
+          <div class="home-stage__figure"><canvas role="img" aria-label="Illustrative figure. The same set of evidence marks is scanned, sorted into measured, attributed, missing and contradictory, ranked into owned priorities, and kept as a record."></canvas></div>
         <ol class="home-stage-grid">
           <li><span class="home-stage-grid__number">01</span><h3>Assess</h3><p>Begin with the asset, domain, initiative, or decision and evaluate the evidence that applies.</p></li>
           <li><span class="home-stage-grid__number">02</span><h3>Diagnose</h3><p>Distinguish measured, attributed, missing, and contradictory evidence.</p></li>
           <li><span class="home-stage-grid__number">03</span><h3>Act</h3><p>Turn material gaps into prioritized remediation with named ownership.</p></li>
           <li><span class="home-stage-grid__number">04</span><h3>Prove</h3><p>Preserve what supports the decision, what changed, and what requires reassessment.</p></li>
         </ol>
+        </div>
       </div>
     </section>
 
@@ -142,6 +160,7 @@
         <h2 id="industries-title">Different evidence. One readiness discipline.</h2>
         <div class="home-industry-grid">
           <article class="home-industry">
+            <canvas class="home-industry__figure" data-figure="helix" aria-hidden="true"></canvas>
             <p class="home-industry__index">01 / Life Sciences</p>
             <h3>Can this data support the scientific and AI use?</h3>
             <p>Evaluate data quality, statistical integrity, FAIR alignment, and semantic maturity against the intended use—then trace the blockers to evidence and prioritized remediation.</p>
@@ -149,6 +168,7 @@
             <a class="home-text-link" href="/new/" data-measure="life-sciences-selected">Explore Life Sciences <span aria-hidden="true">→</span></a>
           </article>
           <article class="home-industry">
+            <canvas class="home-industry__figure" data-figure="columns" aria-hidden="true"></canvas>
             <p class="home-industry__index">02 / Banking <span>Product preview</span></p>
             <h3>Can this AI decision withstand challenge?</h3>
             <p>Connect data quality, model and use-case risk, control coverage, ARC requirements, unresolved findings, and the bank’s accountable decision in one assessment record.</p>
@@ -173,6 +193,7 @@
           </ul>
         </div>
         <figure class="home-boundary" role="img" aria-labelledby="boundary-caption">
+          <canvas class="home-boundary__canvas" aria-hidden="true"></canvas>
           <div class="home-boundary__customer">
             <span class="home-boundary__label">Customer environment</span>
             <div class="home-boundary__flow">
@@ -193,6 +214,7 @@
           <div><h2 id="request-title">Bring the data—or the decision—you need to trust.</h2><p>We will show you what evidence is present, where the material gaps are, and what the next responsible move looks like.</p></div>
           <a class="home-primary-link" href="#homeSessionForm" data-session-trigger data-measure="working-session-opened">Request a working session</a>
         </div>
+        <canvas class="home-close__bearing" aria-hidden="true"></canvas>
 
         <div class="home-session" id="homeSessionDialog" aria-hidden="false">
           <div class="home-session__card" aria-labelledby="homeSessionTitle">
@@ -236,5 +258,6 @@
   </footer>
 
   <script src="/assets/home.js?v=1" defer></script>
+  <script src="/assets/field.js?v=1" defer></script>
 </body>
 </html>
