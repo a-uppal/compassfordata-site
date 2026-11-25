@@ -16,7 +16,9 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # Pinned: on 2026-11-25 ubuntu-latest moved to 26.04 and deploy-pages stopped
+    # finding the uploaded artifact. 24.04 is the image of the last good deploy.
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
